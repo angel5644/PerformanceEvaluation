@@ -99,6 +99,7 @@
     color: white;
     padding-top: 30px;
     background-color: #7B7D7D;
+    box-shadow: 0 8px 6px -6px black;
     border-radius: 20px;
     margin-bottom: 20px;
 }

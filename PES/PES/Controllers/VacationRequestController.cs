@@ -662,6 +662,7 @@ namespace PES.Controllers
 			var currentUserEmail = (string)Session["UserEmail"];
 			currentUser = _employeeService.GetByEmail(currentUserEmail);
 
+
 			List<VacHeadReqViewModel> listHeaderReqDB = new List<VacHeadReqViewModel>();
 			List<VacHeadReqViewModel> listHeaderReqVM = new List<VacHeadReqViewModel>();
 

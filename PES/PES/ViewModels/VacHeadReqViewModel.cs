@@ -58,6 +58,8 @@ namespace PES.ViewModels
 
         public StatusRequestViewModel Modal { get; set; }
 
+        public int modalActive { get; set; }
+
 
 
     }

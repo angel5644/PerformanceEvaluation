@@ -24,7 +24,7 @@
 
     <div class="buttomShowHideContent">
         <button type="button" class="btn btn-secondary" id="show">Show Colors</button>
-        <button type="button" class="btn btn-secondary" id="hide">Hide Colors</button>
+        <button type="button" class="btn btn-secondary" id="hide">Hidde Colors</button>
     </div>
 
     <div class="container contenedorColores" id="item" hidden>
@@ -92,6 +92,8 @@
 
                     @foreach (var headerVM in Model)
                     {
+                        
+
                         if (headerVM.status.ToLower() == "pending")
                         {
                             <tr>
@@ -99,7 +101,7 @@
                                 {
                                     if (headerVM.Title.Contains("EMERGENCY:"))
                                     {
-                                             <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -115,7 +117,7 @@
                                     else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
                                     {
 
-                                             <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -131,7 +133,7 @@
                                     }
                                     else if (headerVM.Title.Contains("UNPAID:"))
                                     {
-                                            <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -144,9 +146,9 @@
                                         <td style="background-color:#baffc9">Unpaid Request</td>
 
                                     }
-                                     else if (headerVM.Title.Contains("FUNERAL:"))
+                                    else if (headerVM.Title.Contains("FUNERAL:"))
                                     {
-                                             <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -157,11 +159,11 @@
                                         <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#F08080">Emergency Request</td>
-                                        }
+                                    }
 
-                                        else if (headerVM.Title.Contains("PATERNITY:"))
+                                    else if (headerVM.Title.Contains("PATERNITY:"))
                                     {
-                                             <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -172,13 +174,13 @@
                                         <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#F08080">Emergency Request</td>
-                                        }
+                                    }
 
 
                                     else if (headerVM.HaveProject == "True")
                                     {
-                                             <td>@headerVM.FirstName @headerVM.LastName</td>
-                                       
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -194,7 +196,7 @@
                                     else
                                     {
 
-                                           <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>@headerVM.FirstName @headerVM.LastName</td>
 
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
@@ -215,7 +217,7 @@
                                 {
                                     if (headerVM.Title.Contains("EMERGENCY:"))
                                     {
-                                       
+
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -231,7 +233,7 @@
                                     else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
                                     {
 
-                                     
+
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -247,7 +249,7 @@
                                     }
                                     else if (headerVM.Title.Contains("UNPAID:"))
                                     {
-                                      
+
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -260,24 +262,9 @@
                                         <td style="background-color:#baffc9">Unpaid Request</td>
 
                                     }
-                                     else if (headerVM.Title.Contains("FUNERAL:"))
+                                    else if (headerVM.Title.Contains("FUNERAL:"))
                                     {
-                                      
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
-                                        <td style="background-color:#F08080">Emergency Request</td>
-                                        }
 
-                                        else if (headerVM.Title.Contains("PATERNITY:"))
-                                    {
-                                        
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -288,13 +275,28 @@
                                         <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#F08080">Emergency Request</td>
-                                        }
+                                    }
+
+                                    else if (headerVM.Title.Contains("PATERNITY:"))
+                                    {
+
+                                        <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                    }
 
 
                                     else if (headerVM.HaveProject == "True")
                                     {
 
-                                      
+
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -310,7 +312,7 @@
                                     else
                                     {
 
-                                   
+
 
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
@@ -557,7 +559,7 @@
     </div>
 
 
-    <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary">New Request</a>
+    <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary" id="newRequestButom">New Request</a>
     <a href="@Url.Action("emergencyRequest", "VacationRequest", new { id = userID })" class="btn btn-lg btn-primary">Emergency days off</a>
 </div>
 
@@ -586,5 +588,33 @@
         }
     </style>
 }
+
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="noVacationsDays" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>no vacations</b></p>
+                <br />
+                <p ALIGN=center> You dont have enouht vacations </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
 
 
