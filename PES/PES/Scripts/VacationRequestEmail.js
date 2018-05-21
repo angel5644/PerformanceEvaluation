@@ -38,7 +38,7 @@ function sendedImail(id, VacDaysReq, stringFechas) {
 
 $('#cancelBotomModal').on("click", function (e) {
     var Fecha = $('#start').val();
-    var cancelString = $('#calcelmodaltext').text();
+    var cancelString = $('#calcelmodaltext').val();
     var starDate = moment(Fecha.substring(0, 10));
     var today = moment(new Date());
     var compareToday = today.add(2,'days');
