@@ -15,13 +15,8 @@ $("#hide").click(function () {
 
 
 
-$("#newRequestButom").mouseover(function (e) {
+$("#newRequestButom").on("click", function (e) {
 
-    var vacationsDays = $("#availableDays").val();
+    var StartDateCorrection = $("#availableDays").val();
 
-    if (vacationsDays == "0") {
-        $("#noVacationsDays").modal();
-    }
-
-
-})
+});

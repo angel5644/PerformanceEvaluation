@@ -92,7 +92,7 @@
 
                     @foreach (var headerVM in Model)
                     {
-                        
+
 
                         if (headerVM.status.ToLower() == "pending")
                         {
@@ -558,9 +558,21 @@
         </div>
     </div>
 
+    <div>
+        <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary" id="newRequestButom" style="margin-bottom:20px;">New Request</a>
 
-    <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary" id="newRequestButom">New Request</a>
-    <a href="@Url.Action("emergencyRequest", "VacationRequest", new { id = userID })" class="btn btn-lg btn-primary">Emergency days off</a>
+                @if (freeDays == 0)
+        {
+            <span class="badge badge-danger" style="background-color: red !important; margin-top: -20px">You dont have vacations days</span>
+        }
+    </div>
+
+    <div>
+        <a href="@Url.Action("emergencyRequest", "VacationRequest", new { id = userID })" class="btn btn-danger" style="margin-bottom:20px; font-size: 20px">Emergency days off</a>
+    </div>
+
+
+
 </div>
 
 

@@ -91,6 +91,11 @@ namespace PES.Controllers
         {
             Employee currentEmployee = _employeeService.GetByID(userid);
 
+            if(currentEmployee.Freedays == 0)
+            {
+                return RedirectToAction("HistoricalResource");
+            }
+
             if (currentEmployee.EmployeeId > 0)
             {
                 // Is valid
@@ -673,7 +678,7 @@ namespace PES.Controllers
 			}
 			else if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Resource))
 			{
-				listHeaderReqDB = _headerReqService.GetGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
+				listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByManagerId(123);
 			}
 			if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
 			{
