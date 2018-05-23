@@ -218,6 +218,10 @@ function ValidateVacationDaysManager() {
 }
 //Document this if i dont finish it-----------------------------------------------
 
+$("#buttonSendForm").on("click", function (e) {
+    $("#form").submit();
+})
+
 $("#sendRequest").on("click", function (e) {
 
     var StartDateCorrection = $("#start").val();
@@ -226,9 +230,11 @@ $("#sendRequest").on("click", function (e) {
 
     var ReturnDateCorrection = $("#returnDay").val();
 
-    var DaysRequestedCorrection = $("#daysReq").val();
+    var DaysRequestedCorrection = parseInt($("#daysReq").val());
 
     var TitleCorrection = $("#Title").val();
+
+    var VacacionesEmployee = parseInt($("#daysVac").text());
 
 
 
@@ -248,6 +254,10 @@ $("#sendRequest").on("click", function (e) {
     else if (TitleCorrection == "") {
 
         $("#titleEmpy").modal();
+    }
+    else if (DaysRequestedCorrection > VacacionesEmployee)
+    {
+        $("#noVacationsDays").modal();
     }
     else {
         $("#form").submit();

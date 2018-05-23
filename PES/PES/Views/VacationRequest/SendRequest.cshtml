@@ -41,7 +41,8 @@
                 {
                     @Html.HiddenFor(model => model.EmployeedID)
 
-                    @Html.HiddenFor(model => model.VacationDays, Model.VacationDays)
+
+                    @Html.HiddenFor(model => model.VacationDays)
 
                     <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
                     <div class="form-group">
@@ -326,31 +327,27 @@
 
 
 @* Modal begins *@
-<div class="modal fade" id="noVacationsDays" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
+<div class="modal fade" id="noVacationsDays" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Alert</h4>
+                <h5 class="modal-title" id="exampleModalLongTitle">You will make two requets</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <p ALIGN=center><b>no vacations</b></p>
-                <br />
-                <p ALIGN=center> You dont have enouht vacations </p>
-
+                You don't have enough vacation days, your request will be divided in two parts
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="buttonSendForm" type="button" class="btn btn-primary">Agree</button>
             </div>
         </div>
-
     </div>
 </div>
+
 @* Modal ends *@
-
-
 
 @* Modal ends *@
 
