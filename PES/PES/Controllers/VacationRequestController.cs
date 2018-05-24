@@ -754,7 +754,7 @@ namespace PES.Controllers
 			Employee RemindedEmployee = new Employee();
 			RemindedEmployee = _employeeService.GetByID(userid);
 			RemindedEmployee.ReminderDate = DateTime.Now;
-            _employeeService.InsertReminderEmployee(RemindedEmployee);
+            //_employeeService.InsertReminderEmployee(RemindedEmployee);
             _employeeService.UpdateEmployeeRemindedDate(RemindedEmployee);
 			int vacationDays = RemindedEmployee.Freedays;
 			string employeeEmail = RemindedEmployee.Email;
