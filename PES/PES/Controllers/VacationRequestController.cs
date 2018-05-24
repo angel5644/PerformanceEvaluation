@@ -465,15 +465,62 @@ namespace PES.Controllers
 
                     if (sendNormalRequest)
                     {
-                        subrequest.EndDate = subrequest.StartDate.Date.AddDays(normalReqDays - 1);
-                        if(subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                        if (normalReqDays == 1)
                         {
-                            subrequest.EndDate = subrequest.EndDate.Date.AddDays(2);
+                            subrequest.EndDate = subrequest.StartDate.Date.AddDays(normalReqDays - 1);
+                            if (subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                            {
+                                subrequest.EndDate = subrequest.EndDate.Date.AddDays(2);
+                            }
+                            else if (subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                            }
                         }
-                        else if(subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                        else
                         {
-                            subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                            var SumaTotal = 0;
+                            subrequest.EndDate = subrequest.StartDate.Date;
+                            while (true)
+                            {
+                                if (SumaTotal != normalReqDays -1)
+                                {
+                                    subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                                    if (subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                                    {
+                                        SumaTotal--;
+                                    }
+                                    else if (subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                                    {
+                                        SumaTotal--;
+                                    }
+                                    SumaTotal++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+
+                            }
+
                         }
+
+
+                        DateTime returDateDate = new DateTime();
+
+                        returDateDate = subrequest.EndDate.Date.AddDays(1);
+                        if (returDateDate.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            returDateDate = returDateDate.Date.AddDays(2);
+                        }
+                        else if (returDateDate.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            returDateDate = returDateDate.Date.AddDays(1);
+                        }
+
+                        var shortDate = returDateDate.ToString("MM/dd/yyyy");
+
+                        subrequest.ReturnDate = shortDate;
 
                         model.daysReq = normalReqDays;
 
@@ -501,7 +548,7 @@ namespace PES.Controllers
 
                     if (unpaidReqDays > 0)
                     {
-                        subrequest.StartDate = subrequest.EndDate.Date.AddDays(unpaidReqDays - 1);
+                        subrequest.StartDate = subrequest.EndDate.Date.AddDays(1);
                         if (subrequest.StartDate.DayOfWeek == DayOfWeek.Saturday)
                         {
                             subrequest.StartDate = subrequest.StartDate.Date.AddDays(2);
@@ -510,6 +557,66 @@ namespace PES.Controllers
                         {
                             subrequest.StartDate = subrequest.StartDate.Date.AddDays(1);
                         }
+
+                        if(unpaidReqDays == 1)
+                        {
+                            subrequest.EndDate = subrequest.StartDate.Date.AddDays(unpaidReqDays - 1);
+                            if (subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                            {
+                                subrequest.EndDate = subrequest.EndDate.Date.AddDays(2);
+                            }
+                            else if (subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                            }
+                        }
+                        else
+                        {
+                            var SumaTotal = 0;
+                            subrequest.EndDate = subrequest.StartDate.Date;
+                            while (true)
+                            {
+                                if(SumaTotal != unpaidReqDays -1)
+                                {
+                                    subrequest.EndDate = subrequest.EndDate.Date.AddDays(1);
+                                    if (subrequest.EndDate.DayOfWeek == DayOfWeek.Saturday)
+                                    {
+                                        SumaTotal--;
+                                    }
+                                    else if (subrequest.EndDate.DayOfWeek == DayOfWeek.Sunday)
+                                    {
+                                        SumaTotal--;
+                                    }
+                                    SumaTotal++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                                
+                            }
+                            
+                        }
+
+
+                        DateTime returDateDate = new DateTime();
+
+                        returDateDate = subrequest.EndDate.Date.AddDays(1);
+                        if (returDateDate.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            returDateDate = returDateDate.Date.AddDays(2);
+                        }
+                        else if (returDateDate.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            returDateDate = returDateDate.Date.AddDays(1);
+                        }
+
+                        var shortDate = returDateDate.ToString("MM/dd/yyyy");
+
+                        subrequest.ReturnDate = shortDate;
+
+
+
                         model.daysReq = unpaidReqDays;
                         model.TypeRequest = 1;
 
