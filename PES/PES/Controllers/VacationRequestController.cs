@@ -239,15 +239,54 @@ namespace PES.Controllers
         }
 
 
-		public ActionResult VacationAssignation()
-		{
+        public ActionResult VacationAssignation()
+        {
+
+            //******************
+          //  IEnumerable<Employee> listEmployee = new List<Employee>();
+            //List<Employee> listEmployeeFiltered = new List<Employee>();
+            //listEmployee = _employeeService.GetAll();
+
+            // NOTE: add more attributes to the "var employeed" if you need them. 
+         /*   foreach (var employ in listEmployee)
+           {
+                if (employ.Freedays != 0)
+                {
+                    var employeed = new Employee
+                    {
+                        EmployeeId = employ.EmployeeId,
+                        Freedays = employ.Freedays,
+                        FirstName = employ.FirstName,
+                        LastName = employ.LastName,
+                        Email = employ.Email,
+                        ReminderDate = employ.ReminderDate
+
+                    };
+
+                    listEmployeeFiltered.Add(employeed);
+                }
+            }
+            */
+            //]]]]]]]]]]]]]]]]]]
+
 
             AssignVacationsViewModel AssignVacations = new AssignVacationsViewModel();
 
             IEnumerable<Employee> listEmployee = new List<Employee>();
+            List<Employee> FilteredListEmployee = new List<Employee>();
+
             listEmployee = _employeeService.GetAll();
 
-            IEnumerable<SelectListItem> listEmployees = listEmployee.Select(employee => new SelectListItem()
+            foreach (var employ in listEmployee)
+            {
+                if (employ.Freedays != 0)
+                {
+                    FilteredListEmployee.Add(employ);                
+                }
+            }
+            
+
+            IEnumerable<SelectListItem> listEmployees = FilteredListEmployee.Select(employee => new SelectListItem()
             {
                 Text = employee.FirstName + " " + employee.LastName,
                 Value = employee.EmployeeId.ToString()
