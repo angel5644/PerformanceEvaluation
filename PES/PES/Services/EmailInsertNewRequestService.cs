@@ -159,7 +159,7 @@ namespace PES.Services
         public bool UpdateVacationDays(string employeeemail, int daysReq, int typeRequest)
         {
 
-            if (typeRequest == 1 || typeRequest == 2)
+            if (typeRequest == 1 || typeRequest == 2 || typeRequest == 3 || typeRequest == 4)
             {
                 return true;
             }

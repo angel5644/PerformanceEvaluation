@@ -375,19 +375,32 @@ namespace PES.Controllers
         {
             //// Validate if unpaid days will be taken, return unpaid days that will be taken
             //int unpaidDays = 0;
-
             // Send normal request with vacation days
             #region normal vacation days request
             //int vacationDays = model.daysReq - unpaidDays;
             //model.daysReq = vacationDays;
 
             //model.SubRequests.
+            if(model.TypeRequest == 0)
+            {
+                var FirstElement = model.SubRequests.First();
+                DateTime nowa = DateTime.Now;
+                var weekNumberfive = nowa.AddDays(35);
+                if (FirstElement.StartDate.Date < weekNumberfive.Date)
+                {
+                    model.TypeRequest = 6;
+                }
+            }
 
-           
-                //Insert Header Request.
-               if(model.TypeRequest == 0)
+
+            //Insert Header Request.
+            if (model.TypeRequest == 0 || model.TypeRequest == 6)
             {
                 InsertRequest(model);
+            }
+               else if(model.TypeRequest == 5)
+            {
+                InsertAssigntRequest(model);
             }
             else
             {
@@ -445,6 +458,40 @@ namespace PES.Controllers
             }
 
                     return true;
+
+        }
+
+
+        private bool InsertAssigntRequest(SendRequestViewModel model)
+        {
+            model.TypeRequest = 5;
+
+            Employee employee = _employeeService.GetByID(model.EmployeedID);
+
+            // Get manager 
+            Employee manager = _employeeService.GetByID(employee.ManagerId);
+
+            // Emails where the request will be sent to
+            List<string> emails = new List<string> { employee.Email, manager.Email };
+
+            foreach (var subrequest in model.SubRequests)
+            {
+                _headerReqService.InsertVacHeaderReq(model);
+
+
+                int idRequest = _subReqService.GetHeaderRequest(model);
+
+
+                _subReqService.InsertSubrequest(idRequest, subrequest);
+
+                _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+
+
+                _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
+
+            }
+
+            return true;
 
         }
 
@@ -705,7 +752,7 @@ namespace PES.Controllers
 			newRequest.VacationDays = currentEmployee.Freedays;
 			newRequest.FirstName = currentEmployee.FirstName;
 			newRequest.LastName = currentEmployee.LastName;
-            newRequest.TypeRequest = 1;
+            newRequest.TypeRequest = 5;
 			newRequest.SubRequests = new List<SubrequestInfoVM>()
 			{
 				new SubrequestInfoVM

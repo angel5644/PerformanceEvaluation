@@ -254,6 +254,14 @@ namespace PES.Services
                     {
                         command.Parameters.Add(new OracleParameter("Title", "PATERNITY: " + InsertNewRequest.Title));
                     }
+                    else if(InsertNewRequest.TypeRequest == 5)
+                    {
+                        command.Parameters.Add(new OracleParameter("Title", "AR: " + InsertNewRequest.Title));
+                    }
+                    else if(InsertNewRequest.TypeRequest == 6)
+                    {
+                        command.Parameters.Add(new OracleParameter("Title", "HR: " + InsertNewRequest.Title));
+                    }
                     else
                     {
                         command.Parameters.Add(new OracleParameter("Title", InsertNewRequest.Title));
