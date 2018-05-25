@@ -54,6 +54,30 @@
     margin-bottom: 30px;
 }
 
+.ContenedorColorBlanco {
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorRojoF {
+    height: 25px;
+    width: 25px;
+    background-color: #C10A0A;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorAzulF {
+    height: 25px;
+    width: 25px;
+    background-color: #0A49C1;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
 .ContenedorColorAzul {
     height: 25px;
     width: 25px;
