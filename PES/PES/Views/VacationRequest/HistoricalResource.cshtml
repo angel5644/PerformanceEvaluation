@@ -119,9 +119,7 @@
                             <tr>
                                 @if (profileId == Convert.ToInt32(ProfileUser.Manager))
                                 {
-                                    if (headerVM.Title.Contains("EMERGENCY:"))
-                                    {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
                                         <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
@@ -131,102 +129,59 @@
                                         <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    if (headerVM.Title.Contains("EMERGENCY:"))
+                                    {
+
                                         <td style="background-color:#F08080">Emergency Request</td>
 
                                     }
                                     else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
                                     {
 
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#7AD8DB">Unpaid and With Proyect</td>
 
 
                                     }
                                     else if (headerVM.Title.Contains("UNPAID:"))
                                     {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        
                                         <td style="background-color:#baffc9">Unpaid Request</td>
 
                                     }
                                     else if (headerVM.Title.Contains("FUNERAL:"))
                                     {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        
                                         <td style="background-color:#F08080">Emergency Request</td>
                                     }
 
                                     else if (headerVM.Title.Contains("PATERNITY:"))
                                     {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                        
                                         <td style="background-color:#F08080">Emergency Request</td>
                                     }
+                                    else if (headerVM.Title.Contains("AR:"))
+                                    {
 
+                                    <td style="background-color:#c9c9ff">Assigned Vacations</td>
+
+                                    }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                    {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                    }
 
                                     else if (headerVM.HaveProject == "True")
                                     {
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                       
                                         <td style="background-color:#ffdfba">Resource On Bench</td>
 
                                     }
                                     else
-                                    {
-
-                                        <td>@headerVM.FirstName @headerVM.LastName</td>
-
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                    {                                    
+                                        
                                         <td>Normal Request</td>
 
                                     }
@@ -235,10 +190,8 @@
                                 }
                                 else
                                 {
-                                    if (headerVM.Title.Contains("EMERGENCY:"))
-                                    {
 
-                                        <td>
+                                    <td>
                                             <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
                                                 @headerVM.Title
                                             </a>
@@ -247,22 +200,16 @@
                                         <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
                                         <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    if (headerVM.Title.Contains("EMERGENCY:"))
+                                    {
+                                        
                                         <td style="background-color:#F08080">Emergency Request</td>
 
                                     }
                                     else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
                                     {
 
-
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#7AD8DB">Unpaid and With Proyect</td>
 
 
@@ -270,79 +217,44 @@
                                     else if (headerVM.Title.Contains("UNPAID:"))
                                     {
 
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#baffc9">Unpaid Request</td>
 
                                     }
                                     else if (headerVM.Title.Contains("FUNERAL:"))
                                     {
 
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#F08080">Emergency Request</td>
                                     }
 
                                     else if (headerVM.Title.Contains("PATERNITY:"))
                                     {
 
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#F08080">Emergency Request</td>
+                                    }
+
+                                    else if (headerVM.Title.Contains("AR:"))
+                                    {
+
+                                    <td style="background-color:#c9c9ff">Assigned Vacations</td>
+
+                                    }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                    {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
                                     }
 
 
                                     else if (headerVM.HaveProject == "True")
                                     {
 
-
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td style="background-color:#ffdfba">Resource On Bench</td>
 
                                     }
                                     else
                                     {
 
-
-
-                                        <td>
-                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
-                                                @headerVM.Title
-                                            </a>
-                                        </td>
-                                        <td>@headerVM.NoVacDays</td>
-                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
-                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
                                         <td>Normal Request</td>
 
                                     }
@@ -424,6 +336,18 @@
                                     <td style="background-color:#baffc9">Unpaid Request</td>
 
                                 }
+                                else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assigned Vacations</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                }
                                 else if (headerVM.HaveProject == "True")
                                 {
                                     <td style="background-color:#ffdfba">Resource On Bench</td>
@@ -494,6 +418,18 @@
                                     <td style="background-color:#baffc9">Unpaid Request</td>
 
                                 }
+                                  else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assigned Vacations</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                }
                                 else if (headerVM.HaveProject == "True")
                                 {
                                     <td style="background-color:#ffdfba">Resource On Bench</td>
@@ -559,6 +495,18 @@
                                 {
 
                                     <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                }
+                               else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assigned Vacations</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
 
                                 }
                                 else if (headerVM.HaveProject == "True")
