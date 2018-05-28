@@ -963,8 +963,71 @@ namespace PES.Controllers
 
 		}
 
+        public JsonResult SendReminderEmailToAll()
+        {
+            //
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            List<Employee> listEmployeeFiltered = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
 
-		public JsonResult SendConfirmationHR(int userid,int VacationDays, string Sfechas)
+            // NOTE: add more attributes to the "var employeed" if you need them. 
+            foreach (var employ in listEmployee)
+            {
+                if (employ.Freedays != 0)
+                {
+                    var employeed = new Employee
+                    {
+                        EmployeeId = employ.EmployeeId,
+                        Freedays = employ.Freedays,
+                        FirstName = employ.FirstName,
+                        LastName = employ.LastName,
+                        Email = employ.Email,
+                        ReminderDate = employ.ReminderDate
+
+                    };
+
+                    listEmployeeFiltered.Add(employeed);
+                }
+            }
+            //
+            int numberOfItems = listEmployeeFiltered.Count;
+            int counterForEach = 0;
+            int counterFailureSend = 0;
+            foreach (var employ in listEmployeeFiltered)
+            {
+                Employee RemindedEmployee = new Employee();
+                RemindedEmployee = _employeeService.GetByID(employ.EmployeeId);
+                RemindedEmployee.ReminderDate = DateTime.Now;
+                //_employeeService.InsertReminderEmployee(RemindedEmployee);
+                _employeeService.UpdateEmployeeRemindedDate(RemindedEmployee);
+                int vacationDays = RemindedEmployee.Freedays;
+                string employeeEmail = RemindedEmployee.Email;
+                //this is the hardcoded message, this should be editable?. need to ask
+                string bodyEmail = "I have to remind you that you have " + vacationDays + " vacation days available, if you don't take them soon i might have to assign you vacations \nThis is not an automatic email, if you have any doubt feel free to ask me";
+
+                if ( _emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail))
+                {
+                    counterForEach++;
+                }
+                else
+                {
+                    counterFailureSend++;
+                }
+            }
+            if (numberOfItems == counterForEach)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
+        public JsonResult SendConfirmationHR(int userid,int VacationDays, string Sfechas)
 		{   
 			Employee RemindedEmployee = new Employee();
 			RemindedEmployee = _employeeService.GetByID(userid);

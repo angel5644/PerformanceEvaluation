@@ -17,6 +17,16 @@ $("#tableViewReminded .btn-send-reminder").on("click", function (e) {
     //$("#VaReEmail").modal();
 });
 
+
+$(".btn-send-reminder-all").on("click", function (e) {
+    e.stopPropagation();
+    sendedImailToAll();
+    $('.spinner').css('display', 'block');
+
+    //$("#VaReEmail").modal();
+});
+
+
 function sendedImail(id) {
     $.ajax({
         url: "/VacationRequest/SendReminderEmail",
@@ -30,6 +40,29 @@ function sendedImail(id) {
             } else {
                 $("#VaFailedEmail").modal();
             }           
+
+        })
+        .fail(function () {
+            $('.spinner').hide();
+
+            $("#VaFailedEmail").modal();
+        })
+        .always(function () { });
+}
+
+
+function sendedImailToAll() {
+    $.ajax({
+        url: "/VacationRequest/SendReminderEmailToAll",
+    })
+        .done(function (data) {
+            $('.spinner').hide();
+
+            if (data) {
+                $("#VaReEmailAll").modal();
+            } else {
+                $("#VaFailedEmail").modal();
+            }
 
         })
         .fail(function () {

@@ -19,6 +19,10 @@
     </div>
 </div>
 
+<button style="margin-bottom:15px;" class="btn btn-lg btn-default btn-send-reminder-all">Send Reminder Email to All</button>
+
+
+
 <table id="tableViewReminded" border="1" class="table table-striped">
     <thead>
         <tr>
@@ -33,18 +37,18 @@
 
         @foreach (var item in Model)
         {
-           
-
-        <tr>
-            <td>  @item.Freedays</td>
-            <td> @item.FirstName @item.LastName </td>
-            <td>
-                <button id="@item.EmployeeId" class="btn btn-lg btn-default btn-block btn-send-reminder"> Send Reminder </button>
-            </td>
-            <td>  @item.ReminderDate</td>
 
 
-        </tr>
+            <tr>
+                <td>  @item.Freedays</td>
+                <td> @item.FirstName @item.LastName </td>
+                <td>
+                    <button id="@item.EmployeeId" class="btn btn-lg btn-default btn-block btn-send-reminder"> Send Reminder </button>
+                </td>
+                <td>  @item.ReminderDate</td>
+
+
+            </tr>
 
         }
     </tbody>
@@ -52,7 +56,7 @@
 
 
 
-<!--succesfully send mail modal-->>
+<!--succesfully send mail modal-->
 <div class="modal fade" id="VaReEmail" role="dialog">
     <div class="modal-dialog">
 
@@ -76,7 +80,31 @@
     </div>
 </div>
 <!--Documentar en caso de no acabar--------------------------------------------------------->
-<!--failure to send mail modal-->>
+<!--succesfully send mail modal-->
+<div class="modal fade" id="VaReEmailAll" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Emails sent</b></p>
+                <br />
+                <p ALIGN=center>All The Emails Where Sent</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Documentar en caso de no acabar--------------------------------------------------------->
+<!--failure to send mail modal-->
 <div class="modal fade" id="VaFailedEmail" role="dialog">
     <div class="modal-dialog">
 
