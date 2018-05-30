@@ -1034,7 +1034,7 @@ namespace PES.Controllers
 
 		}
 
-        public JsonResult SendReminderEmailToAll()
+        public JsonResult SendReminderEmailToAll(int number)
         {
             //
             IEnumerable<Employee> listEmployee = new List<Employee>();
@@ -1044,7 +1044,7 @@ namespace PES.Controllers
             // NOTE: add more attributes to the "var employeed" if you need them. 
             foreach (var employ in listEmployee)
             {
-                if (employ.Freedays != 0)
+                if (employ.Freedays == number)
                 {
                     var employeed = new Employee
                     {

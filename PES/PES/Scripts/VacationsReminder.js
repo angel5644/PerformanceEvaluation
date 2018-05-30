@@ -34,6 +34,7 @@ $("#buttomSearchVacations").on("click", function (e) {
         })
         .fail(function () {
             $('.spinner').hide();
+            console.log("fail");
 
 
         })
@@ -44,6 +45,9 @@ $("#buttomSearchVacations").on("click", function (e) {
 
 
 $("#resetButtomTable").on("click", function (e) {
+
+    $("#numberFilterTexBox").val("");
+
     $('.spinner').css('display', 'block');
     $.ajax({
         url: "/VacationRequest/ResetVacationRemainder",
@@ -116,6 +120,7 @@ function sendedImail(id) {
                                 "orderable": false
                             }]
                         });
+                        $("#numberFilterTexBox").val("");
                     })
                     .fail(function () {
 
@@ -139,8 +144,10 @@ function sendedImail(id) {
 
 
 function sendedImailToAll() {
+    var numberFT = $("#numberFilterTexBox").val();
     $.ajax({
         url: "/VacationRequest/SendReminderEmailToAll",
+        data: { number: numberFT }
     })
         .done(function (data) {
             $('.spinner').hide();
@@ -163,7 +170,7 @@ function sendedImailToAll() {
                         });
 
 
-
+                        $("#numberFilterTexBox").val("");
                     })
                     .fail(function () {
 
