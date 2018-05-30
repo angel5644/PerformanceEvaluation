@@ -72,8 +72,9 @@ $("#resetButtomTable").on("click", function (e) {
 
 })
 
-$("#tableViewReminded .btn-send-reminder").on("click", function (e) {
+$("#magicDiv").on("click", "#tableViewReminded .btn-send-reminder", function (e) {
     e.stopPropagation();
+    
     var id = $(this).attr('id');
     sendedImail(id);
     $('.spinner').css('display', 'block');
@@ -83,7 +84,7 @@ $("#tableViewReminded .btn-send-reminder").on("click", function (e) {
    
 
 
-$(".btn-send-reminder-all").on("click", function (e) {
+$("#btn-send-reminder-all").on("click", function (e) {
     e.stopPropagation();
     sendedImailToAll();
     $('.spinner').css('display', 'block');
@@ -100,8 +101,29 @@ function sendedImail(id) {
         .done(function (data) {
             $('.spinner').hide();
 
-            if (data) {
+            if (data){
+
+                $.ajax({
+                    url: "/VacationRequest/ResetVacationRemainder",
+                    data: { testChar: true }
+                })
+                    .done(function (data) {
+                        $("#magicDiv").html(data);
+                        $("#tableViewReminded").DataTable({
+                            "order": [[0, "dec"]],
+                            "columnDefs": [{
+                                "targets": 2,
+                                "orderable": false
+                            }]
+                        });
+                    })
+                    .fail(function () {
+
+                    })
+                    .always(function () { });
+
                 $("#VaReEmail").modal();
+
             } else {
                 $("#VaFailedEmail").modal();
             }           
@@ -124,6 +146,35 @@ function sendedImailToAll() {
             $('.spinner').hide();
 
             if (data) {
+                //
+
+                $.ajax({
+                    url: "/VacationRequest/ResetVacationRemainder",
+                    data: { testChar: true }
+                })
+                    .done(function (data) {
+                        $("#magicDiv").html(data);
+                        $("#tableViewReminded").DataTable({
+                            "order": [[0, "dec"]],
+                            "columnDefs": [{
+                                "targets": 2,
+                                "orderable": false
+                            }]
+                        });
+
+
+
+                    })
+                    .fail(function () {
+
+
+                    })
+                    .always(function () { });
+
+                //
+
+
+
                 $("#VaReEmailAll").modal();
             } else {
                 $("#VaFailedEmail").modal();
