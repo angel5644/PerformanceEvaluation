@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<PES.Models.Employee>
+@using PES.ViewModels
 @using PES.Models
 @{
+    /**/
+
     ViewBag.Title = "VacationsReminder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -19,41 +22,57 @@
     </div>
 </div>
 
-<button style="margin-bottom:15px;" class="btn btn-lg btn-default btn-send-reminder-all">Send Reminder Email to All</button>
+<div id="magicDiv">
+    @Html.Partial("~/Views/Shared/_TableVacationRemainder.cshtml")
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="background-color: #7e807e; padding-top: 10px; box-shadow: 0 8px 6px -6px black; border-radius: 10px;">
+            <div class="row">
+                <div class="col-md-6" style="margin-bottom: 10px;">
+                    <input type="email" class="form-control" id="numberFilterTexBox" aria-describedby="emailHelp" placeholder="Search vacations">
+                </div>
+
+                <div class="col-md-3">
+                    <button id="buttomSearchVacations" type="button" class="btn btn-primary">Search</button>
+                </div>
+                <div class="col-md-3">
+                    <button id="resetButtomTable" type="button" class="btn btn-primary">Reset</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-<table id="tableViewReminded" border="1" class="table table-striped">
-    <thead>
-        <tr>
+@*@using (Html.BeginForm("VacationsReminderFilter", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" style="background-color: #7e807e; padding-top: 10px; box-shadow: 0 8px 6px -6px black;">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-6 col-form-label" style="padding-top:5px;">Search by vacations</label>
+                                <div class="col-md-3">
+                                    <input id="testChar" name="testChar" type="text" />
+                                </div>
+                            </div>
+                        </div>
 
-            <th> Vacation Days</th>
-            <th>Emploeyee Name</th>
-            <th>Send email Reminder</th>
-            <th>Last Reminder Date</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-
-
-            <tr>
-                <td>  @item.Freedays</td>
-                <td> @item.FirstName @item.LastName </td>
-                <td>
-                    <button id="@item.EmployeeId" class="btn btn-lg btn-default btn-block btn-send-reminder"> Send Reminder </button>
-                </td>
-                <td>  @item.ReminderDate</td>
-
-
-            </tr>
-
-        }
-    </tbody>
-</table>
-
+                        <div class="col-md-3">
+                            <input id="submit1" type="submit" value="Count" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }*@
 
 
 <!--succesfully send mail modal-->

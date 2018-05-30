@@ -940,7 +940,78 @@ namespace PES.Controllers
 			return View(listEmployeeFiltered);
 		}
 
-		public JsonResult SendReminderEmail(int userid)
+
+        [HttpGet]
+        public ActionResult VacationsReminderFilter(int testChar)
+        {
+
+
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            List<Employee> listEmployeeFiltered = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            // NOTE: add more attributes to the "var employeed" if you need them. 
+            foreach (var employ in listEmployee)
+            {
+                if (employ.Freedays == testChar)
+                {
+                    var employeed = new Employee
+                    {
+                        EmployeeId = employ.EmployeeId,
+                        Freedays = employ.Freedays,
+                        FirstName = employ.FirstName,
+                        LastName = employ.LastName,
+                        Email = employ.Email,
+                        ReminderDate = employ.ReminderDate
+
+                    };
+
+                    listEmployeeFiltered.Add(employeed);
+                }
+            }
+
+
+            return PartialView("~/Views/Shared/_TableVacationRemainder.cshtml", listEmployeeFiltered);
+
+        }
+
+
+
+        [HttpGet]
+        public ActionResult ResetVacationRemainder(bool testChar)
+        {
+
+
+            IEnumerable<Employee> listEmployee = new List<Employee>();
+            List<Employee> listEmployeeFiltered = new List<Employee>();
+            listEmployee = _employeeService.GetAll();
+
+            // NOTE: add more attributes to the "var employeed" if you need them. 
+            foreach (var employ in listEmployee)
+            {
+                if (employ.Freedays != 0)
+                {
+                    var employeed = new Employee
+                    {
+                        EmployeeId = employ.EmployeeId,
+                        Freedays = employ.Freedays,
+                        FirstName = employ.FirstName,
+                        LastName = employ.LastName,
+                        Email = employ.Email,
+                        ReminderDate = employ.ReminderDate
+
+                    };
+
+                    listEmployeeFiltered.Add(employeed);
+                }
+            }
+
+
+            return PartialView("~/Views/Shared/_TableVacationRemainder.cshtml", listEmployeeFiltered);
+
+        }
+
+        public JsonResult SendReminderEmail(int userid)
 		{
 
             
@@ -1180,6 +1251,8 @@ namespace PES.Controllers
 			//Date confirm
 			return Json( flag , JsonRequestBehavior.AllowGet);
 		}
+
+
 
 		[HttpGet]
 		public JsonResult ValidateSameMonth(DateTime start, DateTime end,  bool flag)

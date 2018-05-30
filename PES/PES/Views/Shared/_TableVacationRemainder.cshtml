@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PES.Models.Employee>
+
+
+<table id="tableViewReminded" border="1" class="table table-striped">
+    <thead>
+        <tr>
+
+            <th> Vacation Days</th>
+            <th>Emploeyee Name</th>
+            <th>Send email Reminder</th>
+            <th>Last Reminder Date</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>  @item.Freedays</td>
+                <td> @item.FirstName @item.LastName </td>
+                <td>
+                    <button id="@item.EmployeeId" class="btn btn-lg btn-default btn-block btn-send-reminder"> Send Reminder </button>
+                </td>
+                <td>  @item.ReminderDate</td>
+
+
+            </tr>
+
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th> Vacation Days</th>
+            <th>Emploeyee Name</th>
+            <th>Send email Reminder</th>
+            <th>Last Reminder Date</th>
+        </tr>
+    </tfoot>
+</table>

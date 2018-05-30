@@ -172,6 +172,7 @@
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="Services\ResendRequestService.cs" />
     <Compile Include="ViewModels\AssignVacationsViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\FechaViewModel.cs" />
     <Compile Include="ViewModels\ManagerInsertNewRequestViewModel.cs" />
     <Compile Include="ViewModels\SendRequestViewModel.cs" />
@@ -551,6 +552,7 @@
     <Content Include="Views\VacationRequest\VacationsReminder.cshtml" />
     <Content Include="Views\VacationRequest\emergencyRequest.cshtml" />
     <Content Include="Views\Shared\_EmergencyRequestPartialView.cshtml" />
+    <Content Include="Views\Shared\_TableVacationRemainder.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
