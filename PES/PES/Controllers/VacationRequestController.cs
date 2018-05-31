@@ -120,8 +120,8 @@ namespace PES.Controllers
                     new SubrequestInfoVM
                     {
                         ListEmployee = listEmployees,
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(1)
+                        StartDate = DateTime.Now.AddDays(1),
+                        EndDate = DateTime.Now.AddDays(2)
                     }
                 };
                 ViewBag.NewRequest = userid;
@@ -168,8 +168,8 @@ namespace PES.Controllers
                 new SubrequestInfoVM
                 {
                     ListEmployee = listEmployees,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(1),
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(2),
                     HaveProject = false
                 }
             };
@@ -227,8 +227,8 @@ namespace PES.Controllers
                 new SubrequestInfoVM
                 {
                     ListEmployee = listEmployees,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(1),
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(2),
                     HaveProject = false
                 }
             };
@@ -757,8 +757,8 @@ namespace PES.Controllers
 			{
 				new SubrequestInfoVM
 				{
-					StartDate = DateTime.Now,
-					EndDate = DateTime.Now.AddDays(1),
+					StartDate = DateTime.Now.AddDays(1),
+					EndDate = DateTime.Now.AddDays(2),
 					HaveProject = true
 				}
 			};
