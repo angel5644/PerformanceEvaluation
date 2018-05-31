@@ -340,7 +340,7 @@ namespace PES.Controllers
                 string eYear = endDate.Substring(6, 4);
                 string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
                 //Sending Information to ViewModel.
-                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
+                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim()); // ATENTION PLEASE: THIS FAILS PLEACE FIX.
                 model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
 
             }
