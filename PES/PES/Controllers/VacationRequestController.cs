@@ -1301,7 +1301,7 @@ namespace PES.Controllers
 		public DateTime IsEndDayOfMonth(DateTime returnDate)
 		{
 		   
-			var returnDateVal = returnDate.AddDays(1);
+			var returnDateVal = returnDate.AddDays(0);
 			var finaldate = returnDate;
 			if(returnDateVal.Month != returnDate.Month)
 			{
@@ -1388,7 +1388,7 @@ namespace PES.Controllers
 			var eDate = end;
 			int i = 0;
 			DateTime[] date = new DateTime[100];
-			while( sDate.Day <= eDate.Day)
+			while( sDate.Day < eDate.Day)
 			{ 
 
 				date[i] = sDate;
