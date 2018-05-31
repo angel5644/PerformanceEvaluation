@@ -871,7 +871,7 @@ namespace PES.Controllers
 			}
 			else if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Resource))
 			{
-				listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByManagerId(123);
+                listHeaderReqDB = _headerReqService.GetGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
 			}
 			if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
 			{
