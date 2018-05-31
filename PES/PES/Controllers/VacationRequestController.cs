@@ -120,8 +120,8 @@ namespace PES.Controllers
                     new SubrequestInfoVM
                     {
                         ListEmployee = listEmployees,
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(1)
+                        StartDate = DateTime.Now.AddDays(1),
+                        EndDate = DateTime.Now.AddDays(2)
                     }
                 };
                 ViewBag.NewRequest = userid;
@@ -168,8 +168,8 @@ namespace PES.Controllers
                 new SubrequestInfoVM
                 {
                     ListEmployee = listEmployees,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(1),
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(2),
                     HaveProject = false
                 }
             };
@@ -227,8 +227,8 @@ namespace PES.Controllers
                 new SubrequestInfoVM
                 {
                     ListEmployee = listEmployees,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(1),
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(2),
                     HaveProject = false
                 }
             };
@@ -757,8 +757,8 @@ namespace PES.Controllers
 			{
 				new SubrequestInfoVM
 				{
-					StartDate = DateTime.Now,
-					EndDate = DateTime.Now.AddDays(1),
+					StartDate = DateTime.Now.AddDays(1),
+					EndDate = DateTime.Now.AddDays(2),
 					HaveProject = true
 				}
 			};
@@ -871,7 +871,7 @@ namespace PES.Controllers
 			}
 			else if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.Resource))
 			{
-				listHeaderReqDB = _headerReqService.GetAllGeneralVacationHeaderReqByManagerId(122);
+                listHeaderReqDB = _headerReqService.GetGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
 			}
 			if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
 			{
