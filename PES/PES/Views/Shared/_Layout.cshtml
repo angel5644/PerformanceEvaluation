@@ -59,13 +59,12 @@
                                     <li><a href="@Url.Action("Index", "Lateness")">My Lateness</a></li>
                                     <li><a href="@Url.Action("Index", "Holidays")">Holidays</a></li>
                                    
-                                    <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
-                                    <li><a href="@Url.Action("latenessMenu", "Menu")">Lateness Report</a></li>
+                                   
                                 }
                                 else
                                 {
                                     <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
-                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Request History</a></li>
                                     <li><a href="@Url.Action("Index", "Lateness")">Lateness Report</a></li>
                                 }
 
@@ -86,7 +85,7 @@
                                 {
                                     <li><a href="@Url.Action("VacationAssignation", "VacationRequest")">Assign Vacations</a></li>
                                     <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Vacations Reminder</a></li>
-                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Vacations</a></li>                                    
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Request History</a></li>                                    
                                 }
                                 else
                                 {
@@ -95,6 +94,25 @@
                                     <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 3})">Funeral Request</a></li>
                                     <li><a href="@Url.Action("SendIdNav", "VacationRequest", new { TypeRedirectRequest = 4})">Paternity Request</a></li>
                                 }
+
+                            </ul>
+                        </li>
+                    </ul>
+                }
+
+                
+                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Manager))
+                 {
+                    <ul class="nav navbar-nav" style="margin-top:10px">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">System Options<span class="caret"></span></a>
+                            <ul class="dropdown-menu text-center">
+                                @if (userProfile == ProfileUser.Manager)
+    {
+                            <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
+                            <li><a href="@Url.Action("latenessMenu", "Menu")">Lateness Report</a></li>
+}
+
 
                             </ul>
                         </li>
