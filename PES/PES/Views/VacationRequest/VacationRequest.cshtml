@@ -80,37 +80,39 @@
                 <div class="col-md-8">
                     <!--Approve Reason -->
 
-                    @Html.LabelFor(model => model.Comments, "Your Comments", new { @class = "control-label" })
+                    @Html.LabelFor(model => model.Comments, "Request Comments", new { @class = "control-label" })
                     @if (Model.status.ToLower() == "rejected")
-                {
-                    if (useProfile == (int)ProfileUser.Manager)
-                    {
-                        @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
-
-
-
-                }
-                else
-                {
-                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
-            }
-        }
-        else
+    {
+        if (useProfile == (int)ProfileUser.Manager)
         {
-            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+               //
+                @Html.LabelFor(model => model.ReplayComment, "Reject Comments From Human Resources", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
 
-    }
+
+}
+else
+{
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+}
+}
+else
+{
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+
+}
 
                     @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                     @if (Model.status.ToLower() == "canceled")
-                {
-                    @Html.LabelFor(model => model.ReplayComment, "Canceled commets ", new { @class = "control-label" })
-                    @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
-            }
+    {
+                @Html.LabelFor(model => model.ReplayComment, "Canceled commets ", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+}
                     @if (Model.status.ToLower() == "approved")
-        {
-            @Html.LabelFor(model => model.ReplayComment, "Aproval Comments From Human Resources ", new { @class = "control-label" })
-            @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+    {
+                @Html.LabelFor(model => model.ReplayComment, "Aproval Comments From Human Resources ", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
 }
                 </div>
 
