@@ -101,143 +101,83 @@ function statusColor() {
     }
 }
 
-function getDaysRequested() {
-    var total = 0;
-    var dates = '';
-    var start = null;
-    var end = null;
+
+$('#start').datepicker({
+    format: "mmm/d/yyyy",
+    autoclose: true,
+    todayHighlight: true
+});
+
+$('#End').datepicker({
+    format: "d/MM/yyyy",
+    autoclose: true,
+    todayHighlight: true
+});
 
 
-    $('.datesBox').each(function (i, input) {
-        dates = $(input).val();
-        if (dates != '') {
-            start = moment(dates.split(" - ")[0]).subtract(1, 'days');  //subtract a day to count the first day selected in calendar till the last
-            end = moment(dates.split(" - ")[1]);
+$(".valida-fecha").on("change", function () {
 
-            ValidateSameMonth(start , end );
-           
-        }
-    });
+    var Fecha1 = $("#start").val();
 
-}
+    var Fecha2 = $("#End").val();
 
-function ValidateSameMonth(start, end, count) {
+    var star = moment(Fecha1).add(-1, 'days');
+
+    var end = moment(Fecha2);
+
+    if (star != "" && end != "") {
+        SendInfo(star, end);
+
+    }
+    else {
+        alert("Llene los campos");
+    }
+});
+
+
+function SendInfo(start, end) {
     var sD = new Date(start);
     var eD = new Date(end);
-    var count = 0;
-    var flag = false;
 
     $.ajax({
-        url: "/VacationRequest/ValidateSameMonth",
-        data: { start: sD.toISOString(), end: eD.toISOString(), flag: flag }
+        url: "/VacationRequest/ValidationStarEndDatesHolidays",
+        data: { startDate: sD.toISOString(), endDate: eD.toISOString() }
     })
         .done(function (data) {
+            switch (data.errorType) {
+                case 1:
+                    $('.datesBox').val("invalided date");
+                    $("#OldDate").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    break;
+                case 2:
+                    $("#sameMonth").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    $("#returnDay").val(data.ReturnDate)
+                    $("#daysRequest").val(data.NumberDaysRequested)
+                    break;
+                case 3:
+                    $('.datesBox').val("invalided date");
+                    $("#EndDateLow").modal();
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    break;
+                case 0:
 
-            if (!data) {
+                    $("#daysReq").val(data.NumberDaysRequested);
+                    $("#returnDay").val(data.ReturnDate)
+                    $("#daysRequest").val(data.NumberDaysRequested)
+                    break;
 
-                $("#sameMonth").modal();
-                $("#daysReq").text("0");
-                $("#returnDay").val("");
-                $('.datesBox').val("invalided date");
-            } else {
-                ValidateStartDate(start, end, count);
             }
+
         })
         .fail(function () {
         })
         .always(function () { });
 }
 
-function ValidateStartDate(start, end,  count) {
-    var sD = new Date(start);
 
-    var flag = false;
 
-    $.ajax({
-        url: "/VacationRequest/ValidateStartDate",
-        data: { start: sD.toISOString(), flag: flag }
-    })
-        .done(function (data) {
-
-            if (!data) {
-
-                $("#OldDate").modal();
-                $("#daysReq").text("0");
-                $("#returnDay").val("");
-                $('.datesBox').val("invalided date");
-            } else {
-                CountHolidaysAndValidateDates(start, end, count);
-            }
-
-        })
-        .fail(function () {
-        })
-        .always(function () { });    
-}
-
-function CountHolidaysAndValidateDates(start, end, count) {
-    var sD = new Date(start);
-
-    var eD = new Date(end);
-
-        $.ajax({
-            url: "/VacationRequest/CountHolidaysAndValidateDates",
-            data: { start: sD.toISOString(), end: eD.toISOString(), count: count }
-        })
-            .done(function (data) {
-
-                $("#daysReq").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
-                $("#daysRequest").val(validateDaysRequested(getWorkableDays(start, end) - data, this));
-            })
-            .fail(function () {
-            })
-            .always(function () { });
-
-}
-
-function validateDaysRequested(daysReq, input) {
-    if ($('#daysVac').text() < daysReq) {
-        $(input).val('');
-        $("#modalNoEnoughDays").modal();
-        return 0;
-    }
-    else {
-        getReturnDate();
-        return daysReq;
-    }
-}
-
-function validateReturnDate(returnDate) {
-    $.ajax({
-        url: "/VacationRequest/ValidateResultDate",
-        data: { returnDate: returnDate.toISOString() }
-    })
-        .done(function (data) {
-
-            $("#returnDay").val(data.date);
-        })
-        .fail(function () {
-
-        })
-        .always(function () {});
-}
-
-function getReturnDate() {
-    //var returnDay = new Date();
-    var dates = '';
-    var endDate = null;
-    $('.datesBox').each(function (i, input) {
-        dates = $(input).val();
-        if (dates != '') {
-            endDate = moment(dates.split(" - ")[1]);
-        }
-    });
-    var returnDay = new Date(endDate);
-    //var finalReturnDay = new Date(returnDay.getDate() + 1);
-    //var finalDate = new Date();
-    //finalDate.setDate(returnDay.getDate() + 1);
-    validateReturnDate(returnDay);
-}
 
 function getSysdate() {
     var d = new Date();

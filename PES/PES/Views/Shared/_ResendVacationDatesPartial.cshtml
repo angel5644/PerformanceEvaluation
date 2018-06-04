@@ -4,15 +4,20 @@
 <div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
     <div id="subDatesGroup" class="form-group">
         <div id="datesCont">
+            
             <div class="col-sm-4 col-md-4 col-lg-4">
-                <label for="start">Start Date - End Date</label>
-                <input id="start" type="text" name="subRequest[0].Date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" value="@Model.StartDateResend.ToString("MM/dd/yyyy") - @Model.EndDateResend.ToString("MM/dd/yyyy")" />
+                <label>Start Date</label>
+                @Html.TextBoxFor(model => model.StartDateResend, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>End Date</label>
+                @Html.TextBoxFor(model => model.EndDateResend, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center" })
+            </div>
                 <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
-            </div>
-            <div class="col-md-3 col-lg-3">
-                <label>Return Date</label>
-                <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="@Model.ReturnDateResend.ToString("MM/dd/yyyy") " readonly />
-            </div>
+                <div class="col-md-3 col-lg-3">
+                    <label>Return Date</label>
+                    @Html.TextBoxFor(model => model.ReturnDateResend, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
+                </div>
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
     <div class="form-group">

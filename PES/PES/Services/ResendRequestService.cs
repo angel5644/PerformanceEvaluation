@@ -128,15 +128,11 @@ namespace PES.Services
                         command.Connection.Open();
                         foreach (var date in model)
                         {
-                            string returnDate = date.ReturnDate;
-                            string rMonth = returnDate.Substring(0, 2);
-                            string rDay = returnDate.Substring(3, 2);
-                            string rYear = returnDate.Substring(6, 4);
-                            string finalReturnDate = (rDay + "/" + rMonth + "/" + rYear);
+
 
                             command.Parameters.Add(new OracleParameter("NewSTART_DATE", date.StartDate));
                             command.Parameters.Add(new OracleParameter("NewEND_DATE", date.EndDate));
-                            command.Parameters.Add(new OracleParameter("NewRETURN_DATE", finalReturnDate));
+                            command.Parameters.Add(new OracleParameter("NewRETURN_DATE", Convert.ToDateTime(date.ReturnDate)));
                             command.Parameters.Add(new OracleParameter("NewHAVE_PROJECT", (date.HaveProject).ToString()));
                             command.Parameters.Add(new OracleParameter("NewLEAD_NAME", date.LeadName));
                             command.Parameters.Add(new OracleParameter("NewID_HEADER_REQ", idHeaderReq));

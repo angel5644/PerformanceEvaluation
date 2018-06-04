@@ -322,26 +322,15 @@ namespace PES.Controllers
             _resendRequestService.UpdateResendRequestHeaderReq(model);
             //Obtain id header request inserted.
 
-            string[] StartAndEndate;
+        
 
             for (int i = 0; i < model.SubRequest.Count(); i++)
             {
-                StartAndEndate = model.SubRequest[i].Date.Split('-');
-                //Changing date format.
-                string startDate = StartAndEndate[0].Trim();
-                string month = startDate.Substring(0, 2);
-                string day = startDate.Substring(3, 2);
-                string year = startDate.Substring(6, 4);
-                string finalStarDate = (day + "/" + month + "/" + year);
-                //Changing date format.
-                string endDate = StartAndEndate[1].Trim();
-                string eMonth = endDate.Substring(0, 2);
-                string eDay = endDate.Substring(3, 2);
-                string eYear = endDate.Substring(6, 4);
-                string eFinalEndDate = (eDay + "/" + eMonth + "/" + eYear);
+
                 //Sending Information to ViewModel.
-                model.SubRequest[i].StartDate = Convert.ToDateTime(finalStarDate.Trim());
-                model.SubRequest[i].EndDate = Convert.ToDateTime(eFinalEndDate.Trim());
+                model.SubRequest[i].StartDate = model.StartDateResend;
+                model.SubRequest[i].EndDate = model.EndDateResend;
+                model.SubRequest[i].ReturnDate = Convert.ToString(model.ReturnDateResend);
 
             }
             //inserting sub request.
