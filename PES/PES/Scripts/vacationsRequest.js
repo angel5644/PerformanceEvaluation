@@ -145,10 +145,11 @@ function SendInfo(start, end) {
                     $("#daysReq").val(data.NumberDaysRequested);
                     break;
                 case 2:
-                    $("#sameMonth").modal();
                     $("#daysReq").val(data.NumberDaysRequested);
                     $("#returnDay").val(data.ReturnDate)
                     $("#daysRequest").val(data.NumberDaysRequested)
+                    var ubication = document.getElementById("bangaeFiveWeeks");
+                    ubication.style.visibility = 'visible';
                     break;
                 case 3:
                     $('.datesBox').val("invalided date");
@@ -160,6 +161,8 @@ function SendInfo(start, end) {
                     $("#daysReq").val(data.NumberDaysRequested);
                     $("#returnDay").val(data.ReturnDate)
                     $("#daysRequest").val(data.NumberDaysRequested)
+                    var ubication = document.getElementById("bangaeFiveWeeks");
+                    ubication.style.visibility = 'hidden';
                     break;
                    
             }

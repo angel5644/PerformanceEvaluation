@@ -18,11 +18,7 @@
                 <input id="returnDay" type="text" name="subRequest[0].ReturnDate" class="form-control returnBox" value="@Model.ReturnDate.ToString("MM/dd/yyyy") " @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" }) />
 
             </div>
-            <div class="col-sm-2 col-lg-4 col-md-5 col-lg-1">
-                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn addatebtn" @(Model.status.ToLower() == "rejected" && useProfile != (int)ProfileUser.Manager || Model.status == "New" && useProfile != (int)ProfileUser.Manager ? null : new { disabled = "disabled" })>
-                    Add Date
-                </button>
-            </div>
+
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
     <div id="subDatesGroup" class="form-group">
@@ -43,9 +39,7 @@
                 </label>
             </div>
 
-            <div class="removeBtn col-md-2 ">
-                <button onclick="removeDate(this)" type="button" class="btn btn-danger btn-block">Remove Date</button>
-            </div>
+      
         </div> <!-- container end -->
     </div> <!-- subform-group end -->
 </div>

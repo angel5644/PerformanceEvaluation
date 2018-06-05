@@ -13,7 +13,7 @@
         @if(useProfile == (int)ProfileUser.Manager)
         {
             <div class="page-header text-center">
-                <h1>Employee: @Model.FirstName @Model.LastName</h1>
+                <h1>Resource: @Model.FirstName @Model.LastName</h1>
             </div>
         }
         
@@ -66,13 +66,7 @@
         @Html.Partial("_VacationDatesPartial", Model)
         <!-- PARTIAL VIEW WITH REQUEST DATES -->
 
-        <div class="form-group">
-            <div class="container">
-                <div class="col-md-4">
-                    <span class="label label-warning">All vacations days must be in the same month</span>
-                </div>
-            </div>
-        </div>
+
 
         <div class="form-group">
             <div class="container flexEnd">

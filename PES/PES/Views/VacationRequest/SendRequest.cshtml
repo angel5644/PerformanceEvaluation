@@ -61,14 +61,6 @@
                         @Html.Partial("~/Views/Shared/_NewVacationDatesUnpaid.cshtml", subrequest)
                     }
 
-                    <!--Mensaje de alerta-->
-                    <div class="form-group">
-                        <div class="container">
-                            <div class="col-md-4">
-                                <span class="label label-warning">All vacations days must be in the same month</span>
-                            </div>
-                        </div>
-                    </div>
 
                     <!--Contenedor de comentarios, botones y boton para subir archivos-->
                     <div class="form-group">
@@ -337,7 +329,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                You don't have enough vacation days, your request will be divided in two parts
+                You don't have enough vacation days, your remainders days will taken like unpaid days
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

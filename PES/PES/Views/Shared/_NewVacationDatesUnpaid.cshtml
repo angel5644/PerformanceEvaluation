@@ -4,55 +4,59 @@
 
 @using (Html.BeginCollectionItem("SubRequests"))
 {
-    <div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
-        <div id="subDatesGroup" class="form-group">
-            <div id="datesCont">
-                <!--<div class="col-md-3 col-lg-3">
-                    <label>Return Date</label>
-                    <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="" readonly />
-                </div>-->
-                <div class="col-sm-4 col-md-4 col-lg-3">
-                    <label for="start">Start Date</label>
-                    @Html.TextBoxFor(model => model.StartDate, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
-                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
-                </div>
-                <div class="col-sm-4 col-md-4 col-lg-3">
-                    <label for="EndDateLabel">End Date</label>
-                    @Html.TextBoxFor(model => model.EndDate, "{0:MM/dd/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
-                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
-                </div>
-                <div class="col-sm-4 col-md-4 col-lg-3">
-                    <label for="returnDay">Return Date</label>
-                    @Html.TextBoxFor(model => model.ReturnDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
-                </div>
-                <div class="col-sm-2 col-md-2 col-lg-2">
-                    <button onclick="" type="button" class="btn btn-default addBtn addatebtn">
-                        Add Date
-                    </button>
-                </div>
+<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont">
+            <!--<div class="col-md-3 col-lg-3">
+                <label>Return Date</label>
+                <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="" readonly />
+            </div>-->
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="start">Start Date</label>
+                @Html.TextBoxFor(model => model.StartDate, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
+                @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
             </div>
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="EndDateLabel">End Date</label>
+                @Html.TextBoxFor(model => model.EndDate, "{0:MM/dd/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
+                @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-3">
+                <label for="returnDay">Return Date</label>
+                @Html.TextBoxFor(model => model.ReturnDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
+            </div>
+
+        </div>
+    </div>
+
+    <div id="bangaeFiveWeeks" class="row" style="visibility:hidden">
+        <div class="col-md-1">
+
         </div>
 
-        <div id="subDatesGroup" class="form-group">
-            <div id="datesCount">
-                <div id="leadName" class="col-md-4 col-lg-4">
-                    @*<label for="lead" class="control-label">Lead Name</label>*@
-                    @Html.LabelFor(m => m.SelectedEmployee, new { @class = "control-label" })
+        <span class="label label-danger">Start date sould be after five weeks</span>
+    </div>
 
-                    @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployee, new { style = "width: 200px;", @class = "MySelect2 leadBox", @id = "lead" })
-                    @*@Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })*@
-                </div>
-                <div id="checktext" class="col-sm-3 col-md-3 col-lg-3">
-                    <label id="checktext" class="text-left">
-                        @Html.CheckBoxFor(model => model.HaveProject, new { @class = "projectBox", @id = "haveProject" }) I do not have a project
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCount">
+            <div id="leadName" class="col-md-4 col-lg-4">
+                @*<label for="lead" class="control-label">Lead Name</label>*@
+                @Html.LabelFor(m => m.SelectedEmployee, new { @class = "control-label" })
 
-                    </label>
-                </div>
-                <div class="removeBtn col-md-1 hidden">
-                    <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
-                </div>
+                @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployee, new { style = "width: 200px;", @class = "MySelect2 leadBox", @id = "lead" })
+                @*@Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })*@
+            </div>
+            <div id="checktext" class="col-sm-3 col-md-3 col-lg-3">
+                <label id="checktext" class="text-left">
+                    @Html.CheckBoxFor(model => model.HaveProject, new { @class = "projectBox", @id = "haveProject" }) I do not have a project
+
+                </label>
+            </div>
+            <div class="removeBtn col-md-1 hidden">
+                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
             </div>
         </div>
     </div>
+</div>
 
 }

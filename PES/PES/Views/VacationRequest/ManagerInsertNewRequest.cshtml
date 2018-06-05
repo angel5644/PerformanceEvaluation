@@ -13,7 +13,7 @@
 </div>
 
 <div class="page-header text-center">
-    <h2>Employee: @Model.LastName @Model.FirstName</h2>
+    <h2>Resource: @Model.LastName @Model.FirstName</h2>
 </div>
 
 <!--Titulo donde marca el numero de dias-->
@@ -73,14 +73,7 @@
                         @Html.Partial("~/Views/Shared/_PartialManagerInsertRequest.cshtml", subrequest)
                     }
 
-                    <!--Mensaje de alerta-->
-                    <div class="form-group">
-                        <div class="container">
-                            <div class="col-md-4">
-                                <span class="label label-warning">All vacations days must be in the same month</span>
-                            </div>
-                        </div>
-                    </div>
+                  
 
                     <!--Contenedor de comentarios, botones y boton para subir archivos-->
                     <div class="form-group">
