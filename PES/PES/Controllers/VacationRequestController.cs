@@ -1099,7 +1099,7 @@ namespace PES.Controllers
 
 			string bodyEmail = "An employee has solicited vacations, can you please confirm me your aproval or rejection please. this is his information:\n" +
 				"\n" +
-				"Complete Name: " + wholeName + "\n" +
+				"Full Name: " + wholeName + "\n" +
 				"Location: " + locationName + "\n" +
 				"Client: " + employeeClient + "\n" +
 				"Dates Requested: " + Sfechas + "\n" +

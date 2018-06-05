@@ -67,7 +67,7 @@
                             <div class="col-md-4 text-center" style=" margin-top: 40px;">
                                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
                                 <br />
-                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#ResendReqModal">Resend Request</button>
+                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="submit" class="btn btn-lg btn-primary btn-block" >Resend Request</button>
                                 @Html.Partial("_ModalResendRequestPartial")
                             </div>
                         </div> <!-- container end -->
