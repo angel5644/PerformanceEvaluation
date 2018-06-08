@@ -1065,7 +1065,7 @@ namespace PES.Controllers
                 //this is the hardcoded message, this should be editable?. need to ask
                 string bodyEmail = "I have to remind you that you have " + vacationDays + " vacation days available, if you don't take them soon i might have to assign you vacations \nThis is not an automatic email, if you have any doubt feel free to ask me";
 
-                if ( _emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From HR", bodyEmail))
+                if ( _emailInsertNewRequestService.SendEmail(employeeEmail, "Reminder From The Resource Manager", bodyEmail))
                 {
                     counterForEach++;
                 }
