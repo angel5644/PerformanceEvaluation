@@ -1,0 +1,104 @@
+﻿@model PES.Models.UploadFileViewModel
+@{
+    ViewBag.Title = "Upload Performance File";
+}
+
+<hr />
+<div class="well">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Upload Performance File</h2>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UploadFile", "PerformanceEvaluation", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data", @id = "UploadForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.Replace, new { @id = "Replace", @name = "Replace"})
+                        @Html.Label("selectedYear", "Evaluation Year", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                                @Html.DropDownListFor(m => m.SelectedYear, Model.ListYears, new { @class = "inlined form-control", @style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.SelectedYear, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("selectedPeriod", "Period", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6"> 
+                            @Html.DropDownListFor(m => m.SelectedPeriod, Model.PeriodList, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.ValidationMessageFor(m => m.SelectedPeriod, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("fileUploaded", "Performance File", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            <input type="file" style="width:100%;" name="fileUploaded" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("SelectedEmployee", "Employee", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployees, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("SelectedEvaluator", "Evaluator", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.SelectedEvaluator, Model.ListAllEmployees, new { @class = "inlined form-control ", @style = "width:100%" })
+                            @Html.ValidationMessageFor(m => m.SelectedEvaluator, "", new { @class = "text-danger" })
+                        </div>
+                        @*<input class="btn btn-info" id="btnVerify" value="Verify" />*@
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="button" class="btn btn-primary" id="btnVerify" value="Upload File" />
+                            @*<input type="submit" id="loadFile" value="Load File" class="btn btn-primary" />*@
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>   
+</div>
+
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+
+    <style type="text/css">
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/select2.min.js")
+    @Scripts.Render("~/Scripts/verifyPE.js")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#SelectedEmployee").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+
+            $("#SelectedEvaluator").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for evaluator",
+            });
+        });
+    </script>
+}

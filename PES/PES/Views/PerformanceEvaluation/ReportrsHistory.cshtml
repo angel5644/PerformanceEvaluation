@@ -1,0 +1,151 @@
+﻿@model PES.ViewModels.PerformanceFilesPartial
+
+<div class="row text-center">
+        <div class="col-md-12">
+            <h2>Periods Historical Information</h2>
+        </div>
+    </div>
+    <hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-horizontal">
+            <div class="form-group col-md-4">
+                @Html.Hidden("CurrentProfile", Model.currentUser.ProfileId)
+                @Html.Label("Year")
+                @Html.DropDownListFor(model => model.SelectedYear, Model.ListYear, new { @class = "inlined form-control", @style = "width:100%" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.Label("Period")
+                @Html.DropDownListFor(model => model.SelectedPeriod, Model.ListPeriods, new { @class = "inlined form-control", @style = "width:100%" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="performancePartialPeriods">
+            @Html.Partial("_PerformanceFilesPeriodsPartial")
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+    @Scripts.Render("~/Scripts/utilities.js")
+    @Scripts.Render("~/Scripts/history-report.js")
+
+    <script type="text/javascript">
+        var listPerformances = [];
+        var currentProfile = $("#CurrentProfile");
+        var optionValue;
+        if (currentProfile == 3) {
+            orderValue = 6;
+        }
+        else {
+            orderValue = 5;
+        }
+            $(document).ready(function () {
+                setupTable();
+            });
+
+            function setupTable() {
+                var tableOptions = {
+                    dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
+                    buttons: [
+                        'excel', 'pdf'],
+                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    pageLength: 10,
+                        order: [[orderValue, "desc"]],
+                };
+                $('#TableviewPeriods').DataTable(tableOptions);
+
+                @*$("#submitFilesChanges").click(function () {
+                    if (listPerformances.length > 0) {
+                        var data = {
+                            listPerformances: listPerformances
+                        };
+
+                        $.ajax({
+                            url: "@Url.Action("UpdateRank", "PerformanceEvaluation")",
+                            data: { listPerformances: listPerformances },
+                        dataType: 'html',
+                        type: 'POST'
+                    })
+                    .done(function (data) {
+                        if (data) {
+
+                            // Reload data
+                            $("#performancePartial").hide().html(data).fadeIn("slow");
+
+                            $('#Tableview').DataTable(tableOptions);
+                        }
+                    })
+                    .fail(function (jqxhr, textStatus, error) {
+                        alert("Error while saving changes. Please try again later.");
+                    })
+                    .always(function () {
+                        //alert("finished");
+                    });
+                }
+                });*@
+            }
+
+            function calculate(performanceId, element) {
+                // total1
+                var total1 = parseFloat($("#total1" + performanceId).text());
+                if ($(element).val() == "") {
+                    var rank = 1;
+                }
+                else {
+                    var rank = parseFloat($(element).val());
+                }
+                var t1Rank = total1 * rank;
+                t1Rank = Math.round(t1Rank * 100) / 100;
+
+                // Assign new value to t1Rank
+                $("#t1Rank" + performanceId).text(t1Rank);
+
+                // --[ Add performance to be eddited
+                var exists = false;
+                if (listPerformances && listPerformances.length > 0) {
+                    // Get performance ids
+                    var ids = listPerformances.map(function (p) {
+                        return p.performanceId;
+                    });
+
+                    // Check if already exists
+                    exists = ids.indexOf(performanceId) != -1;
+
+                    // If already exists
+                    if (exists) {
+                        // Get index of value to update
+                        var index = ids.indexOf(performanceId);
+                        // Update value
+                        listPerformances[index].rankValue = rank;
+                    }
+                }
+
+                // If does not exist yet
+                if (!exists) {
+                    // Create new performance to be updated
+                    var intId = parseInt(performanceId);
+                    var doubleRank = parseFloat(rank);
+                    var newPerformance = new PerformanceRankHelper(intId, doubleRank);
+                    // Add to the list
+                    listPerformances.push(newPerformance);
+                }
+                // --]
+            }
+    </script>
+}

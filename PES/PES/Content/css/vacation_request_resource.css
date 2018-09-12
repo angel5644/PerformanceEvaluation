@@ -1,0 +1,104 @@
+﻿#reqStatus {
+    vertical-align: middle;
+    min-height: 100%;
+}
+
+#vacationarea {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#requestarea {
+    padding-left: 0px;
+}
+
+#checktext {
+    font-weight: bold;
+}
+
+#checkarea {
+    padding-top: 0px;
+    padding-left: 10px;
+    margin-top: 40px;
+}
+
+#holidaytable {
+    color: red !important;
+}
+
+.flexEnd {
+    display: flex;
+    align-items:flex-end;
+}
+
+.flexCenter{
+    display: flex;
+    align-items: center;
+}
+
+.divisor {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.hidden{
+    display: none;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: normal;
+    color: black;
+    background-color: #ffffff;
+    display: inline-block;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+}
+
+.daysReq {
+    border-radius: 3px;
+    border: 0;
+    background-color: #a3a3a3;
+    margin: 0;
+    width: 23px;
+    height: 17px;
+    font-size: 10.5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+#my-file {
+    visibility: hidden;
+}
+
+.addatebtn {
+  margin-top: 1.8vw;
+}
+
+#datesGroup {
+    margin: 1vw;
+}

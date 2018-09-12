@@ -28,7 +28,7 @@ namespace PES.Models
         /// </summary>
         public string Comments { get; set; }
 
-        public int Calculation { get; set; }      
+        public double Calculation { get; set; }      
         
     }
 }

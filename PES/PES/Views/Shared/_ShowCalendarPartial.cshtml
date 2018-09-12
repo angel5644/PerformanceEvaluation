@@ -1,0 +1,37 @@
+﻿@model IEnumerable<PES.Models.Holiday>
+<!-- TABLE TO HOLIDAYS -->
+<div id="datesGroups">
+    <div id="datesGroup" class="form-group">
+        <div class="">
+            @if (Model.Count() == 0)
+    {
+            <span class="label label-danger etiquetavacaciones">No Holidays Available</span>
+    }
+    else
+    {
+
+        <table id="holidayTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Celebration</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var holiday in Model)
+                {
+                <tr>
+                    <td id="day">@holiday.Day.ToString("MM/dd/yyyy") </td><!--.ToString("MM/dd/yyyy")-->
+                    <td id="description">@holiday.Description</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+}
+
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,121 @@
+﻿@model PES.ViewModels.UpdateEmployeeViewModel
+@using PES.Models
+@{
+    ViewBag.Title = "Update employee";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12 well">
+        @using (Html.BeginForm("UpdateEmployee", "Employee", FormMethod.Post))
+        {
+@Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h3>Update employee information</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.EmployeeId)
+                @Html.Hidden("currentProfile", Model.SelectedProfile)
+                @Html.Hidden("currentManager", Model.SelectedManager)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "textemail form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.TextEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+                @if (Model.SelectedProfile == (int)ProfileUser.Resource)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%" })
+                            @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="dropdownManager">
+                            @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
+                                @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.SelectedProfile);
+                        @Html.HiddenFor(model => model.SelectedManager);
+                    </div>
+                }
+                <div class="form-group">
+                    <div>
+                        @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "locationLabel" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocation, new { @class = "inlined form-control", @style = "width:100%", @id = "dropdownLocation" })
+                            @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+        <div>
+            @Html.ActionLink("Back to List", "ViewEmployees") |
+            @if (Model.SelectedProfile != (int)ProfileUser.Resource)
+            {
+               @Html.ActionLink("Change Profile", "ChangeProfile", new { @email = Model.Email })
+            }
+        </div>
+
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+    @*<style type="text/css">
+        .textemail
+        {
+            text-align: right;
+        }
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>*@
+}
+@section Scripts{
+    @Scripts.Render("~/Scripts/update-change-validations.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/select2.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#selectedManager").select2({
+
+            });
+
+            $("#test").select2();
+        });
+    </script>*@
+}

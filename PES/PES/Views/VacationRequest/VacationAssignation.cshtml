@@ -1,0 +1,98 @@
+﻿
+@model PES.ViewModels.AssignVacationsViewModel
+
+
+@{
+    ViewBag.Title = "VacationAssignation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br /><br /> <br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-4"></div>
+
+            @using (Html.BeginForm("ManagerInsertNewRequest", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+            {
+                <div class="col-lg-4">
+
+                    <h2 class="text-center">Vacation Assignation</h2>
+                    <br />
+                    @*<label for="lead" class="control-label">Lead Name</label>*@
+                    @Html.LabelFor(m => m.SelectedEmployee, new { @class = "control-label", style = "padding-right: 10px" })
+
+                    @Html.DropDownListFor(m => m.SelectedEmployee, Model.ListEmployee, new { style = "width: 200px;", @class = "MySelect2 leadBox", @id = "lead" })
+                    @*@Html.TextBoxFor(model => model.LeadName, htmlAttributes: new { @class = "form-control leadBox", @id = "lead" })*@
+
+
+                    <br /><br /> <br />
+
+
+
+
+                    <input id="sendRequest2" type="button" class="btn btn-lg btn-primary btn-block bottonSelectEmploye" value="Select Employee" />
+
+
+                    @*@Html.Partial("_ModalInsertNewRequestPartial")*@
+                </div>
+            }
+
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+
+</div>
+
+<!--Documentar en caso de no acabar--------------------------------------------------------->
+<div class="modal fade" id="VaEmMa" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>This employe doesn't have vacations days</b></p>
+                <br />
+                <p ALIGN=center> Please select other employee </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Documentar en caso de no acabar--------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/select2.min.css")
+
+
+}
+
+@section Scripts
+{
+
+
+
+    @Scripts.Render("~/Scripts/select2.min.js")
+    @Scripts.Render("~/Scripts/VacationAssignation.js")
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+
+
+}

@@ -1,0 +1,117 @@
+﻿@model PES.ViewModels.InsertEmployeeViewModel
+@using PES.Models
+@using PES.Services
+@*@if (TempData["Error"] != null)
+    {
+        <p class="alert alert-danger">@TempData["Error"]</p>
+    }*@
+@{
+    ViewBag.Title = "Insert employee";
+    EmployeeService _employeeService = new EmployeeService();
+    //var currentUserProfile = (ProfileUser)Session["UserProfile"];
+    var currentEmoloyee = _employeeService.GetByEmail(Session["UserEmail"].ToString());
+}
+<hr />
+<div class="row">
+    <div class="col-md-12 well">
+
+        <h3>New Employee</h3>
+        @using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post))
+            {
+            <hr />
+                <div class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <fieldset>
+                        <div class="form-group">
+                            @Html.Hidden("CurrentUser", currentEmoloyee.EmployeeId, new { @id = "currentId"} )
+                            @Html.Hidden("CurrentUser", currentEmoloyee.ProfileId, new { @id = "currentProfile" })
+                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "textemail form-control" } })                          
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @*@Html.EditorFor(model => model.textEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })*@
+                            </div> 
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SelectedProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                                @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
+                            </div>
+                            <div id="dropdownManager">
+                                @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(m => m.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedManager" })
+                                    @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
+                                </div>
+                            </div>                           
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                @Html.LabelFor(model => model.SelectedLocation, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(m => m.SelectedLocation, Model.ListLocations, new { @class = "inlined form-control", @style = "width:100%" })
+                                    @Html.ValidationMessageFor(model => model.SelectedLocation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+        }
+
+
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "ViewEmployees")
+</div>
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+    @*<style type="text/css">
+        .textemail
+        {
+            text-align: right;
+        }
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>*@
+}
+@section Scripts{
+    @Scripts.Render("~/Scripts/location.js")
+    @Scripts.Render("~/Scripts/insert-validations.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/select2.min.js")
+
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $("#selectedManager").select2({
+
+                });
+            });
+    </script>*@
+}
+
+
+

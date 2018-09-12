@@ -1,0 +1,595 @@
+﻿@* View of the Historical Vacation Requests *@
+@model IEnumerable<PES.ViewModels.VacHeadReqViewModel>
+@using PES.Models
+@{
+    int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+    int freeDays = ViewBag.FreeDays != null ? (int)ViewBag.FreeDays : 0;
+    int profileId = ViewBag.profileId != null ? (int)ViewBag.profileId : 0;
+}
+<div class="row text-center">
+    <br />
+    <div class="col-md-12">
+        <h2>Vacation Request History </h2>
+    </div>
+</div>
+<div class="well">
+    <div id="freeDaysArea" class="text-right">
+        <label>
+            Available Days:
+            <span id="availableDays" class="label label-default">@freeDays</span>
+        </label>
+    </div>
+
+
+
+    <div class="buttomShowHideContent">
+        <button type="button" class="btn btn-secondary" id="show">Show Colors</button>
+        <button type="button" class="btn btn-secondary" id="hide">Hidde Colors</button>
+    </div>
+
+    <div class="container contenedorColores" id="item" hidden>
+        <div class="row">
+            <div class="col-md-1">
+                <div class="ContenedorColorNaranja"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Resource On Bench</div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="ContenedorColorVerde"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Unpaid Request</div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="ContenedorColorAzul"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Resource On Bench and Unpaid Request</div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="ContenedorColorRojo"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Emergency Request</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <div class="ContenedorColorAzulF"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Assignment request</div>
+            </div>
+            <div class="col-md-1">
+                <div class="ContenedorColorRojoF"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Hardbooked Request</div>
+            </div>
+            <div class="col-md-1">
+                <div class="ContenedorColorBlanco"></div>
+            </div>
+            <div class="col-md-2">
+                <div class="TextoColorVerde">Normal Request</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <ul class="nav nav-tabs" style="margin-bottom: 5px;">
+        <li class="active" id="pending-tab"><a data-toggle="tab" href="#pending" class="pending-tab">Pending</a></li>
+        <li id="rejected-tab"><a data-toggle="tab" href="#rejected" class="rejected-tab">Rejected</a></li>
+        <li id="approved-tab"><a data-toggle="tab" href="#approved" class="approved-tab">Approved</a></li>
+        <li id="canceled-tab"><a data-toggle="tab" href="#canceled" class="canceled-tab">Canceled</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="pending" class="tab-pane fade in active">
+            <table id="Tableview" border="1" class="table">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                        {
+                            <th>Name</th>
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                        <th id="header_req_type">Request Type</th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var headerVM in Model)
+                    {
+
+
+                        if (headerVM.status.ToLower() == "pending")
+                        {
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                        <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    if (headerVM.Title.Contains("EMERGENCY:"))
+                                    {
+
+                                        <td style="background-color:#F08080">Emergency Request</td>
+
+                                    }
+                                    else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                    {
+
+                                        <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+
+                                    }
+                                    else if (headerVM.Title.Contains("UNPAID:"))
+                                    {
+                                        
+                                        <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                    }
+                                    else if (headerVM.Title.Contains("FUNERAL:"))
+                                    {
+                                        
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                    }
+
+                                    else if (headerVM.Title.Contains("PATERNITY:"))
+                                    {
+                                        
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                    }
+                                    else if (headerVM.Title.Contains("AR:"))
+                                    {
+
+                                        <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                    }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                    {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                    }
+
+                                    else if (headerVM.HaveProject == "True")
+                                    {
+                                       
+                                        <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                    }
+                                    else
+                                    {                                    
+                                        
+                                        <td>Normal Request</td>
+
+                                    }
+
+
+                                }
+                                else
+                                {
+
+                                    <td>
+                                            <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId ,  } )">
+                                                @headerVM.Title
+                                            </a>
+                                        </td>
+                                        <td>@headerVM.NoVacDays</td>
+                                        <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                        <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                    if (headerVM.Title.Contains("EMERGENCY:"))
+                                    {
+                                        
+                                        <td style="background-color:#F08080">Emergency Request</td>
+
+                                    }
+                                    else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                    {
+
+                                        <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+
+                                    }
+                                    else if (headerVM.Title.Contains("UNPAID:"))
+                                    {
+
+                                        <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                    }
+                                    else if (headerVM.Title.Contains("FUNERAL:"))
+                                    {
+
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                    }
+
+                                    else if (headerVM.Title.Contains("PATERNITY:"))
+                                    {
+
+                                        <td style="background-color:#F08080">Emergency Request</td>
+                                    }
+
+                                    else if (headerVM.Title.Contains("AR:"))
+                                    {
+
+                                        <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                    }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                    {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                    }
+
+
+                                    else if (headerVM.HaveProject == "True")
+                                    {
+
+                                        <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                    }
+                                    else
+                                    {
+
+                                        <td>Normal Request</td>
+
+                                    }
+
+
+                                }
+
+
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="rejected" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == (int)ProfileUser.Manager)
+                        {
+                            <th>Name</th>
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                        <th id="header_req_type">Request Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "rejected")
+                        {
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
+                                <td>
+                                    @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                    {
+                                        <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                            @headerVM.Title
+
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("ResendRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId , userID  = headerVM.EmployeeId })">
+                                            @headerVM.Title
+
+                                        </a>
+                                    }
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+
+
+                                @if (headerVM.Title.Contains("EMERGENCY:"))
+                                {
+                                    <td style="background-color:#F08080">Emergency Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:"))
+                                {
+
+                                    <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                }
+                                else if (headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                }
+                                else
+                                {
+                                    <td>Normal Request</td>
+                                }
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="approved" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                        {
+                            <th>Name</th>
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                        <th id="header_req_type">Request Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "approved")
+                        {
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
+                                <td>
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                        @headerVM.Title
+
+                                    </a>
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+
+                                @if (headerVM.Title.Contains("EMERGENCY:"))
+                                {
+                                    <td style="background-color:#F08080">Emergency Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:"))
+                                {
+
+                                    <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                }
+                                else if (headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                }
+                                else
+                                {
+                                    <td>Normal Request</td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="canceled" class="tab-pane fade">
+            <table id="Tableview" border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                        {
+                            <th>Name</th>
+                        }
+                        <th id="header_title">Title</th>
+                        <th id="header_days">Days</th>
+                        <th id="header_start_date">Start Date</th>
+                        <th id="header_end_date">End Date</th>
+                        <th id="header_return_date">Return Date</th>
+                        <th id="header_req_type">Request Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var headerVM in Model)
+                    {
+                        if (headerVM.status.ToLower() == "canceled")
+                        {
+                            <tr>
+                                @if (profileId == Convert.ToInt32(ProfileUser.Manager))
+                                {
+                                    <td>@headerVM.FirstName @headerVM.LastName</td>
+                                }
+                                <td>
+                                    <a href="@Url.Action("GetVacationRequest", "VacationRequest", new { headerReqId = headerVM.VacationHeaderReqId })">
+                                        @headerVM.Title
+                                    </a>
+                                </td>
+                                <td>@headerVM.NoVacDays</td>
+                                <td>@headerVM.StartDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.EndDate.ToString("MM/dd/yyyy")</td>
+                                <td>@headerVM.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                @if (headerVM.Title.Contains("EMERGENCY:"))
+                                {
+                                    <td style="background-color:#F08080">Emergency Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:") && headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+                                }
+                                else if (headerVM.Title.Contains("UNPAID:"))
+                                {
+
+                                    <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                }
+                               else if (headerVM.Title.Contains("AR:"))
+                                {
+
+                                    <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                }
+                                  else if (headerVM.Title.Contains("HR:"))
+                                {
+
+                                    <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                }
+                                else if (headerVM.HaveProject == "True")
+                                {
+                                    <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                }
+                                else
+                                {
+                                    <td>Normal Request</td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a href="@Url.Action("SendRequest", "VacationRequest", new { userid = userID })" class="btn btn-lg btn-primary" id="newRequestButom" style="margin-bottom:20px;">New Request</a>
+
+                @if (freeDays == 0)
+        {
+            <span class="badge badge-danger" style="background-color: red !important; margin-top: -20px">You dont have vacations days</span>
+        }
+    </div>
+
+
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/enable-disable.js")
+    @Scripts.Render("~/Scripts/showEmployees.js")
+    @Scripts.Render("~/Scripts/historicalResource.js")
+
+}
+
+@section Styles {
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+    @Styles.Render("~/Content/css/historical-resource.css")
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+
+    <style type="text/css">
+        .line-through {
+            text-decoration: line-through;
+        }
+    </style>
+}
+
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="noVacationsDays" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>no vacations</b></p>
+                <br />
+                <p ALIGN=center> You dont have enouht vacations </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PES.ViewModels.EmployeeDetailsViewModel>
+@using PES.Models
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            @Html.Hidden("EmailUser", Session["UserEmail"])
+            @Html.ActionLink("Create New", "InsertEmployee")
+        </p>
+    </div>
+    <div class="pull-right"}>
+            
+        <input type="radio" name="showFilter" id="showEnables" value="enabled"> Show Enable  |  
+        <input type="radio" name="showFilter" id="showDisables" value="disabled"> Show Disable  |  
+        <input type="radio" name="showFilter" id="showBoth" value="both" checked> Show Both
+    </div>
+    <hr />
+    <div class="col-md-12">
+        <div class="well responsive" id="table-content">
+            @Html.Partial("_ViewEmployeesPartial")
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @*<script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>*@
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/enable-disable.js")
+    @Scripts.Render("~/Scripts/showEmployees.js")
+}
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+
+    <style type="text/css">
+        .line-through {
+            text-decoration: line-through;
+        }
+    </style>
+}

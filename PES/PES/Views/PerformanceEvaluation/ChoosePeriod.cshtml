@@ -1,0 +1,105 @@
+﻿@model IEnumerable<PES.Models.EmployeeChoosePeriodViewModel>
+@using PES.Models
+@{
+    ViewBag.Title = "Period";
+
+    string userName = ViewBag.UserName != null ? (string)ViewBag.UserName : "";
+    string userEmail = ViewBag.UserEmail != null ? (string)ViewBag.UserEmail : "";
+    int userID = ViewBag.UserID != null ? (int)ViewBag.UserID : 0;
+    int currentUserProfile = ViewBag.CurrentUserProfile != null ? (int)ViewBag.CurrentUserProfile : 1;
+}
+<hr/>
+<div class="row text-center">
+    <div class="col-md-12">
+        <h2>Performance Evaluation Files For:</h2>
+        <h3 class="text-center">@userName</h3>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <table id="Tableview" border="1" class="table table-striped">
+            <thead>
+                <tr>
+                    <th id="Header_Period">Period</th>
+                    <th id="Header_Year">Year</th>
+                    <th id="Header_Upload">Upload Date</th>
+                    <th id="Header_Performance">Performance Score</th>
+                    <th id="Header_Competences">Competences Score</th>
+                    <th id="Header_English">English Score</th>
+                    <th id="Header_Score">Final Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var scoreM in Model)
+                {
+                    if (userID == scoreM.employeeid)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("PEVisualization", "PerformanceEvaluation", new { peID = scoreM.pesid })">
+                                    
+                                    @{ 
+                                        @("Period " + scoreM.periodName.PeriodId + " (" + scoreM.periodName.Name + ")" )
+                                    }
+                                </a>
+                            </td>
+                            <td>@scoreM.evaluationYear</td>
+                            <td>@scoreM.period.ToShortDateString()</td>
+                            <td>@Math.Round(scoreM.totalPerforformance, 2)</td>
+                            <td>@Math.Round(scoreM.totalCompetences, 2)</td>
+                            <td>@Math.Round(scoreM.totalEnglish, 2)</td>
+                            <td>@Math.Round(scoreM.totalEvaluation, 2)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@if (currentUserProfile != (int)ProfileUser.Resource)
+{
+    <hr />
+    <div> 
+        @Html.ActionLink("Back to Performance Files", "SearchInformation", "PerformanceEvaluation")
+    </div>
+}
+<!--else if (currentUserProfile == (int)ProfileUser.Resource)
+{
+    <hr />
+    <div>
+        @Html.ActionLink("View Employee Details", "EmployeeDetails", "Employee", new { @email = userEmail }, null)       
+    </div>
+}-->
+
+@section Styles
+{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+}
+
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+    
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#Tableview').DataTable({
+            dom: '<"row"<"col-md-12"B>><"row"<"col-md-6"l><"col-md-6"f>>rtip',
+            buttons: [
+                'excel', 'pdf'],
+            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            pageLength: 25
+        });
+    });
+    </script>
+
+}

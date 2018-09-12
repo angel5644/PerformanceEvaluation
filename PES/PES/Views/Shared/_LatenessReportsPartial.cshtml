@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PES.Models.Lateness>
+@using PES.Models
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <div class="text-right">
+            Total Lateness: @Model.Count()
+        </div>
+        <div class="well">
+            @if (Model.Count() > 0)
+            {
+                <table id="Tableview" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width="45%">
+                                DATE
+                            </th>
+                            <th class="text-center" >
+                                TIME
+                            </th>
+                            <th class="text-center" width="22%">
+                                STATUS
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lateness in Model)
+                        {
+                            <tr> 
+                                <td width="40%">
+                                    @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
+                                </td>
+                                <td class="text-center">
+                                    @lateness.Date.ToString("hh:mm:ss tt")
+                                </td>
+                                <td class="text-center" width="25%">
+                                    @if (lateness.Status.Equals(1)){
+                                       <label style="color:darkgreen">Justified</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:indianred;">Delay</label>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                @if (ViewBag.period == null)
+                                {
+                                    <label>YOU DON'T HAVE ANY LATENESS FOR TODAY.</label>
+                                }
+                                else
+                                {
+                                    <label>YOU DON'T HAVE ANY LATENESS FOR @ViewBag.period.</label>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        
+        <div id="container" style="height: 400px; margin: 0 auto"></div>
+    </div>
+</div>

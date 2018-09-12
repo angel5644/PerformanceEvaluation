@@ -1,0 +1,77 @@
+﻿@model IEnumerable<PES.ViewModels.EmployeeDetailsViewModel>
+@using PES.Models;
+@{
+    ViewBag.Title = "ViewEmployeesPartial";
+}
+  
+
+<table class="table" id="table-employees">
+    <thead>
+        <tr>
+            <th class="disableTextDecoration">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th class="disableTextDecoration">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th class="disableTextDecoration">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th class="disableTextDecoration">
+                Profile
+            </th>
+            <th class="disableTextDecoration">
+                Manager
+            </th>
+            <th class="disableTextDecoration">
+                Location
+            </th>
+            <th class="disableTextDecoration">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @Html.Hidden("Id" + item.EmployeeId, item.EmployeeId)
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @(item.Profile.Name)
+                </td>
+                @if (item.ProfileId == (int)ProfileUser.Director)
+            {
+                    <td class="@(item.EndDate != null ? "line-through" : "")">
+                        @(item.FirstName + " " + item.LastName)
+                    </td>
+                }
+                else
+                {
+                    <td class="@(item.EndDate != null ? "line-through" : "")">
+                        @(item.Manager.FirstName + " " + item.Manager.LastName)
+                    </td>
+                }
+                <td class="@(item.EndDate != null ? "line-through" : "")">
+                    @(item.Location.Name)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, new { @class = "edit-button"}) |*@                    
+                    <a href=@(item.EndDate != null ? "#" : "UpdateEmployee/" + item.EmployeeId.ToString() ) class="edit-button glyphicon glyphicon-edit" title="Edit"></a> |
+                    @Html.ActionLink(" ", "EmployeeDetails", "Employee", new { email = item.Email }, new { @class = "glyphicon glyphicon-list-alt", @title = "Details" }) |
+                    <a href="#" onclick="enableDisable(@item.EmployeeId);" class="enableDisable glyphicon @(item.EndDate != null ? "glyphicon-eye-open" : "glyphicon-eye-close")" data-employee-id="@item.EmployeeId" data-option="@(item.EndDate != null ? "enable" : "disable")" title="@(item.EndDate != null ? "Enable" : "Disable")">@(item.EndDate != null ? " " : " ")</a> |
+                    @Html.ActionLink(" ", "ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = item.Email, employeeID = item.EmployeeId }, new { @class = "glyphicon glyphicon-file", @title = "Performance Evaluations"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

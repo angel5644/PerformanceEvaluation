@@ -1,0 +1,48 @@
+﻿@model PES.ViewModels.InsertNewRequestViewModel 
+
+@* Partial view to Get all vacation periods of a NEW VACATION REQUEST*@
+<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label for="start">Start Date - End Date</label>
+                <input id="start" type="text" name="subRequest[0].Date" class="form-control text-center datesBox daterange" data-val="true" data-val-required="Start date is required" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <label>Return Date</label>
+                <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="" readonly />
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <button onclick="addDate(this)" type="button" class="btn btn-default addBtn addatebtn">
+                    Add Date
+                </button>
+            </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont">
+            <div id="leadName" class="col-md-4 col-lg-4">
+                <label for="lead" class="control-label">Lead Name</label>
+                <div>
+                    
+                    <input id="lead" type="text" name="subRequest[0].LeadName" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" disabled />
+
+                </div>
+                <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+            </div>
+            <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
+                <label id="checktext" class="text-left">
+                    @Html.CheckBoxFor(model => model.SubRequest[0].HaveProject, new { @class = "projectBox" , @id="haveProject"})  I do not have a project
+                    <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].unpaid" value="false" />
+
+                </label>
+            </div>
+
+            <div class="removeBtn col-md-1 hidden">
+                <button onclick="removeDate(this)" type="button" class="btn btn-danger">Remove Date</button>
+            </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+</div><!-- form-group end -->
+

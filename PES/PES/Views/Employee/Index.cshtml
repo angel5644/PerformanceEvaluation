@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PES.Models.Employee>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "InsertEmployee")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            Position
+        </th>
+        <th>
+            Id Profile
+        </th>
+        <th>
+            Id Manager
+        </th>
+        <th>
+            Hire Date
+        </th>
+        <th>
+            Ranking
+        </th>
+        <th>
+            End Date
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var employee in Model) {
+    <tr>
+        <td>
+            @employee.FirstName
+        </td>
+        <td>
+            @employee.LastName
+        </td>
+        <td>
+            @employee.Email
+        </td>
+        <td>
+            @employee.Customer
+        </td>
+        <td>
+            @employee.Position
+        </td>
+        <td>
+            @employee.ProfileId
+        </td>
+        <td>
+            @employee.ManagerId
+        </td>
+        @*<td>
+            @employee.HireDate
+        </td>*@
+        @*<td>
+            @employee.Ranking
+        </td>*@
+        <td>
+            @employee.EndDate
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=employee.EmployeeId }) |
+            @Html.ActionLink("Details", "Details", new { id=employee.EmployeeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=employee.EmployeeId })
+        </td>*@
+    </tr>
+}
+
+</table>

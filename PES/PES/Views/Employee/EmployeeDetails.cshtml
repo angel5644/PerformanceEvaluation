@@ -1,0 +1,115 @@
+﻿@model PES.ViewModels.EmployeeDetailsViewModel
+@using PES.Models;
+
+@{
+    ViewBag.Title = "Employee Details";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12 well">
+        <h3>Employee information</h3>
+            <hr />
+            <td class="dl-horizontal">
+                <dt>
+                    Name
+                </dt>
+            
+                <dd>
+                    @(Model.FirstName + " " + Model.LastName)
+                </dd>
+                <br />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <br />
+                <dt>
+                    Profile
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Profile.Name)
+                </dd>
+                <br />
+                @if (Model.ProfileId == (int)ProfileUser.Resource){
+                    <dd><strong>Manager</strong></dd>
+                }
+                else if (Model.ProfileId == (int)ProfileUser.Manager)
+                {
+                    <dd><strong>Director</strong></dd>
+                }
+                else
+                {
+                    <dd></dd>
+                }
+                @if (Model.ProfileId != (int)ProfileUser.Director)
+                {
+                    <dd>
+                        @(Model.Manager.FirstName + " " + Model.Manager.LastName)
+                    </dd>
+                }
+                <br />
+                @if (Model.ProfileId == (int)ProfileUser.Resource)
+                {
+                    <dt><strong>Director</strong></dt>
+                    <dd>
+                        @(Model.Director.FirstName + " " + Model.Director.LastName)
+                    </dd>
+                }
+                else
+                {
+                    <dt></dt>
+                    <dd></dd>
+                }
+                <br />
+                @if (Model.EndDate != null)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
+                }
+                else
+                {
+                    <dt hidden>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
+
+                    <dd hidden>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.Location)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Location.Name)
+                </dd>
+          </td>
+    </div>
+</div>
+        @if ((int)Session["UserProfile"] != (int)ProfileUser.Resource)
+        {
+            <p>
+               
+                @Html.ActionLink("Back to List", "ViewEmployees") |
+            
+                @if ((int)Session["UserProfile"] == (int)ProfileUser.Director)
+                {
+                    @Html.ActionLink("Edit", "UpdateEmployee", new { id = Model.EmployeeId})
+                }
+            </p>
+        }
+        else if ((int)Session["UserProfile"] == (int)ProfileUser.Resource)
+        {
+            <p>
+                @Html.ActionLink("Back to Performance Evaluations", "ChoosePeriod", "PerformanceEvaluation", new { @employeeEmail = Model.Email, @employeeID = Model.ProfileId }, null)
+            </p>
+        }

@@ -1,0 +1,34 @@
+﻿@using HtmlHelpers.BeginCollectionItem
+@model PES.ViewModels.SubrequestInfoVM
+
+@using (Html.BeginCollectionItem("SubRequests"))
+{
+    <div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+        <div id="subDatesGroup" class="form-group">
+            <div id="datesCont">
+                <!--<div class="col-md-3 col-lg-3">
+                    <label>Return Date</label>
+                    <input id="returnDay" type="text" class="form-control text-center returnbox" name="subrequest[0].ReturnDate" value="" readonly />
+                </div>-->
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <label for="start">Start Date</label>
+                    @Html.TextBoxFor(model => model.StartDate, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
+                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <label for="EndDateLabel">End Date</label>
+                    @Html.TextBoxFor(model => model.EndDate, "{0:MM/dd/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center datesBox" })
+                    @*Aqui hacen faltan las etiquetas para poder comprobar que la informacion es valida*@
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <label for="returnDay">Return Date</label>
+                    @Html.TextBoxFor(model => model.ReturnDate, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
+                </div>
+
+            </div>
+        </div>
+
+       
+    </div>
+
+}

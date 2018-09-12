@@ -6,9 +6,10 @@ using System.Web.Mvc;
 
 namespace PES.Controllers
 {
+   [AllowAnonymous]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public  ActionResult Index()
         {
             return View();
         }

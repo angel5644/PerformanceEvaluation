@@ -1,0 +1,107 @@
+﻿@model PES.Models.Holiday
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div>
+    <h2 class="page-header text-center"> Create Holiday</h2>
+
+</div>
+
+@using (Html.BeginForm("Create", "Holidays", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.InsertDay, "{0:MM/DD/YYYY}", new { @class = "date-picker form-control createFormInput", @required = "required" })
+                @Html.ValidationMessageFor(model => model.InsertDay, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control createFormInput" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary createFormSubmit"/>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="modal-Add-Holiday" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Well Done!</h2>
+            </div>
+            <div class="modal-body">
+                <h3>The new holiday was added.</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="@Url.Action("index", "Holidays")" class="btn btn-primary">  Go to List </a>
+                <a href="@Url.Action("Create", "Holidays")" class="btn btn-success" >  Add more </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+<script>
+    $(document).ready(function () {
+        //var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        $(".date-picker").datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+}
+
+@section Scripts
+{
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/holidays.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+}

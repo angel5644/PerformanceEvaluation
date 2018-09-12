@@ -1,0 +1,80 @@
+﻿@model PES.Models.Holiday
+
+@{
+    ViewBag.Title = "EditShow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header text-center">
+    <h1>Edit Holiday</h1>
+</div>
+
+@using (Html.BeginForm("Edit", "Holidays", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HolidayId)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.InsertDay, "{0:MM/dd/yyyy}", new { @class = "date-picker form-control createFormInput", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+               </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
+    <!-- Include jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+    <script>
+    $(document).ready(function () {
+        //var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        $(".date-picker").datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+    </script>
+
+    @section Styles
+{
+        @Styles.Render("~/Content/css/vacation_request_resource.css")
+        @Styles.Render("~/Content/themes/base/daterangepicker.css")
+    }
+
+    @section Scripts
+{
+        @Styles.Render("~/Content/themes/base/daterangepicker.css")
+        @Scripts.Render("~/Scripts/holidays.js")
+        @Scripts.Render("~/Scripts/vacationsRequest.js")
+        @Scripts.Render("~/Scripts/moment.js")
+        @Scripts.Render("~/Scripts/daterangepicker.js")
+    }

@@ -1,0 +1,180 @@
+﻿@* View to make a new vacation request *@
+@model PES.ViewModels.InsertNewRequestViewModel
+
+<div class="page-header text-center">
+    <h1>New Vacation Request</h1>
+</div>
+<div class="row text-center">
+    <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4" style="margin: 1vw;">
+        <label>
+            Vacation Days:
+            <span id="daysVac" class="label label-default">@Model.Freedays</span>
+        </label>
+    </div>
+    <div id="requestarea" class="col-sm-4 col-md-4 col-lg-4">
+        <label>
+            Days Requested:
+            <input id="daysReq" type="text" class="daysReq" value="0" readonly />
+        </label>
+    </div>
+    <div id="reqStatus" class="col-sm-4 col-md-4 col-lg-4">
+        <label class="">
+            Request Status:
+            <span class="label label-default" id="status">New</span>
+        </label>
+    </div>
+</div>
+<hr class="divisor" />
+<br />
+<div class="row">
+    <div class="col-md-9">
+        <div class="row">
+            <section>
+                @using (Html.BeginForm("InsertNewRequestData", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+                {
+                    @Html.HiddenFor(model => model.EmployeeId) // id
+                    <input id="daysRequest" name="daysReq" type="text" class="daysReq" value="" hidden />
+                    <div class="form-group">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-left:1vw;">
+                                    @Html.LabelFor(model => Model.Title, "Request Title", new { @class = "control-label col-form-label" })
+                                    <div>
+                                        @Html.EditorFor(model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+
+                    <!-- PARTIAL VIEW WITH REQUEST DATES -->
+
+                    @Html.Partial("~/Views/Shared/_NewVacationDatesPartial.cshtml", Model)
+
+
+                    <div class="form-group">
+                        <div class="container">
+                            <div class="col-md-4">
+                                <span class="label label-warning">All vacations days must be in the same month</span>
+                            </div>
+                        </div> <!-- container end -->
+                    </div><!-- form-group end -->
+                    <div class="form-group">
+                        <div class="container flexEnd">
+                            <div class="col-md-8">
+
+                                @Html.LabelFor(model => Model.Comments, "Comments:", new { @class = "control-label" })
+                                @Html.TextAreaFor(model => Model.Comments, htmlAttributes: new { @class = "form-control ", @style = "min-width:100%;" })
+                                <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                                <input type="button" id="my-button" value="Select Files">
+                                <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
+                                @Html.TextBoxFor(m => m.myFile, new { type = "file" })
+
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
+                                <br />
+                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#SendRequest">Send Request</button>
+                                @Html.Partial("_ModalInsertNewRequestPartial")
+                            </div>
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+                    @*</div>*@
+                }
+            </section>
+        </div>
+    </div>
+    <div class="col-md-3">
+        @Html.Partial("_ShowCalendarPartial", (List<PES.Models.Holiday>)ViewBag.MyHoliday)
+    </div>
+</div>
+
+@* Modal begins *@
+<div class="modal fade" id="modalNoEnoughDays" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">No Enough Days</h4>
+            </div>
+            <div class="modal-body">
+                <p>You don't have enough days available.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+@* Modal begins *@
+<div class="modal fade" id="OldDate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Date can not be a pass or present date</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+@* Modal begins *@
+<div class="modal fade" id="sameMonth" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Selected dates must be in the same month</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+@section Styles
+{
+
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+}
+
+@section Scripts
+{
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+
+  
+
+}

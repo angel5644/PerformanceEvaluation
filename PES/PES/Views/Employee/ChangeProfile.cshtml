@@ -1,0 +1,129 @@
+﻿@model PES.ViewModels.ChangeProfileViewModel   
+ @using PES.Models
+
+@{
+    ViewBag.Title = "View";
+}
+<hr />
+<div class="row">
+    <div class="col-md-12 well">
+        @using (Html.BeginForm("ChangeProfile", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h3>Change Profile</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Hidden("currentProfile", Model.SelectedProfile)
+                    @Html.Hidden("currentManager", Model.SelectedManager)
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @readonly= "readonly" }  })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.EditorFor(model => model.textEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                    @Html.LabelFor(model => model.CurrentProfile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-2">
+                        @Html.HiddenFor(model => model.CurrentProfile.ProfileId)
+                        @Html.EditorFor(model => model.CurrentProfile.Name, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("New Profile", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ListProfiles, new { @class = "inlined form-control", @style = "width:100%"})
+                        <a href="#" data-toggle="popover" title="Choose a new profile" data-content="Use this list to select a new profile and change your current one."><span class="glyphicon glyphicon-question-sign"></span></a>
+                        @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
+                    </div>
+                    <div id="dropdownManager">
+                        @Html.LabelFor(model => model.SelectedManager, htmlAttributes: new { @class = "control-label col-md-2", @id = "profileLabel" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.SelectedManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%" })
+                            <a href="#" data-toggle="popover" title="Choose a new manager/director" data-content="Use this list to choose a manager or a director depending on your new chosen profile."><span class="glyphicon glyphicon-question-sign"></span></a>
+                            @Html.ValidationMessageFor(model => model.SelectedManager, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div id="dropdownNewManager">
+                        @Html.Hidden("Assigned", Model.Assigned)
+                        @Html.LabelFor(model => model.NewManager, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(model => model.NewManager, Model.ListManagers, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedNewManager", @name = "selectedNewManager" })
+                            <a href="#" data-toggle="popover" title="Choose the new assigned employees manager" data-content="If you have assigned employees, use this list to choose a manager or a director to transfer them first so you can be able to change your profile."><span class="glyphicon glyphicon-question-sign"></span></a>
+                            @Html.ValidationMessageFor(model => model.NewManager, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "ViewEmployees")
+</div>
+
+
+@section Styles{
+    @Styles.Render("~/Content/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/css/select2.min.css")
+    <style type="text/css">
+        .select2-container--default .select2-dropdown--below .select2-search--dropdown .select2-search__field {
+            width: 100% !important;
+        }
+    </style>
+}
+@section Scripts{
+    @Scripts.Render("~/scripts/update-change-validations.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/new-manager-validations.js")
+   @* @Scripts.Render("~/Scripts/select2.min.js")*@
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#selectedManager").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+            $("#selectedNewManager").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+            $(".inlined form-control valid").select2({
+                multiple: false,
+                minimumInputLength: 0,
+                placeholder: "Search for resources",
+            });
+        });
+    </script>*@
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+}

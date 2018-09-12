@@ -1,0 +1,55 @@
+﻿@model PES.ViewModels.PEVisualizationViewModel
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_PerformanceMainPartial", Model.PerformanceMain)
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h3>Sections</h3>
+        <hr />
+        @Html.Partial("_SectionsPartial", Model.PerformanceSections)
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h3>Comments</h3>
+        <hr />
+        @Html.Partial("_CommentsPartial", Model.PerformanceComments)
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h3>Leading / Mentoring Skills</h3>
+        <hr />
+        @Html.Partial("_SkillsPartial", Model.PerformanceSkills)
+    </div>
+</div>
+
+@section Styles
+{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+}
+
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tableOptions = {
+                dom: '<"row"<"col-md-6"><"col-md-6"f>>rtip',
+                pageLength: -1
+            };
+            $('#TableSections').DataTable(tableOptions);
+            //$('#TableComments').DataTable(tableOptions);
+            $('#TableSkills').DataTable(tableOptions);
+        });
+    </script>
+}

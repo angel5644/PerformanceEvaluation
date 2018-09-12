@@ -1,0 +1,72 @@
+﻿@model PES.ViewModels.PerformanceFilesPartial
+@using PES.Models
+
+@if(Model.CountRankUpdated.HasValue)
+{
+    <p class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@Model.CountRankUpdated</strong> record(s) updated successfully.
+    </p>
+}
+<table id="Tableview" border="1" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+                 
+            <th>Employee</th>
+            <th class="col-md-2">Position</th>
+            @if (Model.CurrentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                <th>Manager</th>
+            }   
+            <th>Location</th>
+            <th>Final Score</th>
+            <th>English Score</th>
+            <th>Total 1</th>
+            @if (Model.CurrentUser.ProfileId == (int)ProfileUser.Director)
+            {
+                <th style="width: 5%">Rank</th>  
+                <th>T1 * Rank</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employeeM in Model.listFiles)
+        {
+            <tr>
+                <td><a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation", new { employeeEmail = employeeM.Employee.Email, employeeID = employeeM.Employee.EmployeeId })">@(employeeM.Employee.FirstName + " " + employeeM.Employee.LastName)</a></td>
+                <td>@(employeeM.Employee.Position)</td>
+                @if (Model.CurrentUser.ProfileId == (int)ProfileUser.Director)
+                {
+                    <td>@(employeeM.Manager.FirstName + " " + employeeM.Manager.LastName)</td>
+                }
+                <td>@employeeM.Location.Name</td>
+                @if (employeeM.LastPe != null)
+                {
+                    double total1 = Math.Round(employeeM.LastPe.Total + employeeM.LastPe.EnglishScore, 2);
+                    var calculation = Convert.ToDecimal((employeeM.LastPe.Rank.HasValue ? employeeM.LastPe.Rank : 1) * total1);
+                    @*@Html.Hidden("performanceId" + employeeM.lastPe.PEId, employeeM.lastPe.PEId)*@
+                    <td>@Math.Round(employeeM.LastPe.Total, 2)</td>
+                    <td>@Math.Round(employeeM.LastPe.EnglishScore, 2)</td>
+                    <td id="total1@(employeeM.LastPe.PEId)">@total1</td>
+                    if (Model.CurrentUser.ProfileId == (int)ProfileUser.Director)
+                    {
+                        <td id="rank@(employeeM.LastPe.PEId)"><input type="number" style="width: 100%" value="@employeeM.LastPe.Rank"  onchange="calculate(@employeeM.LastPe.PEId, this);" min="0" max="1" step="0.01" /><span style="display:none">@employeeM.LastPe.Rank</span></td>
+                        <td id="t1Rank@(employeeM.LastPe.PEId)">@Math.Round(calculation, 2)</td>
+                    }
+                }
+                else
+                {
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    if (Model.CurrentUser.ProfileId == (int)ProfileUser.Director)
+                    {
+                        <td><input type="text" style="width: 100%" value="" disabled /></td>
+                        <td></td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+

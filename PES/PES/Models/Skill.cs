@@ -18,6 +18,6 @@ namespace PES.Models
         /// <summary>
         /// Description of skill
         /// </summary>
-        public string Skill {get; set;}
+        public string Description {get; set;}
     }
 }

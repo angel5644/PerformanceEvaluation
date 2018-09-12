@@ -1,0 +1,89 @@
+﻿@model PES.ViewModels.TransferEmployeeViewModel
+
+@{
+    ViewBag.Title = "Transfer employees one by one";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-12 well">
+        @using (Html.BeginForm("ChangeProfile2", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h3>Transfer Employees</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.Hidden("EmailUser", Session["UserEmail"])
+                        @Html.Label("Transfer employees between:")
+                        @Html.DropDownListFor(model => model.SelectedProfile, Model.ProfilesList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedProfile" })
+                        @Html.ValidationMessageFor(model => model.SelectedProfile, "", new { @class = "text-danger" })
+                    </div>
+                   <div class="col-md-6">
+                       <div class="alert alert-info" role="alert">
+                           <strong>Note: </strong>
+                            To transfer employees located in different pages, first transfer
+                            the selected employees of the current page and then, select the next page.
+                       </div>
+                   </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4 id="EmployeeALabel">Manager A</h4>
+                        @Html.DropDownListFor(model => model.SelectedManagerA, Model.ManagerAList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedEmployeeA" })
+                        @Html.ValidationMessageFor(model => model.SelectedManagerA, "", new { @class = "text-danger" })
+                        <hr />
+                    </div>
+                    <div class="col-md-offset-7">
+                        <h4 id="EmployeeBLabel">Manager B</h4>
+                        @Html.DropDownListFor(model => model.SelectedManagerB, Model.ManagerBList, new { @class = "inlined form-control", @style = "width:100%", @id = "selectedEmployeeB" })
+                        @Html.ValidationMessageFor(model => model.SelectedManagerB, "", new { @class = "text-danger" })
+                        <hr />
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-lg-5 well responsive" id="tableA-content">                                        
+                            @Html.Partial("_TransferEmployeePartial")                            
+                    </div>
+                    <div class="col-md-2">   
+                        <br />
+                        <br />               
+                        @*<button class="btn-default" id="btnToB" title="Move to Manager B" onclick="moveToB()"> > </button>*@
+                        <input type="button" class="btn-default" id="btnToB" title="Move to Manager B" onclick="moveToB()" value='>' />
+                        <hr />
+                        @*<button class="btn-default" id="btnToA" title="Move to Manager A" onclick="moveToA()"> < </button>*@
+                        <input type="button" class="btn-default" id="btnToA" title="Move to Manager A" onclick="moveToA()" value='<' />
+                    </div>
+                    <div class="col-lg-5 well responsive" id="tableB-content">
+                            @Html.Partial("_TransferEmployeePartial2")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "ViewEmployees")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/moveEmployees.js")
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+}
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")>
+}

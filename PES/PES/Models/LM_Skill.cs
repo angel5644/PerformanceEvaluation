@@ -22,12 +22,17 @@ namespace PES.Models
         /// <summary>
         /// Property to store employee selection
         /// </summary>
-        public bool CheckEmployee { get; set; }
+        public string CheckEmployee { get; set; }
 
         /// <summary>
         /// Property to store evaluator selection
         /// </summary>
-        public bool CheckEvaluator { get; set; }
+        public string CheckEvaluator { get; set; }
 
+    }
+
+    public class SkillHelper : LM_Skill
+    {
+        public string SkillName { get; set; }
     }
 }

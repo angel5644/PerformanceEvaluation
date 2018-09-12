@@ -1,0 +1,345 @@
+﻿@* View to make a new vacation request *@
+@model PES.ViewModels.ResendRequestViewModel
+
+<div class="page-header text-center">
+    <h1>Vacation Request</h1>
+</div>
+<div class="row text-center">
+    <div id="vacationarea" class="col-sm-4 col-md-4 col-lg-4">
+        <label>
+            Vacation Days:
+            <span id="daysVac" class="label label-default">@Model.ModelEmployeeResend.Freedays</span>
+        </label>
+    </div>
+    <div id="requestarea" class="col-sm-4 col-md-4 col-lg-4">
+        <label>
+            Days Requested:
+            <input id="daysReq" type="text" name="NovacDaysResend" class="daysReq" value="@Model.NovacDaysResend" readonly />
+        </label>
+    </div>
+    <div id="reqStatus" class="col-sm-4 col-md-4 col-lg-4">
+        <label class="">
+            Request Status:
+            <span class="label label-default" id="status">REJECTED</span>
+        </label>
+    </div>
+</div>
+<hr class="divisor" />
+<br />
+<div class="row">
+    <div class="col-md-9">
+        <div class="row">
+            <section>
+                @using (Html.BeginForm("UpdateResendRequest", "VacationRequest", FormMethod.Post, new { @class = "form-horizontal", @id = "form" }))
+                {
+                    @Html.HiddenFor(model => Model.ModelEmployeeResend.EmployeeId)
+                    @Html.HiddenFor(model => Model.RequestIdResend)
+                    <input id="daysRequest" type="text" hidden name="NovacDaysResend" class="daysReq" value="@Model.NovacDaysResend" readonly />
+                    <div class="form-group">
+                        <div>
+                            <div class="row" style="margin-left: 1vw;">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    @Html.LabelFor(model => Model.TitleResend, "Request Title", new { @class = "control-label col-form-label" })
+                                    <div>
+                                        @Html.EditorFor(model => Model.TitleResend, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="title" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+
+                    <!-- PARTIAL VIEW WITH REQUEST DATES -->
+
+                    @Html.Partial("~/Views/Shared/_ResendVacationDatesPartial.cshtml", Model)
+
+                    <div class="form-group">
+                        <div class="container flexEnd" style="display: flex; align-items: flex-start;">
+                            <div class="col-md-8 ">
+                                @Html.LabelFor(model => Model.ReplayCommentsResend, "Comments from Resource Manager:", new { @class = "control-label" })
+                                @Html.TextAreaFor(model => Model.ReplayCommentsResend, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;", @disabled = "disabled" })
+                                @Html.LabelFor(model => Model.CommentsResend, "Comment Your Request:", new { @class = "control-label" })
+                                @Html.TextAreaFor(model => Model.CommentsResend, htmlAttributes: new { @class = "form-control", @style = "min-width:100%;" })
+                                <span class="field-validation-valid text-danger" data-valmsg-for="comments" data-valmsg-replace="true"></span>
+                                <input type="button" id="my-button" value="Select Files">
+                                <input type="file" name="myFile" id="my-file" accept=".jpg, .jpeg, .png , .txt">
+                            </div>
+                            <div class="col-md-4 text-center" style=" margin-top: 40px;">
+                                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-default btn-block"> Return to History </a>
+                                <br />
+                                <button id="sendRequest" value="Model.VacationHeaderReqId" type="submit" class="btn btn-lg btn-primary btn-block" >Resend Request</button>
+                                @Html.Partial("_ModalResendRequestPartial")
+                            </div>
+                        </div> <!-- container end -->
+                    </div> <!-- form-group end -->
+                }
+            </section>
+        </div>
+    </div>
+    <div class="col-md-3">
+        @Html.Partial("_ShowCalendarPartial", (List<PES.Models.Holiday>)ViewBag.MyHoliday)
+    </div>
+</div>
+
+@* Modal begins *@
+<div class="modal fade" id="modalNoEnoughDays" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">No Enough Days</h4>
+            </div>
+            <div class="modal-body">
+                <p>You don't have enough days available.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+@* Modal begins *@
+<div class="modal fade" id="correctDate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">This Date is correct</h4>
+            </div>
+            <div class="modal-body">
+                <p>You don't have enough days available.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+@* Modal begins *@
+<div class="modal fade" id="EndDateLow" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">The end date is low</h4>
+            </div>
+            <div class="modal-body">
+                <p>You don't have enough days available.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+@* Modal begins *@
+<div class="modal fade" id="OldDate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Date can not be a pass or present date</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+@* Modal begins *@
+<div class="modal fade" id="sameMonth" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Start date sould be after 5 weeks</b></p>
+                <br />
+                <p ALIGN=center> Please select other date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+@* Modal begins *@
+<div class="modal fade" id="endDateInvalit" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Invalid date texbox</b></p>
+                <br />
+                <p ALIGN=center> Please put a correct date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+
+@* Modal begins *@
+<div class="modal fade" id="endEmpy" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>ReturnDay is empty</b></p>
+                <br />
+                <p ALIGN=center> Please select a valid date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="daysRequestedZero" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Days requested is zero</b></p>
+                <br />
+                <p ALIGN=center> Please select a valid date </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="titleEmpy" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>The tittle is empty</b></p>
+                <br />
+                <p ALIGN=center> Please put something in the title </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* Modal ends *@
+
+
+
+
+
+@* Modal begins *@
+<div class="modal fade" id="noVacationsDays" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">You will make two requets</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You don't have enough vacation days, your request will be divided in two parts
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="buttonSendForm" type="button" class="btn btn-primary">Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal ends *@
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+
+}
+
+@section Scripts
+{
+    @Styles.Render("~/Content/themes/base/daterangepicker.css")
+
+    @Scripts.Render("~/Scripts/vacationsResendRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+}

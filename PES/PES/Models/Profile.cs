@@ -18,8 +18,15 @@ namespace PES.Models
         /// <summary>
         /// Profile name
         /// </summary>
-        public string Profile { get; set; }
+        public string Name { get; set; }
 
         /// Comment
+    }
+    public enum ProfileUser
+    {
+        None = 0,
+        Resource = 1,
+        Manager = 2,
+        Director = 3
     }
 }

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<PES.Models.Lateness>
+@using PES.Models
+<br /><br />
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2>
+            @if (Model.Count() > 0)
+            {
+                Model.First().Date.ToString("MMMM", new System.Globalization.CultureInfo("en-US"));
+            } Current Month Lateness.
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12"> 
+        <div class="text-right">
+            Total Lateness: @Model.Count()
+        </div>
+        <div class="well">         
+            @if (Model.Count() > 0)
+            {
+                <table id="Tableview" class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                NAME
+                            </th>
+                            <th>
+                                EMAIL
+                            </th>
+                            <th>
+                                DATE
+                            </th>
+                            <th class="text-center">
+                                NO. LATENESSES
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lateness in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @lateness.EmployeeName
+                                </td>
+                                <td>
+                                    @lateness.EmployeeEmail
+                                </td>
+                                <td>
+                                    @lateness.Date.ToString("dddd, MMMM dd, yyyy", new System.Globalization.CultureInfo("en-US"))
+                                </td>
+                                <td class="text-center">
+                                    @lateness.NoLateness
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <label>YOU DON'T HAVE ANY LATENESS FOR THIS MONTH.</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/latenessManager.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+}
+
+
+

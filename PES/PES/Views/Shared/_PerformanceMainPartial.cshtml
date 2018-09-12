@@ -1,0 +1,20 @@
+﻿@model PES.ViewModels.PerformanceMainPartial
+
+<div class="row">
+    <div class="col-md-4 well">
+        <h4>Employee Evaluated</h4>
+        <p>Name: @(Model.Employee.FirstName + " " + Model.Employee.LastName)</p>
+        <p>Position: @Model.Employee.Position</p>
+        <p>Customer: @Model.Employee.Customer</p>
+        <p>Project: @Model.Employee.Project</p>
+    </div>
+    <div class="col-md-4 well">
+        <h4>Team Leader/Evaluator</h4>
+        <p>Name: @(Model.Evaluator.FirstName + " " + Model.Evaluator.LastName)</p>
+        <p>Position: @Model.Evaluator.Position</p>
+    </div>
+    <div class="col-md-4 well">
+        <h4>Total (Performance + Competences)</h4>
+        <p style="text-align: center">@Math.Round(Model.TotalEvaluation, 2)</p>
+    </div>
+</div>      

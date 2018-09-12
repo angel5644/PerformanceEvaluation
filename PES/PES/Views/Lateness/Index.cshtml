@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Lateness Reports";
+}
+<br /><br />
+
+<h3 class="text-center">LATENESS REPORT</h3>
+<label class="radio-inline"><input type="radio" name="period" value="today" checked>Today</label>
+<label class="radio-inline"><input type="radio" name="period" value="week">Week</label>
+<label class="radio-inline"><input type="radio" name="period" value="month">Month</label>
+<label class="radio-inline"><input type="radio" name="period" value="year">Year</label>
+<label class="radio-inline"><input type="radio" name="period" value="last 5 years">Last 5 years</label>
+
+<br /><br />
+
+<div id="table-content">
+    @Html.Partial("_LatenessReportsPartial")
+</div>
+
+
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")  
+    @Styles.Render("~/Content/css/StyleLateness.css")
+  
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/lateness.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+}
+

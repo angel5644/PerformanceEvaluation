@@ -1,0 +1,27 @@
+﻿@model PES.ViewModels.PerformanceCommentsPartial
+
+<table id="TableComments" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>About Training Employee</th>
+            <th>About Training Evaluator</th>
+            <th>Special Aknowledges</th>
+            <th>Other Comments Employee</th>
+            <th>Other Comments Evaluator</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in Model.Comments)
+        { 
+            <tr>
+                <td>@comment.TrainningEmployee</td>
+                <td>@comment.TrainningEvaluator</td>
+                <td>@comment.AcknowledgeEvaluator</td>
+                <td>@comment.CommRecommEmployee</td>
+                <td>@comment.CommRecommEvaluator</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+  

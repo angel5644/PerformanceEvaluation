@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PES.Models.Holiday>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br/>
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 style="text-align:center;">Holidays</h2>
+    </div>
+</div>
+<table id="holidayTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Celebration</th>
+            <th><a href="@Url.Action("Create", "Holidays")" class="btn btn-success" style="width:100%;">Add a holiday </a></th>
+            
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var holiday in Model)
+        {
+            <tr>
+                <td> @holiday.Day.Date.ToString("D", holiday.USCulture) </td>
+                <td>@holiday.Description</td>
+                <td class="col-sm-3">
+                    <a type="button" class="btn btn-primary col-sm-4 col-sm-offset-1" href='@Url.Action("EditShow", "Holidays", new { holidayId = holiday.HolidayId })'><span style="margin-right: 5px" class="glyphicon glyphicon-align-justify"></span>Edit</a>
+                    <button type="button" class="btn btn-danger col-sm-4 col-sm-offset-1" data-toggle="modal" data-target="#modal-delete-holiday-@holiday.HolidayId"> <span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span>Delete</button>
+                    @Html.Partial("_ModalDeleteHolidayPartial", holiday)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

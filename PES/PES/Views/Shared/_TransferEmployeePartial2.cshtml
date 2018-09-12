@@ -1,0 +1,28 @@
+﻿@model PES.ViewModels.TransferEmployeeViewModel
+
+<table class="table-striped" id="ManagerB-table" width="450">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ManagerEmployeeList)
+        {
+            <tr>
+                @Html.Hidden("idEmployee", item.EmployeeId)
+                <th>
+                    <input type="checkbox" class="checkbox" value=@item.EmployeeId onclick="selectToMove(@item.EmployeeId)" />
+                </th>
+                <th>
+                    @(item.FirstName + " " + item.LastName)
+                </th>
+            </tr>
+        }    
+    </tbody>
+</table>

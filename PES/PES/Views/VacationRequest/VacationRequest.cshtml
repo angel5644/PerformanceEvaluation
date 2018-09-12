@@ -1,0 +1,288 @@
+﻿@* View of a Existing Request *@
+@model PES.ViewModels.VacHeadReqViewModel
+@using PES.Models;
+@{
+    int useProfile = (int)Session["UserProfile"];
+}
+<div>
+    <section>
+        <div class="page-header text-center">
+            <h1>Vacation Request</h1>
+        </div>
+
+        @if(useProfile == (int)ProfileUser.Manager)
+        {
+            <div class="page-header text-center">
+                <h1>Resource: @Model.FirstName @Model.LastName</h1>
+            </div>
+        }
+        
+
+        <div>
+            <div class="container flexEnd">
+                <div class="col-md-3">
+
+                    @Html.LabelFor(model => model.Title, "Request Title", new { @class = "control-label col-form-label" })
+                    @if (Model.status.ToLower() == "rejected")
+                {
+                    if (useProfile == (int)ProfileUser.Manager)
+                    {
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+            }
+        }
+        else
+        {
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @disabled = "disabled" })
+    }
+
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+
+                <div id="vacationarea" class="col-md-2 text-center">
+                    <label>
+                        Vacation Days:
+                        <input id="" name="" type="text" class="daysReq" value="@Model.FreeDays" readonly />
+                    </label>
+                </div>
+                <div id="requestarea" class="col-md-2 text-left">
+                    <label>
+                        Days Requested:
+                        <input type="text" name="NoVacDaysRequested" class="daysReq" value="@Model.NoVacDays" readonly />
+                    </label>
+                </div>
+                <div id="reqStatus" class="col-md-5 text-right">
+                    <label class="control-label text-center">
+                        Request Status:
+                        <span class="label label-default" id="status">@Model.status</span>
+                    </label>
+                </div>
+            </div> <!-- container end -->
+        </div> <!-- form-group end -->
+        <!-- PARTIAL VIEW WITH REQUEST DATES -->
+        @Html.Partial("_VacationDatesPartial", Model)
+        <!-- PARTIAL VIEW WITH REQUEST DATES -->
+
+
+
+        <div class="form-group">
+            <div class="container flexEnd">
+                <!--COMMENTS-->
+                <div class="col-md-8">
+                    <!--Approve Reason -->
+
+                    @Html.LabelFor(model => model.Comments, "Request Comments", new { @class = "control-label" })
+                    @if (Model.status.ToLower() == "rejected")
+    {
+        if (useProfile == (int)ProfileUser.Manager)
+        {
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+               //
+                @Html.LabelFor(model => model.ReplayComment, "Reject Comments From Human Resources", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+
+
+}
+else
+{
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;" })
+}
+}
+else
+{
+                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+
+}
+
+                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                    @if (Model.status.ToLower() == "canceled")
+    {
+                @Html.LabelFor(model => model.ReplayComment, "Canceled commets ", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+}
+                    @if (Model.status.ToLower() == "approved")
+    {
+                @Html.LabelFor(model => model.ReplayComment, "Aproval Comments From Human Resources ", new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ReplayComment, new { @class = "form-control", @placeholder = "Add a comment or attach lead's approval", @style = "min-width:100%;", @disabled = "disabled" })
+}
+                </div>
+
+                <!--  SPINNER -->
+
+                <div class="spinner" style="display:none">
+                    <div class="center-div">
+                        <div class="inner-div">
+                            <div class="loader"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCK BUTTONS -->
+                <div class="col-md-4 text-center">
+
+                    @if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Resource)
+        {
+            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+            <button id="cancelReq" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel Request</button>
+            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+}
+
+            else if (Model.status.ToLower() == "pending" && useProfile == (int)ProfileUser.Manager)
+            {
+                <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+                <button id="reject" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-rejected">Reject</button>
+                @Html.Partial("_ModalRejectRequestPartial", Model.Modal)
+
+                <div style="line-height:40%;">
+                    <br />
+                </div>
+
+                <button id="aprove" value="Model.VacationHeaderReqId" type="button" class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#modal-approved">Aprove</button>
+                @Html.Partial("_ModalApproveRequestPartial", Model.Modal)
+                <div style="line-height:40%;">
+                    <br />
+                </div>
+                <button id="@Model.EmployeeId" value="@Model.NoVacDays" class="btn btn-lg btn-default btn-block btn-send-mail">Email to HR</button>
+
+        }
+
+        else if (Model.status.ToLower() == "approved")
+        {
+            <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+
+        if (Model.StartDate > DateTime.Today)
+        {
+            <button id="cancelReq" value="Model.VacationHeaderReqId" onlicktype="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel</button>
+            @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+    }
+}
+
+else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Manager)
+{
+    <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+
+if (Model.StartDate > DateTime.Today)
+{
+    <button id="cancelReq" value="Model.VacationHeaderReqId" onlicktype="button" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#modal-cancel">Cancel</button>
+    @Html.Partial("_ModalCancelRequestPartial", Model.Modal)
+}
+}
+
+    @*else if (Model.status.ToLower() == "rejected" && useProfile == (int)ProfileUser.Resource)
+    {
+        <a href="@Url.Action("in", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+        <button id="resendReq" type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-sm">Resend</button>
+    }*@
+
+else if (Model.status.ToLower() == "canceled")
+{
+    <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary btn-block">Return to Historical</a>
+}
+                </div>
+            </div> <!-- container end -->
+        </div> <!-- form-group end -->
+    </section>
+</div>
+
+
+
+
+
+<!--modal for the mail send-->
+
+<div class="modal fade" id="VaReEmail" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>Email sent</b></p>
+                <br />
+                <p ALIGN=center>The Email was successfully sent to Natalia of Human Resources</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Understand</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--failure to send mail modal-->
+<div class="modal fade" id="VaFailedEmail" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b> Email failed to send</b></p>
+                <br />
+                <p ALIGN=center> Something happened and the mail could not be sent</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="filltextfield" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p ALIGN=center><b>You Need To Add a Comment To Cancel The Request</b></p>
+                <br />
+                <p ALIGN=center>Please Fill The Comments Text Field </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Docu
+<!--Documentar en caso de no acabar--------------------------------------------------------->
+
+
+@section Styles
+{
+    @Styles.Render("~/Content/css/vacation_request_resource.css")
+    @Styles.Render("~/content/themes/base/daterangepicker.css")
+    @Styles.Render("~/Content/css/spiner.css")
+
+}
+
+@section Scripts
+{
+
+    @Scripts.Render("~/Scripts/vacationsRequest.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+    @Scripts.Render("~/Scripts/VacationRequestEmail.js")
+
+
+}
+

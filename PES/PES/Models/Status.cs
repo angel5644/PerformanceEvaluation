@@ -18,6 +18,6 @@ namespace PES.Models
         /// <summary>
         /// Status of the Performance Evaluation
         /// </summary>
-        public string Status { get; set; }
+        public string Description { get; set; }
     }
 }

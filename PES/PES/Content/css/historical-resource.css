@@ -1,0 +1,129 @@
+#pending-tab {
+    background-color: #FFFF66;
+}
+
+.pending-tab {
+    color:black;
+}
+
+#rejected-tab {
+    background-color: lightcoral;
+}
+
+.rejected-tab {
+    color:black;
+}
+
+#approved-tab {
+    background-color: lightgreen;
+}
+
+.approved-tab {
+    color:black;
+}
+
+#canceled-tab {
+    background-color: lightgray;
+}
+
+.canceled-tab {
+    color:black;
+}
+
+.nav-tabs > li > a {
+    margin-right:0;
+}
+
+.ContenedorColorVerde {
+    height: 25px;
+    width: 25px;
+    background-color: #baffc9;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.TextoColorVerde{
+    margin-left: -50px;
+}
+
+.ContenedorColorNaranja {
+    height: 25px;
+    width: 25px;
+    background-color: #ffdfba;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorBlanco {
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorRojoF {
+    height: 25px;
+    width: 25px;
+    background-color: #e32e2e;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorAzulF {
+    height: 25px;
+    width: 25px;
+    background-color: #c9c9ff;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.ContenedorColorAzul {
+    height: 25px;
+    width: 25px;
+    background-color: #7AD8DB;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+.unpaid-color {
+    background-color: #BBF40A
+}
+
+.ContenedorColorRojo {
+    height: 25px;
+    width: 25px;
+    background-color: #F08080;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+
+.redColorBackground {
+    background-color: #F08080;
+}
+
+
+.blueColorBackground {
+    background-color: #7AD8DB;
+}
+
+.greenColorBackground {
+    background-color: #BBF40A
+}
+
+.yellowColorBackground {
+    background-color: #ffdfba;
+}
+
+
+.buttomShowHideContent{
+    margin-bottom: 20px;
+}
+
+.contenedorColores {
+    color: white;
+    padding-top: 30px;
+    background-color: #7B7D7D;
+    box-shadow: 0 8px 6px -6px black;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}

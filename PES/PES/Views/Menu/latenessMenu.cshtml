@@ -1,0 +1,90 @@
+﻿@model IEnumerable<PES.Models.Lateness>
+@using PES.Models
+
+@{
+    ViewBag.Title = "Choose";
+}
+<hr />
+<div class="well">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h2>Lateness System</h2>
+        </div>
+
+        <div class="col-md-12">
+            <label> Manager </label>
+        </div>
+        <hr>
+
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-6">
+            <a href="@Url.Action("LatenessAllUsers", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">List of Lateness</a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("ShowLatenesExcel", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">Import an Excel File</a>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-pull-6">
+                <a href="@Url.Action("Index", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">My Lateness</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Count() > 0)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-right">
+                Total Employees: @Model.Count()
+            </div>
+            <div class="well">
+                    <table id="Tableview" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    NAME
+                                </th>
+                                <th>
+                                    EMAIL
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var lateness in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @lateness.EmployeeName
+                                    </td>
+                                    <td>
+                                        @lateness.EmployeeEmail
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+}
+@section Styles{
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/latenessManager.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/dataTables.buttons.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/jszip.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/pdfmake.min.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/vfs_fonts.js")
+    @Scripts.Render("~/Scripts/ExportDataTables/buttons.html5.min.js")
+}

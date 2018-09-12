@@ -1,0 +1,44 @@
+﻿@model PES.ViewModels.ResendRequestViewModel
+
+
+<div id="datesGroup" class="form-group datesGroup" style="margin: 1vw;">
+    <div id="subDatesGroup" class="form-group">
+        <div id="datesCont">
+            
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>Start Date</label>
+                @Html.TextBoxFor(model => model.StartDateResend, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "start", @class = "valida-fecha form-control text-center" })
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <label>End Date</label>
+                @Html.TextBoxFor(model => model.EndDateResend, "{0:MM/d/yyyy}", htmlAttributes: new { @id = "End", @class = "valida-fecha form-control text-center" })
+            </div>
+                <span class="field-validation-valid text-danger" data-valmsg-for="start" data-valmsg-replace="true"></span>
+                <div class="col-md-3 col-lg-3">
+                    <label>Return Date</label>
+                    @Html.TextBoxFor(model => model.ReturnDateResend, "{0:d/MM/yyyy}", htmlAttributes: new { @id = "returnDay", @class = "form-control text-center returnbox", @readonly = "readonly" })
+                </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+    
+    <div id="subDatesGroup" class="form-group" >
+        <div id="datesCont">
+            <div id="leadName" class="col-md-4 col-lg-4">
+                <label for="lead" class="control-label">Lead Name</label>
+                <div>
+
+                    <input id="lead" type="text" name="subRequest[0].LeadName" value="@Model.LeadNameResend" class="form-control leadBox" data-val="true" data-val-required="Lead name is required" disabled />
+
+                </div>
+                <span class="field-validation-valid text-danger" data-valmsg-for="lead" data-valmsg-replace="true"></span>
+            </div>
+            <div id="checkarea" class="col-sm-3 col-md-3 col-lg-3">
+                <label id="checktext" class="text-left">
+                    @Html.CheckBoxFor(model => model.SubRequest[0].HaveProject, new { @class = "projectBox", @id = "haveProject" })  I do not have a project
+                    <input type="hidden" class="projectHiddenBox" id="unpaid_hidden" name="subRequest[0].unpaid" value="false" />
+                </label>
+            </div>
+        </div> <!-- container end -->
+    </div> <!-- subform-group end -->
+</div><!-- form-group end -->
+

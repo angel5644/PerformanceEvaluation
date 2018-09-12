@@ -1,0 +1,48 @@
+﻿@model PES.Models.Holiday
+ 
+ <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="modal-delete-holiday-@Model.HolidayId">
+        <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                    @using (Html.BeginForm("Delete", "Holidays", FormMethod.Post))
+                     {
+                 <div class="modal-header">
+                 <button type = "button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 <div class="text-center">
+                     <h4 class="modal-title" id="gridSystemModalLabel">
+                         Delete Holiday
+                     </h4>
+                 </div>
+
+             </div>
+             <div class="row" >
+                <div class="modal-body, col-lg-12 col-md-12 col-sm-12 col-xs-12" ><br /><br />
+                    <p class="text-center">
+                        Are you sure you want to<b> delete</b> this Holiday?
+                    </p> <br />
+                    <div class="text-center">
+                        <p>
+                           <b> @Model.Day.Date.ToString("D", Model.USCulture)  ( @Model.Description )</b>
+                        </p>
+                    </div>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <fieldset>
+                            @Html.HiddenFor(model => model.HolidayId)
+                        </fieldset>
+                   </div>
+                </div>
+             </div>
+             <div class="modal-footer">
+                 <button type = "button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                 <input type = "submit" class="btn btn-secondary" value="Delete holiday" />
+             </div>
+         }
+ 
+        </div><!-- /.modal-content -->
+        
+    </div><!-- /.modal-dialog -->
+    
+</div><!-- /.modal -->

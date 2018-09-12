@@ -1,0 +1,21 @@
+﻿@model PES.ViewModels.PerformanceSkilsPartial
+
+<table id="TableSkills" class="table table-striped table-bordered">
+    <thead>  
+        <tr>
+            <th>Skill</th>  
+            <th>Self Assessment</th>
+            <th>Evaluator</th>
+        </tr>
+    </thead>  
+    <tbody>
+        @foreach (var skill in Model.Skills)
+        {   
+            <tr>
+                <td>@skill.SkillName</td>
+                <td>@skill.CheckEmployee</td>
+                <td>@skill.CheckEvaluator</td>
+            </tr>
+        }
+    </tbody>
+</table>    
