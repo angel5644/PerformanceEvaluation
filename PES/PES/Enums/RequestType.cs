@@ -5,6 +5,9 @@ using System.Web;
 
 namespace PES.Enums
 {
+    /// <summary>
+    /// The vacation request type
+    /// </summary>
     public enum RequestType
     {
         Normal = 0,
