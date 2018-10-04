@@ -513,6 +513,11 @@ namespace PES.Controllers
                 // Update number of vacation days
                 vacationDays = _employeeService.GetByID(employee.EmployeeId).Freedays;
                 //model.daysReq = (subrequest.EndDate.Date - subrequest.StartDate.Date).Days + 1;
+                // Body message for email
+                string bodyMessage = model.daysReq + " free day(s) have been requested. \n" 
+                                    + "\nFrom " + subrequest.StartDate + " to " + subrequest.EndDate + " returning to work on " + subrequest.ReturnDate 
+                                    + "\n\n" + model.Comments 
+                                    + "\nAvailable vacations days: " + (model.VacationDays - model.daysReq).ToString();
 
                 if (model.daysReq <= vacationDays)
                 {
@@ -525,7 +530,9 @@ namespace PES.Controllers
                     //inserting sub request.
                     _subReqService.InsertSubrequest(idRequest, subrequest);
 
-                    _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+                    //_emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+                    //Send the new email with relevant information.
+                    _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", bodyMessage, model.MyFile);
 
                     // Update 
                     _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
@@ -610,7 +617,8 @@ namespace PES.Controllers
                         //inserting sub request.
                         _subReqService.InsertSubrequest(idRequest, subrequest);
 
-                        _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", model.Comments, model.MyFile);
+                        //Send the new email with relevant information.
+                        _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", bodyMessage, model.MyFile);
 
                         // Update 
                         _emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
@@ -706,7 +714,8 @@ namespace PES.Controllers
                         //inserting sub request.
                         _subReqService.InsertSubrequest(idRequest, subrequest);
 
-                        _emailInsertNewRequestService.SendEmails(emails, "New Unpaid Vacation Request", model.Comments, model.MyFile);
+                        //Send the new email with relevant information.
+                        _emailInsertNewRequestService.SendEmails(emails, "New Vacation Request ", bodyMessage, model.MyFile);
 
                         // Update 
                         //_emailInsertNewRequestService.UpdateVacationDays(employee.Email, model.daysReq, model.TypeRequest);
@@ -1119,42 +1128,44 @@ namespace PES.Controllers
 
 
 
-		[HttpPost]
-		public ActionResult CancelRequest(StatusRequestViewModel model)
-		{
+        [HttpPost]
+        public ActionResult CancelRequest(StatusRequestViewModel model)
+        {
             int TypeRequest = 0;
             if (model.Title.Contains("UNPAID:"))
             {
                 TypeRequest = 1;
             }
-            else if(model.Title.Contains("EMERGENCY:"))
+            else if (model.Title.Contains("EMERGENCY:"))
             {
                 TypeRequest = 2;
             }
-            else if(model.Title.Contains("FUNERAL:"))
+            else if (model.Title.Contains("FUNERAL:"))
             {
                 TypeRequest = 3;
             }
-            else if(model.Title.Contains("PATERNITY:"))
+            else if (model.Title.Contains("PATERNITY:"))
             {
                 TypeRequest = 4;
             }
 
-			// Update status of the request
-			_emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
-			// Send email if success
-			// Get request by id
-			List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
-			data = _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
-			string employeeEmail = data[0].EmployeeEmail;
-			string managerEmail = data[0].ManagerEmail;
-			string reasonCancellation = data[0].Reason;
-			List<string> emails = new List<string>()
-			{
-				employeeEmail,
-				managerEmail
-			};
-			_emailCancelRequestService.SendEmails(emails, "Cancel Request", reasonCancellation);
+            // Update status of the request
+            _emailCancelRequestService.ChangeRequestStatus(model.HeaderRequestId, model.Reason);
+            // Send email if success
+            // Get request by id
+            List<StatusRequestViewModel> data = new List<StatusRequestViewModel>();
+            data = _emailCancelRequestService.GetDataRequest(model.HeaderRequestId);
+            string employeeEmail = data[0].EmployeeEmail;
+            string managerEmail = data[0].ManagerEmail;
+            //string reasonCancellation = data[0].Reason;
+            // Body message for cancelation email
+            string cancelMessage = "The " + model.NoVacDaysRequested + "-days vacation " + model.Title + " has been canceled because " + data[0].Reason + ", if you have any doubt feel free to ask me";
+            List<string> emails = new List<string>()
+            {
+                employeeEmail,
+                managerEmail
+            };
+            _emailCancelRequestService.SendEmails(emails, "Cancel Request", cancelMessage);
 			//Add if 
 			if(model.currentStatusId.ToLower() != "rejected")
 			{
@@ -1175,13 +1186,15 @@ namespace PES.Controllers
 			data = _emailApproveRequestService.GetDataRequest(model.HeaderRequestId);
 			string employeeEmail = data[0].EmployeeEmail;
 			string managerEmail = data[0].ManagerEmail;
-			string approveReason = data[0].Reason;
-			List<string> emails = new List<string>()
+            //string approveReason = data[0].Reason;
+            // Body message for approval email
+            string approveMessage = "The " + model.NoVacDaysRequested + "-days vacation " + model.Title + " has been approved \n" + data[0].Reason + "\nIf you have any doubt feel free to ask me. \nRegards.";
+            List<string> emails = new List<string>()
 			{
 				employeeEmail,
 				managerEmail
 			};
-			_emailApproveRequestService.SendEmails(emails, " Approved Request", approveReason);
+			_emailApproveRequestService.SendEmails(emails, " Approved Request", approveMessage);
 			//_emailApproveRequestService.LessNoVacDays(employeeEmail, model.NoVacDaysRequested);
 			return RedirectToAction("HistoricalResource");
 	}
@@ -1214,13 +1227,15 @@ namespace PES.Controllers
             data = _emailRejectRequestService.GetDataRequest(model.HeaderRequestId);
             string employeeEmail = data[0].EmployeeEmail;
             string managerEmail = data[0].ManagerEmail;
-            string rejectReason = data[0].Reason;
+            //string rejectReason = data[0].Reason;
+            // Body message for rejection email
+            string rejectMessage = "The " + model.NoVacDaysRequested + "-days vacation " + model.Title + " has been rejected because " + data[0].Reason + ", if you have any doubt feel free to ask me. \nRegards.";
             List<string> emails = new List<string>()
             {
                 employeeEmail,
                 managerEmail
             };
-            _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectReason);
+            _emailRejectRequestService.SendEmails(emails, "Rejected Request", rejectMessage);
             _emailCancelRequestService.PlusNoVacDays(employeeEmail, model.NoVacDaysRequested, TypeRequest);
 
 			return RedirectToAction("HistoricalResource");
