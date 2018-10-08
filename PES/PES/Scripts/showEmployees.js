@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("#table-employees").DataTable();
-    $("#Tableview").DataTable({
+    $(".init-datatable").DataTable({
         "order": [[4, "asc"]]
     } );
 

@@ -90,7 +90,7 @@
 
     <div class="tab-content">
         <div id="pending" class="tab-pane fade in active">
-            <table id="Tableview" border="1" class="table">
+            <table id="Tableview" border="1" class="table init-datatable">
                 <thead>
                     <tr>
                         @if (profileId == Convert.ToInt32(ProfileUser.Manager))
@@ -271,7 +271,7 @@
             </table>
         </div>
         <div id="rejected" class="tab-pane fade">
-            <table id="Tableview" border="1" class="table table-striped">
+            <table id="Tableview" border="1" class="table table-striped init-datatable">
                 <thead>
                     <tr>
                         @if (profileId == (int)ProfileUser.Manager)
@@ -365,7 +365,7 @@
             </table>
         </div>
         <div id="approved" class="tab-pane fade">
-            <table id="Tableview" border="1" class="table table-striped">
+            <table id="Tableview" border="1" class="table table-striped init-datatable">
                 <thead>
                     <tr>
                         @if (profileId == Convert.ToInt32(ProfileUser.Manager))
@@ -446,7 +446,7 @@
             </table>
         </div>
         <div id="canceled" class="tab-pane fade">
-            <table id="Tableview" border="1" class="table table-striped">
+            <table id="Tableview" border="1" class="table table-striped init-datatable">
                 <thead>
                     <tr>
                         @if (profileId == Convert.ToInt32(ProfileUser.Manager))
