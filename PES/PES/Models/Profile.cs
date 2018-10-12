@@ -27,6 +27,7 @@ namespace PES.Models
         None = 0,
         Resource = 1,
         Manager = 2,
-        Director = 3
+        Director = 3,
+        ReadonlyAdmin = 4
     }
 }
