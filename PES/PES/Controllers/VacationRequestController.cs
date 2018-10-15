@@ -871,6 +871,7 @@ namespace PES.Controllers
 			{
                 listHeaderReqDB = _headerReqService.GetGeneralVacationHeaderReqByEmployeeId(currentUser.EmployeeId);
 			}
+
 			if (listHeaderReqDB != null && listHeaderReqDB.Count > 0)
 			{
 				foreach (var headerReq in listHeaderReqDB)
@@ -908,7 +909,29 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult ReadOnlyAdmin()
         {
-            return View();
+            //Get current user
+            Employee currentUser = new Employee();
+            var currentUserEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(currentUserEmail);
+
+            //Get all the vacation requests
+            List<ReadOnlyUserViewModel> vacationRequests = new List<ReadOnlyUserViewModel>();
+
+            //Validate if user is Read Only Admin and the query is not empty
+            if (currentUser.ProfileId == Convert.ToInt16(ProfileUser.ReadonlyAd))
+            {
+                //Execute the service to get all the vacation requests
+                vacationRequests = _headerReqService.GetAllVacationRequests();
+                return View(vacationRequests);
+            }
+            else
+            {
+                TempData["Error"] = "User is not Read Only Admin";
+                return RedirectToAction("HistoricalResource", "VacationRequest");
+            }
+               
+            
+            //return View(vacationRequests);
         }
 
 
