@@ -175,6 +175,7 @@
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\FechaViewModel.cs" />
     <Compile Include="ViewModels\ManagerInsertNewRequestViewModel.cs" />
+    <Compile Include="ViewModels\ReadOnlyUserViewModel.cs" />
     <Compile Include="ViewModels\SendRequestViewModel.cs" />
     <Compile Include="ViewModels\StatusRequestViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
