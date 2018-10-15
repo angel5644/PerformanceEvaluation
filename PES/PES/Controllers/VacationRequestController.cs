@@ -905,9 +905,14 @@ namespace PES.Controllers
 			return View(listHeaderReqVM);
 		} 
 		
+        [HttpGet]
+        public ActionResult ReadOnlyAdmin()
+        {
+            return View();
+        }
 
 
-		public ActionResult VacationsReminder()
+        public ActionResult VacationsReminder()
 		{
 
 

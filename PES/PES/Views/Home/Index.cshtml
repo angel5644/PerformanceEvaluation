@@ -20,15 +20,23 @@
             {
                 <a href="@Url.Action("ChoosePeriod", "PerformanceEvaluation")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
             }
+            else if(useProfile == (int)PES.Models.ProfileUser.ReadonlyAd)
+            {
+
+            }
             else
             {
                 <a href="@Url.Action("Index", "PerformanceEvaluation")" class="btn btn-lg btn-primary" style="width: 250px">Performance Evaluation</a>
             }
         </div>
         <div class="col-md-6">
-            @if (useProfile == (int)PES.Models.ProfileUser.Resource) 
+            @if (useProfile == (int)PES.Models.ProfileUser.Resource)
             {
                 <a href="@Url.Action("Index", "Lateness")" class="btn btn-lg btn-primary" style="width: 250px">Lateness Report</a>
+
+            }
+            else if(useProfile == (int)PES.Models.ProfileUser.ReadonlyAd)
+            {
 
             }
             else
@@ -44,10 +52,22 @@
                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px">Vacations</a>
 
             }
+            else if(useProfile == (int)PES.Models.ProfileUser.ReadonlyAd)
+            {
+
+            }
             else
             {
                 <a href="@Url.Action("HistoricalResource", "VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px">Vacations</a>
             }
         </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-pull-6">
+            @if (useProfile == (int)PES.Models.ProfileUser.ReadonlyAd)
+            {
+                <a href="@Url.Action("ReadOnlyAdmin", "VacationRequest")" class="btn btn-lg btn-primary" style="width: 250px"> View Request Vacations</a>
+            }
+            </div>
     </div>
 </div>

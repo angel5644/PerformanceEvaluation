@@ -554,6 +554,7 @@
     <Content Include="Views\VacationRequest\emergencyRequest.cshtml" />
     <Content Include="Views\Shared\_EmergencyRequestPartialView.cshtml" />
     <Content Include="Views\Shared\_TableVacationRemainder.cshtml" />
+    <Content Include="Views\VacationRequest\ReadOnlyAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
