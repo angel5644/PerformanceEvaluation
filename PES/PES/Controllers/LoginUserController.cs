@@ -76,6 +76,11 @@ namespace PES.Controllers
                             //return RedirectToAction("Index", "PerformanceEvaluation");
                             return RedirectToAction("Index", "Home");
                         }
+                        else if((ProfileUser)resource.ProfileId == ProfileUser.ReadonlyAd)
+                        {
+                            //Return the ReadonlyAd view
+                            return RedirectToAction("Index", "Home");
+                        }
                         else
                         {
                             // Return to the login screen if no profile

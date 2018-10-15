@@ -28,6 +28,6 @@ namespace PES.Models
         Resource = 1,
         Manager = 2,
         Director = 3,
-        ReadonlyAdmin = 4
+        ReadonlyAd = 4
     }
 }
