@@ -908,7 +908,25 @@ namespace PES.Controllers
         [HttpGet]
         public ActionResult ReadOnlyAdmin()
         {
-            return View();
+            //Get current user
+            Employee currentUser = new Employee();
+            var currentUserEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(currentUserEmail);
+
+            List<ReadOnlyUserViewModel> vacationRequests = new List<ReadOnlyUserViewModel>();
+
+            if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.ReadonlyAd))
+            {
+                vacationRequests = _headerReqService.GetAllVacationRequests();
+            }
+            else
+            {
+                TempData["Error"] = "User is not Admin";
+                return RedirectToAction("ReadOnlyAdmin", "VacationRequest");
+            }
+
+
+                return View(vacationRequests);
         }
 
 
