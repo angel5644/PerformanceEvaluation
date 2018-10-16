@@ -21,7 +21,8 @@ namespace PES.ViewModels
 
         public string StatusOfRequest { get; set; }
 
+        public string ResourceManager { get; set; }
 
-
+        public int NumberOfDays { get; set; }
     }
 }

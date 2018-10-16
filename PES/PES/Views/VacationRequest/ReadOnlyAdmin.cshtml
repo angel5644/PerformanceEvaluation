@@ -4,7 +4,52 @@
 </head>
 <body>
     <div>
-        
+        <div class="row text-center">
+            <br />
+            <div class="col-md-12">
+                <h2>Only Read User</h2>
+            </div>
+            <br />
+        </div>
+        <div class="well">
+            <div class="tab-content">
+                <div id="pending" class="tab-pane fade in active">
+                    <div id="Tableview_wrapper" class="dataTables_wrapper from-inline dt-bootstrap select2-no-results footer">
+                        <div class="row""
+                            <div class="col-sm-6">
+                                <div class="dataTables_length" id="Tableview_length">
+                                    <label>
+                                        Show
+                                        <select name="Tableview_lenght" aria-controls="Tableview" class="form-inline input-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        entries
+                                    </label>
+                                </div>
+                            </div>
+                        <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="Tableview" border="1" class="table init-datatable dataTable no-footer" role="grid" aria-describedby="Tableview_info">
+
+                                        <thead>
+                                            <tr role="row"><th class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 87px;">First Name</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 87px;">Last Name</th><th id="header_days" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Days: activate to sort column ascending" style="width: 97px;">Employee ID</th><th id="header_start_date" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending" style="width: 120px;">Start Date</th><th id="header_end_date" class="sorting_asc" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-sort="ascending" aria-label="End Date: activate to sort column descending" style="width: 120px;">End Date</th><th id="header_return_date" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Return Date: activate to sort column ascending" style="width: 120px;">Return Date</th><th id="header_req_type" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Request Type: activate to sort column ascending" style="width: 130px;">Status</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 110px;">Resource Name</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 35px;">Days</th></tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">No data available in table</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
