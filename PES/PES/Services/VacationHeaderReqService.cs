@@ -18,6 +18,60 @@ namespace PES.Services
         }
 
         /// <summary>
+        /// Metod to get all Vacation Requests for ReadOnlyAdmin 
+        /// </summary>
+        /// <returns>A list of Vacation Requests </returns>
+        public List<ReadOnlyUserViewModel> GetAllVacationRequests()
+        {
+            List<ReadOnlyUserViewModel> Headers = new List<ReadOnlyUserViewModel>();
+            ReadOnlyUserViewModel Header = new ReadOnlyUserViewModel();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string query = @"SELECT " +
+                                        "EMP.FIRST_NAME, " +
+                                        "EMP.LAST_NAME, " +
+                                        "HE.ID_EMPLOYEE, " +
+                                        "HE.ID_REQ_STATUS," +
+                                        "SUB.START_DATE, " +
+                                        "SUB.END_DATE, " +
+                                        "SUB.RETURN_DATE " +
+                                    "FROM " +
+                                        "VACATION_HEADER_REQ HE " +
+                                    "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
+                                    "INNER JOIN VACATION_SUBREQ SUB ON HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ " +
+                                    "ORDER BY HE.ID_HEADER_REQ";
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.ExecuteReader();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Header = new ReadOnlyUserViewModel();
+                            Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            Header.EmployeeFirstName = Convert.ToString(reader["ID_EMPLOYEE"]);
+                            Header.EmployeeLastName = Convert.ToString(reader["ID_EMPLOYEE"]);
+                            Header.RequestStatus = Convert.ToInt32(reader["ID_REQ_STATUS"]);
+                            Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
+                            Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
+                            Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Headers.Add(Header);
+                        }
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Headers;
+        }
+
+        /// <summary>
         /// Metod to get all Vacation Requests by a employee Id 
         /// </summary>
         /// <param name="employeeId"></param>
