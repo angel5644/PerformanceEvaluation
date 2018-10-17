@@ -1,4 +1,5 @@
-﻿<html>
+﻿@model IEnumerable<PES.ViewModels.ReadOnlyUserViewModel>
+<html>
 <head>
 
 </head>
@@ -7,7 +8,7 @@
         <div class="row text-center">
             <br />
             <div class="col-md-12">
-                <h2>Only Read User</h2>
+                <h2>Read Only User</h2>
             </div>
             <br />
         </div>
@@ -33,14 +34,37 @@
                         <br />
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="Tableview" border="1" class="table init-datatable dataTable no-footer" role="grid" aria-describedby="Tableview_info">
-
-                                        <thead>
-                                            <tr role="row"><th class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 87px;">First Name</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 87px;">Last Name</th><th id="header_days" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Days: activate to sort column ascending" style="width: 97px;">Employee ID</th><th id="header_start_date" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending" style="width: 120px;">Start Date</th><th id="header_end_date" class="sorting_asc" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-sort="ascending" aria-label="End Date: activate to sort column descending" style="width: 120px;">End Date</th><th id="header_return_date" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Return Date: activate to sort column ascending" style="width: 120px;">Return Date</th><th id="header_req_type" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Request Type: activate to sort column ascending" style="width: 130px;">Status</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 110px;">Resource Name</th><th id="header_title" class="sorting" tabindex="0" aria-controls="Tableview" rowspan="1" colspan="1" aria-label="Title: activate to sort column ascending" style="width: 35px;">Days</th></tr>
-                                        </thead>
+                                    <table id="Tableview" border="1" class="table init-datatable">
+                                           <thead>
+                                               <tr>
+                                                   <th id="header_title">Title</th>
+                                                   <th id="header_title">Name</th>
+                                                   <th id="header_title">Employee Id</th>
+                                                   <th id="header_title">Start Date</th>
+                                                   <th id="header_title">End Date</th>
+                                                   <th id="header_title">Return Date</th>
+                                                   <th id="header_title">Days</th>
+                                                   <th id="header_title">Status</th>
+                                                   <th id="header_title">Manager Name</th>
+                                               </tr>
+                                           </thead>
+                                        
                                         <tbody>
+                                            @foreach (var request in Model)
+                                            {
+                                            <tr class="odd">
+                                                <td><a href="#"> @request.TitleOfRequest </a></td>                                           
+                                                <td>@request.EmployeeFirstName @request.EmployeeLastName</td>                                             
+                                                <td>@request.EmployeeId</td>
+                                                <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
+                                                <td>@request.EndDate.ToString("MM/dd/yyyy")</td>
+                                                <td>@request.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                                <td>@request.NumberOfDays</td>
+                                                <td>@request.StatusOfRequest</td>
+                                                <td>@request.ResourceManager</td>
 
-                                            <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">No data available in table</td></tr>
+                                            </tr>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
