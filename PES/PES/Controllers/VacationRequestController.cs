@@ -913,20 +913,16 @@ namespace PES.Controllers
             var currentUserEmail = (string)Session["UserEmail"];
             currentUser = _employeeService.GetByEmail(currentUserEmail);
 
+            //Get all the vacation requests
             List<ReadOnlyUserViewModel> vacationRequests = new List<ReadOnlyUserViewModel>();
 
+            //Validate if user is Read Only Admin
             if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.ReadonlyAd))
             {
-                vacationRequests = _headerReqService.GetAllVacationRequests();
+                //Execute the service to get all the vacation requests
+                vacationRequests = _headerReqService.GetAllVacationRequests().ToList();
             }
-            else
-            {
-                TempData["Error"] = "User is not Admin";
-                return RedirectToAction("ReadOnlyAdmin", "VacationRequest");
-            }
-
-
-                return View(vacationRequests);
+            return View(vacationRequests);
         }
 
 
