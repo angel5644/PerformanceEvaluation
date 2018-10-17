@@ -33,8 +33,11 @@ namespace PES.Services
                     string query = @"SELECT " +
                                         "EMP.FIRST_NAME, " +
                                         "EMP.LAST_NAME, " +
+                                        "(SELECT CONCAT(FIRST_NAME,CONCAT(' ',LAST_NAME)) FROM PE.EMPLOYEE WHERE ID_EMPLOYEE = EMP.ID_MANAGER) MANAGER, " +
                                         "HE.ID_EMPLOYEE, " +
-                                        "HE.ID_REQ_STATUS," +
+                                        "HE.NO_VAC_DAYS," +
+                                        "HE.TITLE," +
+                                        "REQ.REQ_STATUS," +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
                                         "SUB.RETURN_DATE " +
@@ -42,6 +45,7 @@ namespace PES.Services
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
                                     "INNER JOIN VACATION_SUBREQ SUB ON HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ " +
+                                    "INNER JOIN VACATION_REQ_STATUS REQ ON HE.ID_REQ_STATUS = REQ.ID_REQ_STATUS " +
                                     "ORDER BY HE.ID_HEADER_REQ";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
@@ -50,13 +54,16 @@ namespace PES.Services
                         while (reader.Read())
                         {
                             Header = new ReadOnlyUserViewModel();
-                            Header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
-                            Header.EmployeeFirstName = Convert.ToString(reader["ID_EMPLOYEE"]);
-                            Header.EmployeeLastName = Convert.ToString(reader["ID_EMPLOYEE"]);
-                            Header.RequestStatus = Convert.ToInt32(reader["ID_REQ_STATUS"]);
+                            Header.EmployeeId = Convert.ToInt16(reader["ID_EMPLOYEE"]);
+                            Header.EmployeeFirstName = Convert.ToString(reader["FIRST_NAME"]);
+                            Header.EmployeeLastName = Convert.ToString(reader["LAST_NAME"]);
+                            Header.StatusOfRequest = Convert.ToString(reader["REQ_STATUS"]);
                             Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Header.ResourceManager = Convert.ToString(reader["MANAGER"]);
+                            Header.NumberOfDays = Convert.ToInt16(reader["NO_VAC_DAYS"]);
+                            Header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
                             Headers.Add(Header);
                         }
                     }
