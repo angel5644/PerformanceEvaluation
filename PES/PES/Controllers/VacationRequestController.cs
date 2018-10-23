@@ -925,6 +925,26 @@ namespace PES.Controllers
             return View(vacationRequests);
         }
 
+        [HttpGet]
+        public ActionResult ReadOnlyDetails(int headerId)
+        {
+            //Get current user
+            Employee currentUser = new Employee();
+            var currentUserEmail = (string)Session["UserEmail"];
+            currentUser = _employeeService.GetByEmail(currentUserEmail);
+
+            //Get all the vacation requests
+            RequestDetailsViewModel vacationRequestDetails = new RequestDetailsViewModel();
+
+            //Validate if user is Read Only Admin
+            if (currentUser.ProfileId == Convert.ToInt32(ProfileUser.ReadonlyAd))
+            {
+                //Execute the service to get the vacation request details
+                vacationRequestDetails = _headerReqService.RequestDetails(headerId);
+            }
+            return View(vacationRequestDetails);
+        }
+
 
         public ActionResult VacationsReminder()
 		{
