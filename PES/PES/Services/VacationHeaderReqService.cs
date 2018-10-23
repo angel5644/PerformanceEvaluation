@@ -138,6 +138,86 @@ namespace PES.Services
         }
 
         /// <summary>
+        /// Metod to get all Vacation Request data for ReadOnly Admin using a Vacation Resquest Id as a parameter
+        /// </summary>
+        /// <param name="headerId"></param>
+        /// <returns>A vacation resquest object </returns>
+        public RequestDetailsViewModel RequestDetails (int headerId)
+        {
+            RequestDetailsViewModel header = new RequestDetailsViewModel();
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string query = @"SELECT EMP.ID_EMPLOYEE
+                                        , EMP.FIRST_NAME
+                                        , EMP.LAST_NAME
+                                        , EMP.POSITION
+                                        , PROF.PROFILE
+                                        , LOC.NAME LOCATION
+                                        , NVL(EMP.FREE_DAYS, 0) Free_Days
+                                        , MGR.ID_EMPLOYEE Manager_ID
+                                        , CONCAT(MGR.FIRST_NAME, CONCAT(' ', MGR.LAST_NAME)) MANAGER
+                                        , MGR.POSITION Manager_Position
+                                        , HDR.ID_HEADER_REQ
+                                        , HDR.TITLE
+                                        , STAT.STATUS
+                                        , HDR.COMMENTS
+                                        , HDR.NO_VAC_DAYS
+                                        , NVL(HDR.NO_UNPAID_DAYS, 0)
+                                        , SUB.START_DATE
+                                        , SUB.END_DATE
+                                        , RETURN_DATE
+                                    FROM PE.VACATION_HEADER_REQ HDR
+                                    INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE
+                                    INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE
+                                    INNER JOIN PE.LOCATION LOC ON EMP.ID_LOCATION = LOC.ID_LOCATION
+                                    INNER JOIN PE.EMPLOYEE MGR ON EMP.ID_MANAGER = MGR.ID_EMPLOYEE
+                                    INNER JOIN PE.STATUS STAT ON HDR.ID_REQ_STATUS = STAT.ID_STATUS
+                                    INNER JOIN PE.VACATION_SUBREQ SUB ON HDR.ID_HEADER_REQ = SUB.ID_HEADER_REQ
+                                    WHERE HDR.ID_HEADER_REQ = 60
+                                    ; ";
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("headerId", headerId));
+                        command.ExecuteReader();
+                        OracleDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            header.EmployeeId = Convert.ToInt32(reader["ID_EMPLOYEE"]);
+                            header.EmployeeFirstName = Convert.ToString(reader["FIRST_NAME"]);
+                            header.EmployeeLastName = Convert.ToString(reader["LAST_NAME"]);
+                            header.EmployeePosition = Convert.ToString(reader["POSITION"]);
+                            header.EmployeeProfile = Convert.ToString(reader["PROFILE"]);
+                            header.EmployeeLocation = Convert.ToString(reader["LOCATION"]);
+                            header.EmployeeFreeDays = Convert.ToInt16(reader["Free_Days"]);
+                            header.ManagerID = Convert.ToInt16(reader["Manager_ID"]);
+                            header.ResourceManager = Convert.ToString(reader["MANAGER"]);
+                            header.ManagerPosition = Convert.ToString(reader["Manager_Position"]);
+                            header.RequestID = Convert.ToInt32(reader["ID_HEADER_REQ"]);
+                            header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
+                            header.StatusOfRequest = Convert.ToString(reader["REQ_STATUS"]);
+                            header.Comments = Convert.ToString(reader["COMMENTS"]);
+                            header.NumberOfDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
+                            header.UnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
+                            header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
+                            header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
+                            header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                        }
+                    }
+                    db.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return header;
+        }
+
+        /// <summary>
         /// Metod to get all Vacation Request data by a Vacation Resquest Id  
         /// </summary>
         /// <param name="headerId"></param>
@@ -201,7 +281,7 @@ namespace PES.Services
             {
                 throw;
             }
-
+    
             return header;
         }
 
