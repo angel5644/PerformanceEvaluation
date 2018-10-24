@@ -37,6 +37,7 @@ namespace PES.Services
                                         "HE.ID_EMPLOYEE, " +
                                         "HE.NO_VAC_DAYS," +
                                         "HE.TITLE," +
+                                        "HE.ID_HEADER_REQ,"+
                                         "REQ.REQ_STATUS," +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
@@ -64,6 +65,7 @@ namespace PES.Services
                             Header.ResourceManager = Convert.ToString(reader["MANAGER"]);
                             Header.NumberOfDays = Convert.ToInt16(reader["NO_VAC_DAYS"]);
                             Header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
+                            Header.RequestID = Convert.ToInt16(reader["ID_HEADER_REQ"]);
                             Headers.Add(Header);
                         }
                     }
@@ -150,34 +152,33 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string query = @"SELECT EMP.ID_EMPLOYEE
-                                        , EMP.FIRST_NAME
-                                        , EMP.LAST_NAME
-                                        , EMP.POSITION
-                                        , PROF.PROFILE
-                                        , LOC.NAME LOCATION
-                                        , NVL(EMP.FREE_DAYS, 0) Free_Days
-                                        , MGR.ID_EMPLOYEE Manager_ID
-                                        , CONCAT(MGR.FIRST_NAME, CONCAT(' ', MGR.LAST_NAME)) MANAGER
-                                        , MGR.POSITION Manager_Position
-                                        , HDR.ID_HEADER_REQ
-                                        , HDR.TITLE
-                                        , STAT.STATUS
-                                        , HDR.COMMENTS
-                                        , HDR.NO_VAC_DAYS
-                                        , NVL(HDR.NO_UNPAID_DAYS, 0)
-                                        , SUB.START_DATE
-                                        , SUB.END_DATE
-                                        , RETURN_DATE
-                                    FROM PE.VACATION_HEADER_REQ HDR
-                                    INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE
-                                    INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE
-                                    INNER JOIN PE.LOCATION LOC ON EMP.ID_LOCATION = LOC.ID_LOCATION
-                                    INNER JOIN PE.EMPLOYEE MGR ON EMP.ID_MANAGER = MGR.ID_EMPLOYEE
-                                    INNER JOIN PE.STATUS STAT ON HDR.ID_REQ_STATUS = STAT.ID_STATUS
-                                    INNER JOIN PE.VACATION_SUBREQ SUB ON HDR.ID_HEADER_REQ = SUB.ID_HEADER_REQ
-                                    WHERE HDR.ID_HEADER_REQ = 60
-                                    ; ";
+                    string query = @"SELECT EMP.ID_EMPLOYEE"
+                                        + ", EMP.FIRST_NAME"
+                                        + ", EMP.LAST_NAME"
+                                        + ", EMP.POSITION"
+                                        + ", PROF.PROFILE"
+                                        + ", LOC.NAME LOCATION"
+                                        + ", NVL(EMP.FREE_DAYS, 0) Free_Days"
+                                        + ", MGR.ID_EMPLOYEE Manager_ID"
+                                        + ", CONCAT(MGR.FIRST_NAME, CONCAT(' ', MGR.LAST_NAME)) MANAGER"
+                                        + ", MGR.POSITION Manager_Position"
+                                        + ", HDR.ID_HEADER_REQ"
+                                        + ", HDR.TITLE"
+                                        + ", STAT.STATUS"
+                                        + ", HDR.COMMENTS"
+                                        + ", HDR.NO_VAC_DAYS"
+                                        + ", NVL(HDR.NO_UNPAID_DAYS, 0) UNPAID"
+                                        + ", SUB.START_DATE"
+                                        + ", SUB.END_DATE"
+                                        + ", RETURN_DATE"
+                                    + " FROM PE.VACATION_HEADER_REQ HDR"
+                                    + " INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE"
+                                    + " INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE"
+                                    + " INNER JOIN PE.LOCATION LOC ON EMP.ID_LOCATION = LOC.ID_LOCATION"
+                                    + " INNER JOIN PE.EMPLOYEE MGR ON EMP.ID_MANAGER = MGR.ID_EMPLOYEE"
+                                    + " INNER JOIN PE.STATUS STAT ON HDR.ID_REQ_STATUS = STAT.ID_STATUS"
+                                    + " INNER JOIN PE.VACATION_SUBREQ SUB ON HDR.ID_HEADER_REQ = SUB.ID_HEADER_REQ"
+                                    + " WHERE HDR.ID_HEADER_REQ = :headerId";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("headerId", headerId));
@@ -197,10 +198,10 @@ namespace PES.Services
                             header.ManagerPosition = Convert.ToString(reader["Manager_Position"]);
                             header.RequestID = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
-                            header.StatusOfRequest = Convert.ToString(reader["REQ_STATUS"]);
+                            header.StatusOfRequest = Convert.ToString(reader["STATUS"]);
                             header.Comments = Convert.ToString(reader["COMMENTS"]);
                             header.NumberOfDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
-                            header.UnpaidDays = Convert.ToInt32(reader["NO_UNPAID_DAYS"]);
+                            header.UnpaidDays = Convert.ToInt32(reader["UNPAID"]);
                             header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
