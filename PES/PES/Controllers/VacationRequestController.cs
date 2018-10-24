@@ -922,6 +922,11 @@ namespace PES.Controllers
                 //Execute the service to get all the vacation requests
                 vacationRequests = _headerReqService.GetAllVacationRequests().ToList();
             }
+            else
+            {
+                //Deny access
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             return View(vacationRequests);
         }
 
@@ -941,6 +946,11 @@ namespace PES.Controllers
             {
                 //Execute the service to get the vacation request details
                 vacationRequestDetails = _headerReqService.RequestDetails(headerId);
+            }
+            else
+            {
+                //Deny access
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             return View(vacationRequestDetails);
         }
