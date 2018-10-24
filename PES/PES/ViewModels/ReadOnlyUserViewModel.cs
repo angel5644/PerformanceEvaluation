@@ -26,5 +26,7 @@ namespace PES.ViewModels
         public int NumberOfDays { get; set; }
 
         public string TitleOfRequest { get; set; }
+
+        public int RequestID { get; set; }
     }
 }
