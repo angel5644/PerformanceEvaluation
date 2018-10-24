@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<PES.ViewModels.ReadOnlyUserViewModel>
-<html>
-<head>
 
-</head>
-<body>
     <div>
         <div class="row text-center">
             <br />
@@ -53,7 +49,7 @@
                                             @foreach (var request in Model)
                                             {
                                             <tr class="odd">
-                                                <td><a href="#"> @request.TitleOfRequest </a></td>                                           
+                                                <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>                                           
                                                 <td>@request.EmployeeFirstName @request.EmployeeLastName</td>                                             
                                                 <td>@request.EmployeeId</td>
                                                 <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
@@ -75,5 +71,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+
