@@ -24,7 +24,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top" style="box-shadow: 0 8px 6px -6px black;">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="@Url.Action("Index","Menu")">
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">
                     <img alt="4th Source" src="~/Content/images/4thSource_logo.png" height="40">
                 </a> 
                 @if (userLogged)
@@ -58,10 +58,10 @@
                                     <li><a href="@Url.Action("ShowLatenesExcel", "Lateness")">Import an Excel File</a></li>
                                     <li><a href="@Url.Action("Index", "Lateness")">My Lateness</a></li>
                                     <li><a href="@Url.Action("Index", "Holidays")">Holidays</a></li>
-                                   
-                                   
+
+
                                 }
-                                else
+                                else if (userProfile == ProfileUser.Resource)
                                 {
                                     <li><a href="@Url.Action("Index", "PerformanceEvaluation")">Perfomance Evaluation</a></li>
                                     <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Request History</a></li>
@@ -75,7 +75,7 @@
 
 
 
-                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Resource || userProfile == ProfileUser.Manager))
+                 @if (userLogged && (userProfile == ProfileUser.Director || userProfile == ProfileUser.Resource || userProfile == ProfileUser.Manager || userProfile == ProfileUser.ReadonlyAd))
                  {
                     <ul class="nav navbar-nav" style="margin-top:10px">
                         <li class="dropdown">
@@ -85,7 +85,11 @@
                                 {
                                     <li><a href="@Url.Action("VacationAssignation", "VacationRequest")">Assign Vacations</a></li>
                                     <li><a href="@Url.Action("VacationsReminder", "VacationRequest")">Vacations Reminder</a></li>
-                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Request History</a></li>                                    
+                                    <li><a href="@Url.Action("HistoricalResource", "VacationRequest")">Request History</a></li>
+                                }
+                                else if (userProfile == ProfileUser.ReadonlyAd)
+                                {
+                                    <li><a href="@Url.Action("ReadOnlyAdmin", "VacationRequest")">Request History</a></li>
                                 }
                                 else
                                 {
