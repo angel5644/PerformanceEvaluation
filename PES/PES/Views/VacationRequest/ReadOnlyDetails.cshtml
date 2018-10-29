@@ -1,0 +1,43 @@
+﻿@model PES.ViewModels.RequestDetailsViewModel
+
+<html lang="en">
+
+<body>
+    <br /><br />
+    <h1>Request Information</h1>
+    <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" id="contenedor">
+                    <h4>Resource</h4> 
+                    <strong>Name: </strong>@Model.EmployeeFirstName @Model.EmployeeLastName <br>
+                    <strong> Employee ID: </strong> @Model.EmployeeId    <br>
+                    <strong>Employee Position: </strong> @Model.EmployeePosition <br>
+                    <strong>Employee Profile: </strong> @Model.EmployeeProfile <br>
+                    <strong>Employee Location: </strong> @Model.EmployeeLocation
+                </div>
+
+                <div class="col-md-6">
+                    <h4> Manager </h4> 
+                    <strong>Name: </strong> @Model.ResourceManager
+                </div>
+            </div>
+
+            <br><br>
+            
+                <div class="row">
+                    <h4>Request Details:</h4> 
+                    <strong>Request ID: </strong> @Model.RequestID <br>
+                    <strong>Title: </strong> @Model.TitleOfRequest <br>
+                    <strong>Start Date: </strong> @Model.StartDate.ToString("MM/dd/yyyy") <br>
+                    <strong>End Date: </strong> @Model.EndDate.ToString("MM/dd/yyyy") <br>
+                    <strong>Return Date: </strong> @Model.ReturnDate.ToString("MM/dd/yyyy") <br>
+                    <strong>Days: </strong> @Model.NumberOfDays <br>
+                    <strong>Status:</strong> @Model.StatusOfRequest <br>
+                    <strong>Coments: </strong> @Model.Comments
+                </div>
+           </div>
+        
+
+</body>
+</html>
