@@ -164,7 +164,7 @@ namespace PES.Services
                                         + ", MGR.POSITION Manager_Position"
                                         + ", HDR.ID_HEADER_REQ"
                                         + ", HDR.TITLE"
-                                        + ", STAT.STATUS"
+                                        + ", STAT.REQ_STATUS"
                                         + ", HDR.COMMENTS"
                                         + ", HDR.NO_VAC_DAYS"
                                         + ", NVL(HDR.NO_UNPAID_DAYS, 0) UNPAID"
@@ -176,7 +176,7 @@ namespace PES.Services
                                     + " INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE"
                                     + " INNER JOIN PE.LOCATION LOC ON EMP.ID_LOCATION = LOC.ID_LOCATION"
                                     + " INNER JOIN PE.EMPLOYEE MGR ON EMP.ID_MANAGER = MGR.ID_EMPLOYEE"
-                                    + " INNER JOIN PE.STATUS STAT ON HDR.ID_REQ_STATUS = STAT.ID_STATUS"
+                                    + " INNER JOIN PE.VACATION_REQ_STATUS STAT ON HDR.ID_REQ_STATUS = STAT.ID_REQ_STATUS"
                                     + " INNER JOIN PE.VACATION_SUBREQ SUB ON HDR.ID_HEADER_REQ = SUB.ID_HEADER_REQ"
                                     + " WHERE HDR.ID_HEADER_REQ = :headerId";
                     using (OracleCommand command = new OracleCommand(query, db))
@@ -198,7 +198,7 @@ namespace PES.Services
                             header.ManagerPosition = Convert.ToString(reader["Manager_Position"]);
                             header.RequestID = Convert.ToInt32(reader["ID_HEADER_REQ"]);
                             header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
-                            header.StatusOfRequest = Convert.ToString(reader["STATUS"]);
+                            header.StatusOfRequest = Convert.ToString(reader["REQ_STATUS"]);
                             header.Comments = Convert.ToString(reader["COMMENTS"]);
                             header.NumberOfDays = Convert.ToInt32(reader["NO_VAC_DAYS"]);
                             header.UnpaidDays = Convert.ToInt32(reader["UNPAID"]);

@@ -15,11 +15,13 @@ namespace PES.ViewModels
 
         public int EmployeeFreeDays { get; set; }
 
+        public bool EmployeeProject { get; set; }
+
+        public string EmployeeLeader { get; set; }
+
         public int ManagerID { get; set; }
 
         public string ManagerPosition { get; set; }
-
-        public int RequestID { get; set; }
 
         public string Comments { get; set; }
 
