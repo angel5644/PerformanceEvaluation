@@ -28,5 +28,7 @@ namespace PES.ViewModels
         public string TitleOfRequest { get; set; }
 
         public int RequestID { get; set; }
+
+        public string RequestType { get; set; }
     }
 }
