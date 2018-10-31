@@ -45,6 +45,11 @@ namespace PES.ViewModels
         public DateTime ReturnDate { get; set; }
 
         /// <summary>
+        /// Creation Date of the Employee's Vacations
+        /// </summary>
+        public DateTime CreationDate { get; set; }
+
+        /// <summary>
         /// Lead's Name of the employee in the period of the vacations
         /// </summary>
         public string LeadName { get; set; }
