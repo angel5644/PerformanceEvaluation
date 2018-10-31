@@ -19,6 +19,8 @@ namespace PES.ViewModels
 
         public DateTime ReturnDate { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public string StatusOfRequest { get; set; }
 
         public string ResourceManager { get; set; }
