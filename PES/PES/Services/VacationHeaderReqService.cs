@@ -41,7 +41,8 @@ namespace PES.Services
                                         "REQ.REQ_STATUS," +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
-                                        "SUB.RETURN_DATE " +
+                                        "SUB.RETURN_DATE, " +
+                                        "SUB.DATE_CREATED" +
                                     "FROM " +
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
@@ -66,6 +67,7 @@ namespace PES.Services
                             Header.NumberOfDays = Convert.ToInt16(reader["NO_VAC_DAYS"]);
                             Header.TitleOfRequest = Convert.ToString(reader["TITLE"]);
                             Header.RequestID = Convert.ToInt16(reader["ID_HEADER_REQ"]);
+                            Header.CreationDate = Convert.ToDateTime(reader["DATE_CREATED"]);
                             Headers.Add(Header);
                         }
                     }
@@ -102,7 +104,8 @@ namespace PES.Services
                                         "HE.ID_REQ_STATUS," +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
-                                        "SUB.RETURN_DATE " +
+                                        "SUB.RETURN_DATE, " +
+                                        "SUB.DATE_CREATED " +
                                     "FROM " +
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN VACATION_SUBREQ SUB ON HE.ID_HEADER_REQ = SUB.ID_HEADER_REQ " +
@@ -125,6 +128,7 @@ namespace PES.Services
                             Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Header.CreationDate = Convert.ToDateTime(reader["DATE_CREATED"]);
                             Headers.Add(Header);
                         }
                     }
@@ -311,7 +315,8 @@ namespace PES.Services
                                         "SUB.HAVE_PROJECT, " +
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
-                                        "SUB.RETURN_DATE " +
+                                        "SUB.RETURN_DATE, " +
+                                        "SUB.DATE_CREATED" +
                                     "FROM " +
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
@@ -338,6 +343,7 @@ namespace PES.Services
                             Header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             Header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             Header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            Header.CreationDate = Convert.ToDateTime(reader["DATE_CREATED"]);
                             Headers.Add(Header);
                         }
                     }
