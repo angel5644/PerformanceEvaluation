@@ -13,7 +13,19 @@
                     <strong>Name: </strong>@Model.EmployeeFirstName @Model.EmployeeLastName <br>
                     <strong>Employee Position: </strong> @Model.EmployeePosition <br>
                     <strong>Employee Profile: </strong> @Model.EmployeeProfile <br>
-                    <strong>Employee Location: </strong> @Model.EmployeeLocation
+                    <strong>Employee Location: </strong> @Model.EmployeeLocation <br />
+                    <strong>Have project: </strong> 
+                    @if (!Model.EmployeeProject)
+                    {
+                        <span>Yes</span>
+                        <br />
+                        <strong>Leader: @Model.EmployeeLeader</strong>
+                    }
+                    else
+                    {
+                        <span>No</span>
+                    }
+
                 </div>
 
                 <div class="col-md-6">
