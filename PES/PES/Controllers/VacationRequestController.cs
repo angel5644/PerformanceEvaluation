@@ -830,19 +830,10 @@ namespace PES.Controllers
             {
                 return RedirectToAction("SendRequestUnpaid", "VacationRequest", new { id = currentUser.EmployeeId });
             }
-            else if(TypeRedirectRequest == 3)
-            {
-                return RedirectToAction("EmergencyRequest", "VacationRequest", new { id = currentUser.EmployeeId });
-            }
             else
             {
                 return RedirectToAction("EmergencyRequest", "VacationRequest", new { id = currentUser.EmployeeId });
             }
-
-          
-
-
-
         }
 
 		/// <summary>
