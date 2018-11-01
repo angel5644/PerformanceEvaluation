@@ -42,7 +42,7 @@ namespace PES.Services
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
                                         "SUB.RETURN_DATE, " +
-                                        "SUB.DATE_CREATED" +
+                                        "SUB.DATE_CREATED " +
                                     "FROM " +
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
@@ -174,7 +174,8 @@ namespace PES.Services
                                         + ", NVL(HDR.NO_UNPAID_DAYS, 0) UNPAID"
                                         + ", SUB.START_DATE"
                                         + ", SUB.END_DATE"
-                                        + ", RETURN_DATE"
+                                        + ", SUB.RETURN_DATE"
+                                        + ", SUB.DATE_CREATED "
                                     + " FROM PE.VACATION_HEADER_REQ HDR"
                                     + " INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE"
                                     + " INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE"
@@ -209,6 +210,7 @@ namespace PES.Services
                             header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            header.CreationDate = Convert.ToDateTime(reader["DATE_CREATED"]);
                         }
                     }
                     db.Close();
@@ -249,6 +251,7 @@ namespace PES.Services
                                            ",SUB.START_DATE" +
                                            ",SUB.END_DATE" +
                                            ",SUB.RETURN_DATE " +
+                                           ",SUB.DATE_CREATED " +
                                     " FROM  VACATION_HEADER_REQ HE" +
                                           ",VACATION_SUBREQ SUB " + 
                                           ", VACATION_REQ_STATUS ST" +
@@ -277,6 +280,7 @@ namespace PES.Services
                             header.StartDate = Convert.ToDateTime(reader["START_DATE"]);
                             header.EndDate = Convert.ToDateTime(reader["END_DATE"]);
                             header.ReturnDate = Convert.ToDateTime(reader["RETURN_DATE"]);
+                            header.CreationDate = Convert.ToDateTime(reader["DATE_CREATED"]);
                         }
                     }
                     db.Close();
@@ -316,7 +320,7 @@ namespace PES.Services
                                         "SUB.START_DATE, " +
                                         "SUB.END_DATE, " +
                                         "SUB.RETURN_DATE, " +
-                                        "SUB.DATE_CREATED" +
+                                        "SUB.DATE_CREATED " +
                                     "FROM " +
                                         "VACATION_HEADER_REQ HE " +
                                     "INNER JOIN EMPLOYEE EMP ON EMP.ID_EMPLOYEE = HE.ID_EMPLOYEE " +
