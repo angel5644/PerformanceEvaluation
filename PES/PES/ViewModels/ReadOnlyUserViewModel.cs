@@ -13,6 +13,8 @@ namespace PES.ViewModels
 
         public int EmployeeId { get; set; }
 
+        public bool EmployeeProject { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; } 

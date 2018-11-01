@@ -17,7 +17,7 @@
                                 <table id="Tableview" border="1" class="table init-datatable">
                                     <thead>
                                         <tr>
-                                            <th>Title</th>
+                                            <th>TitleOfRequest</th>
                                             <th>Name</th>
                                             <th>Creation Date</th>
                                             <th>Start Date</th>
@@ -33,18 +33,72 @@
                                     <tbody>
                                         @foreach (var request in Model)
                                         {
-                                            <tr class="odd">
-                                                <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>
-                                                <td>@request.EmployeeFirstName @request.EmployeeLastName</td>
-                                                <td>@request.CreationDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@request.EndDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@request.ReturnDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@request.NumberOfDays</td>
-                                                <td>@request.StatusOfRequest</td>
-                                                <td>@request.ResourceManager</td>
-                                                <td>@request.RequestType</td>
-                                            </tr>
+                                        <tr class="odd">
+                                            <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>
+                                            <td>@request.EmployeeFirstName @request.EmployeeLastName</td>
+                                            <td>@request.CreationDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@request.EndDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@request.ReturnDate.ToString("MM/dd/yyyy")</td>
+                                            <td>@request.NumberOfDays</td>
+                                            <td>@request.StatusOfRequest</td>
+                                            <td>@request.ResourceManager</td>
+                                            @if (request.TitleOfRequest.Contains("EMERGENCY:"))
+                                            {
+
+                                            <td style="background-color:#F08080">Emergency Request</td>
+
+                                            }
+                                            else if (request.TitleOfRequest.Contains("UNPAID:") && request.EmployeeProject)
+                                            {
+
+                                            <td style="background-color:#7AD8DB">Resource On Bench and Unpaid Request</td>
+
+
+                                            }
+                                            else if (request.TitleOfRequest.Contains("UNPAID:"))
+                                            {
+
+                                            <td style="background-color:#baffc9">Unpaid Request</td>
+
+                                            }
+                                            else if (request.TitleOfRequest.Contains("FUNERAL:"))
+                                            {
+
+                                            <td style="background-color:#F08080">Emergency Request</td>
+                                            }
+
+                                            else if (request.TitleOfRequest.Contains("PATERNITY:"))
+                                            {
+
+                                            <td style="background-color:#F08080">Emergency Request</td>
+                                            }
+                                            else if (request.TitleOfRequest.Contains("AR:"))
+                                            {
+
+                                            <td style="background-color:#c9c9ff">Assignment request</td>
+
+                                            }
+                                            else if (request.TitleOfRequest.Contains("HR:"))
+                                            {
+
+                                            <td style="background-color:#e32e2e">Hardbooked Request</td>
+
+                                            }
+
+                                            else if (request.EmployeeProject)
+                                            {
+
+                                            <td style="background-color:#ffdfba">Resource On Bench</td>
+
+                                            }
+                                            else
+                                            {
+
+                                            <td>Normal Request</td>
+
+                                            }
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
