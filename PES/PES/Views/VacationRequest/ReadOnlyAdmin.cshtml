@@ -1,58 +1,41 @@
 ﻿@model IEnumerable<PES.ViewModels.ReadOnlyUserViewModel>
 
-    <div>
-        <div class="row text-center">
-            <br />
-            <div class="col-md-12">
-                <h2>Read Only User</h2>
-            </div>
-            <br />
+<div>
+    <div class="row text-center">
+        <br />
+        <div class="col-md-12">
+            <h2>Request History</h2>
         </div>
-        <div class="well">
-            <div class="tab-content">
-                <div id="pending" class="tab-pane fade in active">
-                    <div id="Tableview_wrapper" class="dataTables_wrapper from-inline dt-bootstrap select2-no-results footer">
-                        <div class="row"
-                            <div class="col-sm-6">
-                                <div class="dataTables_length" id="Tableview_length">
-                                    <label>
-                                        Show
-                                        <select name="Tableview_lenght" aria-controls="Tableview" class="form-inline input-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                        entries
-                                    </label>
-                                </div>
-                            </div>
-                        <br />
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="Tableview" border="1" class="table init-datatable">
-                                           <thead>
-                                               <tr>
-                                                   <th id="header_title">Title</th>
-                                                   <th id="header_title">Name</th>
-                                                   <th id="header_title">Employee Id</th>
-                                                   <th id="header_title">Creation Date</th>
-                                                   <th id="header_title">Start Date</th>
-                                                   <th id="header_title">End Date</th>
-                                                   <th id="header_title">Return Date</th>
-                                                   <th id="header_title">Days</th>
-                                                   <th id="header_title">Status</th>
-                                                   <th id="header_title">Manager Name</th>
-                                               </tr>
-                                           </thead>
-                                        
-                                        <tbody>
-                                            @foreach (var request in Model)
-                                            {
+        <br />
+    </div>
+    <div class="well">
+        <div class="tab-content">
+            <div id="pending" class="tab-pane fade in active">
+                <div id="Tableview_wrapper" class="dataTables_wrapper from-inline dt-bootstrap select2-no-results footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="Tableview" border="1" class="table init-datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Name</th>
+                                            <th>Creation Date</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Return Date</th>
+                                            <th>Days</th>
+                                            <th>Status</th>
+                                            <th>Manager Name</th>
+                                            <th>Request Type</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var request in Model)
+                                        {
                                             <tr class="odd">
                                                 <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>
                                                 <td>@request.EmployeeFirstName @request.EmployeeLastName</td>
-                                                <td>@request.EmployeeId</td>
                                                 <td>@request.CreationDate.ToString("MM/dd/yyyy")</td>
                                                 <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
                                                 <td>@request.EndDate.ToString("MM/dd/yyyy")</td>
@@ -60,17 +43,30 @@
                                                 <td>@request.NumberOfDays</td>
                                                 <td>@request.StatusOfRequest</td>
                                                 <td>@request.ResourceManager</td>
-
+                                                <td>@request.RequestType</td>
                                             </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/showEmployees.js")
+    @Scripts.Render("~/Scripts/historicalResource.js")
+
+}
+
+@section Styles {
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/ExportDataTables/buttons.dataTables.min.css")
+    @Styles.Render("~/Content/css/historical-resource.css")
+    @Styles.Render("~/Content/datatables/dataTables.bootstrap.min.css")
+}
 
