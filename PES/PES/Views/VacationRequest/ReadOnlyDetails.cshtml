@@ -1,8 +1,5 @@
 ﻿@model PES.ViewModels.RequestDetailsViewModel
 
-<html lang="en">
-
-<body>
     <br /><br />
     <h1>Request Information</h1>
     <br>
@@ -34,20 +31,23 @@
                     <strong>Name: </strong> @Model.ResourceManager
                 </div>
             </div>
+            <div class="row">
 
             <br><br>
-            
-                    <h4>Request Details:</h4> 
-                    <strong>Title: </strong> @Model.TitleOfRequest <br>
-                    <strong>Start Date: </strong> @Model.StartDate.ToString("MM/dd/yyyy") <br>
-                    <strong>End Date: </strong> @Model.EndDate.ToString("MM/dd/yyyy") <br>
-                    <strong>Return Date: </strong> @Model.ReturnDate.ToString("MM/dd/yyyy") <br>
-                    <strong>Days: </strong> @Model.NumberOfDays <br>
-                    <strong>Status:</strong> @Model.StatusOfRequest <br>
-                    <strong>Coments: </strong> @Model.Comments
-                
-           </div>
-        
-
-</body>
-</html>
+                  <div class="col-md-6">
+                      <h4>Request Details:</h4>
+                      <strong>Title: </strong> @Model.TitleOfRequest <br>
+                      <strong>Start Date: </strong> @Model.StartDate.ToString("MM/dd/yyyy") <br>
+                      <strong>End Date: </strong> @Model.EndDate.ToString("MM/dd/yyyy") <br>
+                      <strong>Return Date: </strong> @Model.ReturnDate.ToString("MM/dd/yyyy") <br>
+                      <strong>Days: </strong> @Model.NumberOfDays <br>
+                      <strong>Status:</strong> @Model.StatusOfRequest <br>
+                      <strong>Coments: </strong> @Model.Comments
+                  </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary" href="@Url.Action("ReadOnlyAdmin", "VacationRequest")">
+                        Return to History
+                    </a>
+                </div>
+             </div>
+        </div>
