@@ -36,6 +36,7 @@
                                                    <th id="header_title">Title</th>
                                                    <th id="header_title">Name</th>
                                                    <th id="header_title">Employee Id</th>
+                                                   <th id="header_title">Creation Date</th>
                                                    <th id="header_title">Start Date</th>
                                                    <th id="header_title">End Date</th>
                                                    <th id="header_title">Return Date</th>
@@ -49,9 +50,10 @@
                                             @foreach (var request in Model)
                                             {
                                             <tr class="odd">
-                                                <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>                                           
-                                                <td>@request.EmployeeFirstName @request.EmployeeLastName</td>                                             
+                                                <td><a href="@Url.Action("ReadOnlyDetails", "VacationRequest", new { headerId = request.RequestID } )"> @request.TitleOfRequest </a></td>
+                                                <td>@request.EmployeeFirstName @request.EmployeeLastName</td>
                                                 <td>@request.EmployeeId</td>
+                                                <td>@request.CreationDate.ToString("MM/dd/yyyy")</td>
                                                 <td>@request.StartDate.ToString("MM/dd/yyyy")</td>
                                                 <td>@request.EndDate.ToString("MM/dd/yyyy")</td>
                                                 <td>@request.ReturnDate.ToString("MM/dd/yyyy")</td>
