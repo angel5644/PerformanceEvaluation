@@ -1,8 +1,44 @@
 ﻿
 @{
+    /**/
+
     ViewBag.Title = "ReadOnlyLineChart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<script type="text/javascript">
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Example Line Chart"
+            },
+            axisY: {
+                includeZero: false
+            },
+            data: [{
+                type: "line",
+                dataPoints: [
+                    { y: 450 },
+                    { y: 414 },
+                    { y: 520, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+                    { y: 460 },
+                    { y: 450 },
+                    { y: 500 },
+                    { y: 480 },
+                    { y: 480 },
+                    { y: 410, indexLabel: "lowest", markerColor: "DarkSlateGrey", markerType: "cross" },
+                    { y: 500 },
+                    { y: 480 },
+                    { y: 510 }
+                ]
+            }]
+        });
+        chart.render();
+    }
+</script>
 
 <br />
 <br />
@@ -11,7 +47,7 @@
         <div id="location" class="col-md-3 text-center">
             <b>Location: </b>
             <select>
-                <option value="Select_Location">Select a State</option>
+                <option value="Select_Location">Select a Location</option>
                 <option value="Colima">Colima</option>
                 <option value="Merida">Merida</option>
             </select>
@@ -30,5 +66,15 @@
     </div> <!-- container end -->
 </div> <!-- form-group end -->
 
-<div class="chartContainer" style="height: 300px; width: 100%;"></div>
+<br />
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/Scripts/canvasjs.min.js")
+}
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
