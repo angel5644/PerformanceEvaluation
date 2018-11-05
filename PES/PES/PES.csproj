@@ -172,6 +172,7 @@
     <Compile Include="Services\EmailInsertNewRequestService.cs" />
     <Compile Include="Services\ResendRequestService.cs" />
     <Compile Include="ViewModels\AssignVacationsViewModel.cs" />
+    <Compile Include="ViewModels\Charts.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\FechaViewModel.cs" />
     <Compile Include="ViewModels\ManagerInsertNewRequestViewModel.cs" />
