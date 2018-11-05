@@ -79,6 +79,56 @@ namespace PES.Services
         }
 
         /// <summary>
+        /// Method to get the count of request by year and location 
+        /// </summary>
+        /// <param name="year", name="location"></param>
+        /// <returns>A list of Sub Resquests</returns>
+        public List<VacationSubreq> GetVacationsForChart(int year, string location)
+        {
+            List<Charts> vacationSubReqs = new List<Charts>();
+            Charts vacationSubReq = new Charts();
+
+            try
+            {
+                using (OracleConnection db = dbContext.GetDBConnection())
+                {
+                    db.Open();
+                    string query = "SELECT " +
+                        "count(ID_SUBREQ) VACATIONS" +
+                        ", EXTRACT(MONTH FROM RETURN_DATE) MONTH" +
+                        "FROM PE.VACATION_SUBREQ SUB " +
+                        "INNER JOIN pe.vacation_header_req HDR on SUB.ID_HEADER_REQ = HDR.ID_HEADER_REQ " +
+                        "INNER JOIN pe.employee EMP on HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE " +
+                        "INNER JOIN pe.location LOC on EMP.ID_LOCATION = LOC.ID_LOCATION " +
+                        "WHERE EXTRACT(YEAR FROM DATE_CREATED) = :year AND LOC.NAME = :location";
+                    using (OracleCommand command = new OracleCommand(query, db))
+                    {
+                        command.Parameters.Add(new OracleParameter("year", year));
+                        command.Parameters.Add(new OracleParameter("location", location));
+                        command.ExecuteReader();
+                        OracleDataReader Reader = command.ExecuteReader();
+                        while (Reader.Read())
+                        {
+                            vacationSubReq = new Charts();
+                            vacationSubReq.Month = Convert.ToInt32(Reader["MONTH"]);
+                            vacationSubReq.Requests = Convert.ToInt32(Reader["VACATIONS"]);
+                            vacationSubReqs.Add(vacationSubReq);
+                        }
+                    }
+
+                    db.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return vacationSubReqs;
+        }
+
+        /// <summary>
         /// Metod to INSERT a subrequest in the DB using a VacationSubreq object
         /// </summary>
         /// <param name="vacSubReq"></param>
