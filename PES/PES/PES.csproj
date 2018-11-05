@@ -375,6 +375,7 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\define-report.js" />
@@ -557,6 +558,7 @@
     <Content Include="Views\Shared\_TableVacationRemainder.cshtml" />
     <Content Include="Views\VacationRequest\ReadOnlyAdmin.cshtml" />
     <Content Include="Views\VacationRequest\ReadOnlyDetails.cshtml" />
+    <Content Include="Views\VacationRequest\ReadOnlyLineChart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

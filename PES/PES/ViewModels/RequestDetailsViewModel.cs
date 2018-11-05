@@ -15,8 +15,6 @@ namespace PES.ViewModels
 
         public int EmployeeFreeDays { get; set; }
 
-        public bool EmployeeProject { get; set; }
-
         public string EmployeeLeader { get; set; }
 
         public int ManagerID { get; set; }

@@ -948,6 +948,12 @@ namespace PES.Controllers
             return View(vacationRequestDetails);
         }
 
+        [HttpGet]
+        public ActionResult ReadOnlyLineChart()
+        {
+            return View();
+        }
+
 
         public ActionResult VacationsReminder()
 		{

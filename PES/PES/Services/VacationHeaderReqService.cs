@@ -176,6 +176,8 @@ namespace PES.Services
                                         + ", SUB.END_DATE"
                                         + ", SUB.RETURN_DATE"
                                         + ", SUB.DATE_CREATED "
+                                        + ", SUB.HAVE_PROJECT"
+                                        + ", SUB.LEAD_NAME"
                                     + " FROM PE.VACATION_HEADER_REQ HDR"
                                     + " INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE"
                                     + " INNER JOIN PE.PROFILE PROF ON EMP.ID_PROFILE = PROF.ID_PROFILE"
@@ -198,6 +200,8 @@ namespace PES.Services
                             header.EmployeeProfile = Convert.ToString(reader["PROFILE"]);
                             header.EmployeeLocation = Convert.ToString(reader["LOCATION"]);
                             header.EmployeeFreeDays = Convert.ToInt16(reader["Free_Days"]);
+                            header.EmployeeProject = Convert.ToBoolean(reader["HAVE_PROJECT"]);
+                            header.EmployeeLeader = Convert.ToString(reader["LEAD_NAME"]);
                             header.ManagerID = Convert.ToInt16(reader["Manager_ID"]);
                             header.ResourceManager = Convert.ToString(reader["MANAGER"]);
                             header.ManagerPosition = Convert.ToString(reader["Manager_Position"]);
