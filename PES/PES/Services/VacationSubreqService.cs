@@ -83,7 +83,7 @@ namespace PES.Services
         /// </summary>
         /// <param name="year", name="location"></param>
         /// <returns>A list of Sub Resquests</returns>
-        public List<VacationSubreq> GetVacationsForChart(int year, string location)
+        public List<Charts> GetVacationsForChart(int year, string location)
         {
             List<Charts> vacationSubReqs = new List<Charts>();
             Charts vacationSubReq = new Charts();
@@ -96,11 +96,12 @@ namespace PES.Services
                     string query = "SELECT " +
                         "count(ID_SUBREQ) VACATIONS" +
                         ", EXTRACT(MONTH FROM RETURN_DATE) MONTH" +
-                        "FROM PE.VACATION_SUBREQ SUB " +
+                        " FROM PE.VACATION_SUBREQ SUB " +
                         "INNER JOIN pe.vacation_header_req HDR on SUB.ID_HEADER_REQ = HDR.ID_HEADER_REQ " +
                         "INNER JOIN pe.employee EMP on HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE " +
                         "INNER JOIN pe.location LOC on EMP.ID_LOCATION = LOC.ID_LOCATION " +
-                        "WHERE EXTRACT(YEAR FROM DATE_CREATED) = :year AND LOC.NAME = :location";
+                        "WHERE EXTRACT(YEAR FROM DATE_CREATED) = :year AND LOC.NAME = :location " +
+                        "group by EXTRACT(MONTH FROM RETURN_DATE)";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("year", year));
