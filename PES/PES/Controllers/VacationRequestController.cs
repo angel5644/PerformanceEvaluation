@@ -949,9 +949,13 @@ namespace PES.Controllers
         }
 
         [HttpGet]
-        public ActionResult ReadOnlyLineChart()
+        public ActionResult ReadOnlyLineChart(int year, string location)
         {
-            return View();
+            List<Charts> chartData = new List<Charts>();
+
+            chartData = _subReqService.GetVacationsForChart(year, location).ToList();
+
+            return View(chartData);
         }
 
 
