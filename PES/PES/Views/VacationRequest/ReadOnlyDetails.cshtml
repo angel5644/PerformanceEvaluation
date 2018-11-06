@@ -1,53 +1,54 @@
 ﻿@model PES.ViewModels.RequestDetailsViewModel
 
-<html lang="en">
+<br /><br />
+<h1>Request Information</h1>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" id="contenedor">
+            <h4>Resource</h4>
+            <strong>Name: </strong>@Model.EmployeeFirstName @Model.EmployeeLastName <br>
+            <strong>Employee Position: </strong> @Model.EmployeePosition <br>
+            <strong>Employee Profile: </strong> @Model.EmployeeProfile <br>
+            <strong>Employee Location: </strong> @Model.EmployeeLocation <br />
+            <strong>Have project: </strong>
+            @if (!Model.EmployeeProject)
+            {
+                <span>Yes</span>
+                <br />
+                <strong>Leader: </strong>
+                <span>@Model.EmployeeLeader</span>
+            }
+            else
+            {
+                <span>No</span>
+            }
 
-<body>
-    <br /><br />
-    <h1>Request Information</h1>
-    <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6" id="contenedor">
-                    <h4>Resource</h4> 
-                    <strong>Name: </strong>@Model.EmployeeFirstName @Model.EmployeeLastName <br>
-                    <strong>Employee Position: </strong> @Model.EmployeePosition <br>
-                    <strong>Employee Profile: </strong> @Model.EmployeeProfile <br>
-                    <strong>Employee Location: </strong> @Model.EmployeeLocation <br />
-                    <strong>Have project: </strong> 
-                    @if (!Model.EmployeeProject)
-                    {
-                        <span>Yes</span>
-                        <br />
-                        <strong>Leader: @Model.EmployeeLeader</strong>
-                    }
-                    else
-                    {
-                        <span>No</span>
-                    }
+        </div>
 
-                </div>
+        <div class="col-md-6">
+            <h4> Manager </h4>
+            <strong>Name: </strong> @Model.ResourceManager
+        </div>
+    </div>
+    <div class="row">
 
-                <div class="col-md-6">
-                    <h4> Manager </h4> 
-                    <strong>Name: </strong> @Model.ResourceManager
-                </div>
-            </div>
-
-            <br><br>
-            
-                    <h4>Request Details:</h4> 
-                    <strong>Title: </strong> @Model.TitleOfRequest <br>
-                    <strong>Creation Date: </strong> @Model.CreationDate.ToString("MM/dd/yyyy")<br>
-                    <strong>Start Date: </strong> @Model.StartDate.ToString("MM/dd/yyyy") <br>
-                    <strong>End Date: </strong> @Model.EndDate.ToString("MM/dd/yyyy") <br>
-                    <strong>Return Date: </strong> @Model.ReturnDate.ToString("MM/dd/yyyy") <br>
-                    <strong>Days: </strong> @Model.NumberOfDays <br>
-                    <strong>Status:</strong> @Model.StatusOfRequest <br>
-                    <strong>Coments: </strong> @Model.Comments
-                
-           </div>
-        
-
-</body>
-</html>
+        <br><br>
+        <div class="col-md-6">
+            <h4>Request Details:</h4>
+            <strong>Title: </strong> @Model.TitleOfRequest <br>
+            <strong>Date Created: </strong> @Model.CreationDate.ToString("MM/dd/yyyy") <br />
+            <strong>Start Date: </strong> @Model.StartDate.ToString("MM/dd/yyyy") <br>
+            <strong>End Date: </strong> @Model.EndDate.ToString("MM/dd/yyyy") <br>
+            <strong>Return Date: </strong> @Model.ReturnDate.ToString("MM/dd/yyyy") <br>
+            <strong>Days: </strong> @Model.NumberOfDays <br>
+            <strong>Status:</strong> @Model.StatusOfRequest <br>
+            <strong>Coments: </strong> @Model.Comments
+        </div>
+        <div class="col-md-6">
+            <a class="btn btn-primary" href="@Url.Action("ReadOnlyAdmin", "VacationRequest")">
+                Return to History
+            </a>
+        </div>
+    </div>
+</div>
