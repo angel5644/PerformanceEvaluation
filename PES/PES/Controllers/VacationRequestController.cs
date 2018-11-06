@@ -7,6 +7,9 @@ using PES.Services;
 using PES.Models;
 using System.Threading.Tasks;
 using PES.ViewModels;
+using Newtonsoft.Json;
+using System.Dynamic;
+
 // email 
 using System.Net.Mail;
 using System.Text;
@@ -954,6 +957,8 @@ namespace PES.Controllers
             List<Charts> chartData = new List<Charts>();
 
             chartData = _subReqService.GetVacationsForChart(year, location).ToList();
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(chartData);
 
             return View(chartData);
         }
