@@ -94,7 +94,8 @@ namespace PES.Services
                 {
                     db.Open();
                     string query = "SELECT DISTINCT " +
-                        "month_value MONTH, " +
+                        "MONTH_DISPLAY MONTH, " +
+                        "month_value , " +
                         "count(id_subreq) VACATIONS " +
                         "FROM " +
                         "WWV_FLOW_MONTHS_MONTH syst " +
@@ -111,7 +112,7 @@ namespace PES.Services
                         while (Reader.Read())
                         {
                             vacationSubReq = new Charts();
-                            vacationSubReq.Month = Convert.ToInt32(Reader["MONTH"]);
+                            vacationSubReq.Month = Convert.ToString(Reader["MONTH"]);
                             vacationSubReq.Requests = Convert.ToInt32(Reader["VACATIONS"]);
                             vacationSubReqs.Add(vacationSubReq);
                         }
