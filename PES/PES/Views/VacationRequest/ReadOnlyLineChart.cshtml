@@ -7,8 +7,9 @@
 }
 
 <script type="text/javascript">
-    window.onload = function () {
+    window.onload = function(){
 
+        var dataPoints = [];
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             theme: "light2",
@@ -24,6 +25,24 @@
             }]
         });
         chart.render();
+        $('button').click(function plot() {
+            var location1 = $("#location option:selected").val();
+            var year1 = $("#year option:selected").val();
+            console.log(year1 + " " + location1);
+            $.ajax({
+                url: "/VacationRequest/ReadOnlyLineChart",
+                data: {
+                    year: year1,
+                    location: location1
+                },
+                success: function () {
+                    @*dataPoints = @Html.Raw(ViewBag.DataPoints);*@
+                    chart.data.dataPoints = @Html.Raw(ViewBag.DataPoints);
+                }
+            });
+            chart.render();
+            console.log(dataPoints[0]);
+        });
     }
 </script>
 
@@ -48,7 +67,7 @@
             </select>
         </div>
         <div id="button" class="col-md-2 text-right">
-            <a href="#" class="btn btn-lg btn-primary" style="width: 250px">Generate Chart</a>
+            <button class="btn btn-lg btn-primary" style="width: 250px">Generate Chart</button>
         </div>
     </div> <!-- container end -->
 </div> <!-- form-group end -->
