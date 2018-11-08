@@ -9,8 +9,8 @@ namespace PES.ViewModels
     [DataContract]
     public class Charts
     {
-        [DataMember(Name = "x")]
-        public int Month { get; set; }
+        [DataMember(Name = "label")]
+        public string Month { get; set; }
 
         [DataMember(Name = "y")]
         public int Requests { get; set; }
