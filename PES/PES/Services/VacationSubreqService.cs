@@ -93,21 +93,22 @@ namespace PES.Services
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string query = "SELECT DISTINCT " +
-                        "MONTH_DISPLAY MONTH, " +
-                        "month_value , " +
-                        "count(id_subreq) VACATIONS " +
-                        "FROM " +
-                        "WWV_FLOW_MONTHS_MONTH syst " +
-                        "LEFT JOIN " +
-                        "pe.vacation_subreq sub ON EXTRACT(MONTH FROM date_created) = syst.MONTH_VALUE " +
-                        "GROUP BY month_value, month_display " +
-                        "ORDER BY MONTH_VALUE";
+                    string query = "WITH requests AS (" +
+                        "SELECT COUNT(ID_SUBREQ) VACATIONS,DATE_CREATED" +
+                        " FROM PE.VACATION_SUBREQ sub" +
+                        " INNER JOIN PE.VACATION_HEADER_REQ hdr ON sub.ID_HEADER_REQ = hdr.ID_HEADER_REQ" +
+                        " INNER JOIN PE.EMPLOYEE emp ON hdr.ID_EMPLOYEE = emp.ID_EMPLOYEE" +
+                        " INNER JOIN PE.LOCATION loc ON emp.ID_LOCATION = loc.ID_LOCATION" +
+                        " WHERE loc.NAME = :location AND EXTRACT(YEAR FROM sub.DATE_CREATED) = :year" +
+                        " GROUP BY DATE_CREATED)" +
+                        " SELECT MONTH_VALUE, MONTH_DISPLAY MONTH, NVL(VACATIONS,0) VACATIONS FROM requests" +
+                        " RIGHT JOIN WWV_FLOW_MONTHS_MONTH syst ON EXTRACT(MONTH FROM DATE_CREATED)=syst.MONTH_VALUE" +
+                        " ORDER BY syst.MONTH_VALUE";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
                         command.Parameters.Add(new OracleParameter("year", year));
                         command.Parameters.Add(new OracleParameter("location", location));
-                        command.ExecuteReader();
+                        //command.ExecuteReader();
                         OracleDataReader Reader = command.ExecuteReader();
                         while (Reader.Read())
                         {
