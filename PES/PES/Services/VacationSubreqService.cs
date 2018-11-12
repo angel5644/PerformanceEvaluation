@@ -99,16 +99,16 @@ namespace PES.Services
                         " INNER JOIN PE.VACATION_HEADER_REQ hdr ON sub.ID_HEADER_REQ = hdr.ID_HEADER_REQ" +
                         " INNER JOIN PE.EMPLOYEE emp ON hdr.ID_EMPLOYEE = emp.ID_EMPLOYEE" +
                         " INNER JOIN PE.LOCATION loc ON emp.ID_LOCATION = loc.ID_LOCATION" +
-                        " WHERE loc.NAME = :location AND EXTRACT(YEAR FROM sub.DATE_CREATED) = :year" +
+                        " WHERE loc.NAME = '"+location+"' AND EXTRACT(YEAR FROM sub.DATE_CREATED) = "+year+
                         " GROUP BY DATE_CREATED)" +
                         " SELECT MONTH_VALUE, MONTH_DISPLAY MONTH, NVL(VACATIONS,0) VACATIONS FROM requests" +
                         " RIGHT JOIN WWV_FLOW_MONTHS_MONTH syst ON EXTRACT(MONTH FROM DATE_CREATED)=syst.MONTH_VALUE" +
                         " ORDER BY syst.MONTH_VALUE";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
-                        command.Parameters.Add(new OracleParameter("year", year));
-                        command.Parameters.Add(new OracleParameter("location", location));
-                        //command.ExecuteReader();
+                        //command.Parameters.Add(new OracleParameter("year", OracleDbType.Int32, year, System.Data.ParameterDirection.Input));
+                        //command.Parameters.Add(new OracleParameter("location", OracleDbType.Varchar2, 25, location, System.Data.ParameterDirection.Input));
+                        command.ExecuteReader();
                         OracleDataReader Reader = command.ExecuteReader();
                         while (Reader.Read())
                         {
