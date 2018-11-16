@@ -14,19 +14,19 @@
             animationEnabled: true,
             theme: "light2",
             title: {
-                text: "Example Line Chart"
+                text: "Vacation days per month"
             },
             axisY: {
                 includeZero: false
             },
             data: [{
-                type: "line",
+                type: "column",
                 dataPoints: @Html.Raw(ViewBag.DataPoints)
             }]
         });
         chart.render();
         $('button').click(function plot() {
-            var location1 = $("#location option:selected").val();
+            var location1 = $("#location").val();
             var year1 = $("#year option:selected").val();
             console.log(year1 + " " + location1);
             $.ajax({
@@ -41,7 +41,7 @@
                 }
             });
             chart.render();
-            console.log(dataPoints[0]);
+            $('#info').html(dataPoints);
         });
     }
 </script>
@@ -53,17 +53,15 @@
         <div id="location" class="col-md-3 text-center">
             <b>Location: </b>
             <select>
-                <option value="Select_Location">Select a Location</option>
-                <option value="Colima">Colima</option>
-                <option value="Merida">Merida</option>
+                <option value="COLIMA" selected>Colima</option>
+                <option value="MERIDA">Merida</option>
             </select>
         </div>
         <div id="year" class="col-md-2 text-right">
             <b>Year: </b>
             <select>
-                <option value="Select_Year">Select a Year</option>
                 <option value="2017">2017</option>
-                <option value="2018">2018</option>
+                <option value="2018" selected>2018</option>
             </select>
         </div>
         <div id="button" class="col-md-2 text-right">
@@ -73,7 +71,7 @@
 </div> <!-- form-group end -->
 
 <br />
-@Html.Raw(ViewBag.DataPoints)
+<div id="info">@Html.Raw(ViewBag.DataPoints)</div>
 
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
