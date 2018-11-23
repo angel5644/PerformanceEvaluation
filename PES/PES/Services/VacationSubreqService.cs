@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using PES.DBContext;
@@ -85,41 +86,65 @@ namespace PES.Services
         /// <returns>A list of Sub Resquests</returns>
         public List<Charts> GetVacationsForChart(int year, string location)
         {
-            List<Charts> vacationSubReqs = new List<Charts>();
-            Charts vacationSubReq = new Charts();
+            List<ChartRequestsViewModel> vacationSubReqs = new List<ChartRequestsViewModel>();
+            ChartRequestsViewModel vacationSubReq = new ChartRequestsViewModel();
+            List<Charts> charts = new List<Charts>();
 
             try
             {
                 using (OracleConnection db = dbContext.GetDBConnection())
                 {
                     db.Open();
-                    string query = "WITH requests AS (SELECT COUNT(ID_SUBREQ) VACATIONS,EXTRACT(MONTH FROM DATE_CREATED) DATE_CREATED" +
-                        " FROM PE.VACATION_SUBREQ sub" +
-                        " INNER JOIN PE.VACATION_HEADER_REQ hdr ON sub.ID_HEADER_REQ = hdr.ID_HEADER_REQ" +
-                        " INNER JOIN PE.EMPLOYEE emp ON hdr.ID_EMPLOYEE = emp.ID_EMPLOYEE" +
-                        " INNER JOIN PE.LOCATION loc ON emp.ID_LOCATION = loc.ID_LOCATION" +
-                        " WHERE loc.NAME = '" + location +"' AND EXTRACT(YEAR FROM sub.DATE_CREATED) = "+ year +
-                        " GROUP BY EXTRACT(MONTH FROM DATE_CREATED))" +
-                        " SELECT MONTH_VALUE, MONTH_DISPLAY MONTH, NVL(VACATIONS, 0) VACATIONS FROM requests" +
-                        " RIGHT JOIN WWV_FLOW_MONTHS_MONTH syst ON  DATE_CREATED = syst.MONTH_VALUE" +
-                        " GROUP BY VACATIONS, MONTH_VALUE, MONTH_DISPLAY, NVL(VACATIONS, 0)" +
-                        " ORDER BY syst.MONTH_VALUE";
+                    //STRING to get vacations requests by month 
+                    //string query = "WITH requests AS (SELECT COUNT(ID_SUBREQ) VACATIONS,EXTRACT(MONTH FROM DATE_CREATED) DATE_CREATED" +
+                    //    " FROM PE.VACATION_SUBREQ sub" +
+                    //    " INNER JOIN PE.VACATION_HEADER_REQ hdr ON sub.ID_HEADER_REQ = hdr.ID_HEADER_REQ" +
+                    //    " INNER JOIN PE.EMPLOYEE emp ON hdr.ID_EMPLOYEE = emp.ID_EMPLOYEE" +
+                    //    " INNER JOIN PE.LOCATION loc ON emp.ID_LOCATION = loc.ID_LOCATION" +
+                    //    " WHERE loc.NAME = '" + location +"' AND EXTRACT(YEAR FROM sub.DATE_CREATED) = "+ year +
+                    //    " GROUP BY EXTRACT(MONTH FROM DATE_CREATED))" +
+                    //    " SELECT MONTH_VALUE, MONTH_DISPLAY MONTH, NVL(VACATIONS, 0) VACATIONS FROM requests" +
+                    //    " RIGHT JOIN WWV_FLOW_MONTHS_MONTH syst ON  DATE_CREATED = syst.MONTH_VALUE" +
+                    //    " GROUP BY VACATIONS, MONTH_VALUE, MONTH_DISPLAY, NVL(VACATIONS, 0)" +
+                    //    " ORDER BY syst.MONTH_VALUE";
+                    string query = "SELECT" +
+                        " SUB.START_DATE, SUB.END_DATE, HDR.NO_VAC_DAYS" +
+                        " FROM PE.VACATION_SUBREQ SUB" +
+                        " INNER JOIN PE.VACATION_HEADER_REQ HDR ON SUB.ID_HEADER_REQ = HDR.ID_HEADER_REQ" +
+                        " INNER JOIN PE.EMPLOYEE EMP ON HDR.ID_EMPLOYEE = EMP.ID_EMPLOYEE" +
+                        " INNER JOIN PE.LOCATION LOC ON EMP.ID_LOCATION = LOC.ID_LOCATION" +
+                        " WHERE EXTRACT(YEAR FROM START_DATE) = :year AND LOC.NAME = :location AND HDR.ID_REQ_STATUS = 3";
                     using (OracleCommand command = new OracleCommand(query, db))
                     {
-                        //command.Parameters.Add(new OracleParameter("year", OracleDbType.Int32, year, System.Data.ParameterDirection.Input));
-                        //command.Parameters.Add(new OracleParameter("location", OracleDbType.Varchar2, 25, location, System.Data.ParameterDirection.Input));
+                        command.Parameters.Add(new OracleParameter("year", OracleDbType.Int32, year, System.Data.ParameterDirection.Input));
+                        command.Parameters.Add(new OracleParameter("location", OracleDbType.Varchar2, 25, location, System.Data.ParameterDirection.Input));
                         command.ExecuteReader();
                         OracleDataReader Reader = command.ExecuteReader();
                         while (Reader.Read())
                         {
-                            vacationSubReq = new Charts();
-                            vacationSubReq.Month = Convert.ToString(Reader["MONTH"]);
-                            vacationSubReq.Requests = Convert.ToInt32(Reader["VACATIONS"]);
+                            vacationSubReq = new ChartRequestsViewModel();
+                            vacationSubReq.StartDate = Convert.ToDateTime(Reader["START_DATE"]);
+                            vacationSubReq.EndDate = Convert.ToDateTime(Reader["END_DATE"]);
+                            vacationSubReq.VacationDays = Convert.ToInt32(Reader["NO_VAC_DAYS"]);
                             vacationSubReqs.Add(vacationSubReq);
                         }
                     }
 
                     db.Close();
+                }
+                //Calculation
+                int[] daysByMonth = new int[12];
+                CalculateDaysByMonth(vacationSubReqs, year, daysByMonth);
+
+                //Filling charts list
+                int monthNumber = 1;
+                DateTimeFormatInfo dateTimeFormatInfo = new DateTimeFormatInfo();
+                string monthName;
+                foreach (var days in daysByMonth)
+                {
+                    monthName = dateTimeFormatInfo.GetMonthName(monthNumber);
+                    charts.Add(new Charts() { Month = monthName, VacationDays = days });
+                    monthNumber++;
                 }
             }
 
@@ -128,7 +153,7 @@ namespace PES.Services
                 throw;
             }
 
-            return vacationSubReqs;
+            return charts;
         }
 
         /// <summary>
@@ -431,6 +456,33 @@ namespace PES.Services
                     throw;
                 }
             return iDHeaderReq;
+        }
+
+        public void CalculateDaysByMonth(List<ChartRequestsViewModel> vacationSubReqs, int year, int[] daysByMonth)
+        {
+            foreach (var date in vacationSubReqs)
+            {
+                DateTime firstDayOfMonth = new DateTime(year, date.StartDate.Month, 1);
+                DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                DateTime start = date.StartDate;
+                if (lastDayOfMonth < date.EndDate)
+                {
+                    int daysForThisMonth = 0;
+                    int daysForNextMonth = 0;
+                    while (start <= lastDayOfMonth)
+                    {
+                        if (start.DayOfWeek != DayOfWeek.Saturday && start.DayOfWeek != DayOfWeek.Sunday)
+                        {
+                            ++daysForThisMonth;
+                        }
+                        start = start.AddDays(1);
+                    }
+                    daysByMonth[date.StartDate.Month - 1] += daysForThisMonth;
+                    daysForNextMonth = date.VacationDays - daysForThisMonth;
+                    daysByMonth[date.StartDate.Month] += daysForNextMonth;
+                }
+                daysByMonth[date.StartDate.Month - 1] += date.VacationDays;
+            }
         }
     }
 }

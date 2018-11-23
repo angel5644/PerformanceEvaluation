@@ -13,6 +13,6 @@ namespace PES.ViewModels
         public string Month { get; set; }
 
         [DataMember(Name = "y")]
-        public int Requests { get; set; }
+        public int VacationDays { get; set; }
     }
 }
