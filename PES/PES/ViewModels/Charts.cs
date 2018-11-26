@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+
 
 namespace PES.ViewModels
 {
     [DataContract]
     public class Charts
     {
-        [DataMember(Name = "label")]
+        [JsonProperty("label")]
         public string Month { get; set; }
 
-        [DataMember(Name = "y")]
+        [JsonProperty("y")]
         public int VacationDays { get; set; }
     }
 }

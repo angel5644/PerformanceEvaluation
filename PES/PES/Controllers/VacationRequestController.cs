@@ -963,6 +963,20 @@ namespace PES.Controllers
             return View(chartData);
         }
 
+        public JsonResult ReadOnlyLineChartJson(int year, string location)
+        {
+            List<Charts> chartData = new List<Charts>();
+
+            chartData = _subReqService.GetVacationsForChart(year, location).ToList();
+
+            var newData = chartData.Select(c => new
+            {
+                label = c.Month,
+                y = c.VacationDays
+            });
+
+            return Json(newData, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult VacationsReminder()
 		{

@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
     window.onload = function(){
-
+        
         var dataPoints = [];
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
@@ -26,22 +26,13 @@
         });
         chart.render();
         $('button').click(function plot() {
-            var location1 = $("#location").val();
+            var location1 = $("#location option:selected").val();
             var year1 = $("#year option:selected").val();
-            console.log(year1 + " " + location1);
-            $.ajax({
-                url: "/VacationRequest/ReadOnlyLineChart",
-                data: {
-                    year: year1,
-                    location: location1
-                },
-                success: function () {
-                    @*dataPoints = @Html.Raw(ViewBag.DataPoints);*@
-                    chart.data.dataPoints = @Html.Raw(ViewBag.DataPoints);
-                }
+            var url = "@Url.Action("ReadOnlyLineChartJson","VacationRequest")";
+            $.get(url, { year: year1, location: location1 }).done(function (data) {
+                chart.options.data[0].dataPoints = data;
+                chart.render();
             });
-            chart.render();
-            $('#info').html(dataPoints);
         });
     }
 </script>
@@ -60,6 +51,7 @@
         <div id="year" class="col-md-2 text-right">
             <b>Year: </b>
             <select>
+                <option value="2016">2016</option>
                 <option value="2017">2017</option>
                 <option value="2018" selected>2018</option>
             </select>
@@ -74,7 +66,6 @@
 </div> <!-- form-group end -->
 
 <br />
-<div id="info">@Html.Raw(ViewBag.DataPoints)</div>
 
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
